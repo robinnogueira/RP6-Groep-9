@@ -1,0 +1,549 @@
+
+Arduinocode.elf:     file format elf32-avr
+
+Sections:
+Idx Name          Size      VMA       LMA       File off  Algn
+  0 .text         0000034a  00000000  00000000  00000074  2**1
+                  CONTENTS, ALLOC, LOAD, READONLY, CODE
+  1 .data         00000000  00800060  00800060  000003be  2**0
+                  CONTENTS, ALLOC, LOAD, DATA
+  2 .bss          00000010  00800060  00800060  000003be  2**0
+                  ALLOC
+  3 .comment      00000030  00000000  00000000  000003be  2**0
+                  CONTENTS, READONLY
+  4 .note.gnu.avr.deviceinfo 0000003c  00000000  00000000  000003f0  2**2
+                  CONTENTS, READONLY
+  5 .debug_aranges 00000048  00000000  00000000  0000042c  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  6 .debug_info   000006c8  00000000  00000000  00000474  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  7 .debug_abbrev 0000052f  00000000  00000000  00000b3c  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  8 .debug_line   00000383  00000000  00000000  0000106b  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  9 .debug_frame  00000074  00000000  00000000  000013f0  2**2
+                  CONTENTS, READONLY, DEBUGGING
+ 10 .debug_str    0000032d  00000000  00000000  00001464  2**0
+                  CONTENTS, READONLY, DEBUGGING
+ 11 .debug_ranges 00000038  00000000  00000000  00001791  2**0
+                  CONTENTS, READONLY, DEBUGGING
+
+Disassembly of section .text:
+
+00000000 <__vectors>:
+   0:	0c 94 34 00 	jmp	0x68	; 0x68 <__ctors_end>
+   4:	0c 94 46 00 	jmp	0x8c	; 0x8c <__bad_interrupt>
+   8:	0c 94 46 00 	jmp	0x8c	; 0x8c <__bad_interrupt>
+   c:	0c 94 46 00 	jmp	0x8c	; 0x8c <__bad_interrupt>
+  10:	0c 94 46 00 	jmp	0x8c	; 0x8c <__bad_interrupt>
+  14:	0c 94 46 00 	jmp	0x8c	; 0x8c <__bad_interrupt>
+  18:	0c 94 46 00 	jmp	0x8c	; 0x8c <__bad_interrupt>
+  1c:	0c 94 46 00 	jmp	0x8c	; 0x8c <__bad_interrupt>
+  20:	0c 94 46 00 	jmp	0x8c	; 0x8c <__bad_interrupt>
+  24:	0c 94 46 00 	jmp	0x8c	; 0x8c <__bad_interrupt>
+  28:	0c 94 46 00 	jmp	0x8c	; 0x8c <__bad_interrupt>
+  2c:	0c 94 46 00 	jmp	0x8c	; 0x8c <__bad_interrupt>
+  30:	0c 94 46 00 	jmp	0x8c	; 0x8c <__bad_interrupt>
+  34:	0c 94 46 00 	jmp	0x8c	; 0x8c <__bad_interrupt>
+  38:	0c 94 46 00 	jmp	0x8c	; 0x8c <__bad_interrupt>
+  3c:	0c 94 46 00 	jmp	0x8c	; 0x8c <__bad_interrupt>
+  40:	0c 94 46 00 	jmp	0x8c	; 0x8c <__bad_interrupt>
+  44:	0c 94 46 00 	jmp	0x8c	; 0x8c <__bad_interrupt>
+  48:	0c 94 46 00 	jmp	0x8c	; 0x8c <__bad_interrupt>
+  4c:	0c 94 46 00 	jmp	0x8c	; 0x8c <__bad_interrupt>
+  50:	0c 94 46 00 	jmp	0x8c	; 0x8c <__bad_interrupt>
+  54:	2b 01       	movw	r4, r22
+  56:	2e 01       	movw	r4, r28
+  58:	4a 01       	movw	r8, r20
+  5a:	31 01       	movw	r6, r2
+  5c:	34 01       	movw	r6, r8
+  5e:	39 01       	movw	r6, r18
+  60:	4a 01       	movw	r8, r20
+  62:	3e 01       	movw	r6, r28
+  64:	41 01       	movw	r8, r2
+  66:	46 01       	movw	r8, r12
+
+00000068 <__ctors_end>:
+  68:	11 24       	eor	r1, r1
+  6a:	1f be       	out	0x3f, r1	; 63
+  6c:	cf e5       	ldi	r28, 0x5F	; 95
+  6e:	d8 e0       	ldi	r29, 0x08	; 8
+  70:	de bf       	out	0x3e, r29	; 62
+  72:	cd bf       	out	0x3d, r28	; 61
+
+00000074 <__do_clear_bss>:
+  74:	20 e0       	ldi	r18, 0x00	; 0
+  76:	a0 e6       	ldi	r26, 0x60	; 96
+  78:	b0 e0       	ldi	r27, 0x00	; 0
+  7a:	01 c0       	rjmp	.+2      	; 0x7e <.do_clear_bss_start>
+
+0000007c <.do_clear_bss_loop>:
+  7c:	1d 92       	st	X+, r1
+
+0000007e <.do_clear_bss_start>:
+  7e:	a0 37       	cpi	r26, 0x70	; 112
+  80:	b2 07       	cpc	r27, r18
+  82:	e1 f7       	brne	.-8      	; 0x7c <.do_clear_bss_loop>
+  84:	0e 94 13 01 	call	0x226	; 0x226 <main>
+  88:	0c 94 a3 01 	jmp	0x346	; 0x346 <_exit>
+
+0000008c <__bad_interrupt>:
+  8c:	0c 94 00 00 	jmp	0	; 0x0 <__vectors>
+
+00000090 <rechtdoor>:
+
+//TODO doe iets met sensoren
+//TODO pad planning implementeren
+
+void rechtdoor () {
+	if (langeafstand) {
+  90:	80 91 66 00 	lds	r24, 0x0066	; 0x800066 <langeafstand>
+  94:	90 91 67 00 	lds	r25, 0x0067	; 0x800067 <langeafstand+0x1>
+  98:	89 2b       	or	r24, r25
+  9a:	09 f1       	breq	.+66     	; 0xde <rechtdoor+0x4e>
+		switch(motor[0]) {
+  9c:	80 91 60 00 	lds	r24, 0x0060	; 0x800060 <_edata>
+  a0:	90 91 61 00 	lds	r25, 0x0061	; 0x800061 <_edata+0x1>
+  a4:	00 97       	sbiw	r24, 0x00	; 0
+  a6:	19 f0       	breq	.+6      	; 0xae <rechtdoor+0x1e>
+  a8:	0c 97       	sbiw	r24, 0x0c	; 12
+  aa:	69 f0       	breq	.+26     	; 0xc6 <rechtdoor+0x36>
+  ac:	08 95       	ret
+			case 0:
+				motor[0] = 0;
+				motor[1] = snelheid + 25;
+  ae:	80 91 6a 00 	lds	r24, 0x006A	; 0x80006a <snelheid>
+  b2:	90 91 6b 00 	lds	r25, 0x006B	; 0x80006b <snelheid+0x1>
+  b6:	49 96       	adiw	r24, 0x19	; 25
+  b8:	e0 e6       	ldi	r30, 0x60	; 96
+  ba:	f0 e0       	ldi	r31, 0x00	; 0
+  bc:	93 83       	std	Z+3, r25	; 0x03
+  be:	82 83       	std	Z+2, r24	; 0x02
+				motor[2] = snelheid + 25;
+  c0:	95 83       	std	Z+5, r25	; 0x05
+  c2:	84 83       	std	Z+4, r24	; 0x04
+			break;
+  c4:	08 95       	ret
+			case 12:
+				motor[0] = 12;
+				motor[1] = snelheid - 25;
+  c6:	80 91 6a 00 	lds	r24, 0x006A	; 0x80006a <snelheid>
+  ca:	90 91 6b 00 	lds	r25, 0x006B	; 0x80006b <snelheid+0x1>
+  ce:	49 97       	sbiw	r24, 0x19	; 25
+  d0:	e0 e6       	ldi	r30, 0x60	; 96
+  d2:	f0 e0       	ldi	r31, 0x00	; 0
+  d4:	93 83       	std	Z+3, r25	; 0x03
+  d6:	82 83       	std	Z+2, r24	; 0x02
+				motor[2] = snelheid - 25;
+  d8:	95 83       	std	Z+5, r25	; 0x05
+  da:	84 83       	std	Z+4, r24	; 0x04
+			break;
+  dc:	08 95       	ret
+		}
+		} else {
+		motor[0] = 0;
+  de:	e0 e6       	ldi	r30, 0x60	; 96
+  e0:	f0 e0       	ldi	r31, 0x00	; 0
+  e2:	11 82       	std	Z+1, r1	; 0x01
+  e4:	10 82       	st	Z, r1
+		motor[1] = instelsnelheid;
+  e6:	80 91 6e 00 	lds	r24, 0x006E	; 0x80006e <instelsnelheid>
+  ea:	90 91 6f 00 	lds	r25, 0x006F	; 0x80006f <instelsnelheid+0x1>
+  ee:	93 83       	std	Z+3, r25	; 0x03
+  f0:	82 83       	std	Z+2, r24	; 0x02
+		motor[2] = instelsnelheid;
+  f2:	95 83       	std	Z+5, r25	; 0x05
+  f4:	84 83       	std	Z+4, r24	; 0x04
+  f6:	08 95       	ret
+
+000000f8 <achteruit>:
+	}
+	return;
+}
+void achteruit () {
+	if (langeafstand) {
+  f8:	80 91 66 00 	lds	r24, 0x0066	; 0x800066 <langeafstand>
+  fc:	90 91 67 00 	lds	r25, 0x0067	; 0x800067 <langeafstand+0x1>
+ 100:	89 2b       	or	r24, r25
+ 102:	09 f1       	breq	.+66     	; 0x146 <achteruit+0x4e>
+		switch(motor[0]) {
+ 104:	80 91 60 00 	lds	r24, 0x0060	; 0x800060 <_edata>
+ 108:	90 91 61 00 	lds	r25, 0x0061	; 0x800061 <_edata+0x1>
+ 10c:	00 97       	sbiw	r24, 0x00	; 0
+ 10e:	19 f0       	breq	.+6      	; 0x116 <achteruit+0x1e>
+ 110:	0c 97       	sbiw	r24, 0x0c	; 12
+ 112:	69 f0       	breq	.+26     	; 0x12e <achteruit+0x36>
+ 114:	08 95       	ret
+			case 0:
+				motor[0] = 0;
+				motor[1] = snelheid - 25;
+ 116:	80 91 6a 00 	lds	r24, 0x006A	; 0x80006a <snelheid>
+ 11a:	90 91 6b 00 	lds	r25, 0x006B	; 0x80006b <snelheid+0x1>
+ 11e:	49 97       	sbiw	r24, 0x19	; 25
+ 120:	e0 e6       	ldi	r30, 0x60	; 96
+ 122:	f0 e0       	ldi	r31, 0x00	; 0
+ 124:	93 83       	std	Z+3, r25	; 0x03
+ 126:	82 83       	std	Z+2, r24	; 0x02
+				motor[2] = snelheid - 25;
+ 128:	95 83       	std	Z+5, r25	; 0x05
+ 12a:	84 83       	std	Z+4, r24	; 0x04
+			break;
+ 12c:	08 95       	ret
+			case 12:
+				motor[0] = 12;
+				motor[1] = snelheid + 25;
+ 12e:	80 91 6a 00 	lds	r24, 0x006A	; 0x80006a <snelheid>
+ 132:	90 91 6b 00 	lds	r25, 0x006B	; 0x80006b <snelheid+0x1>
+ 136:	49 96       	adiw	r24, 0x19	; 25
+ 138:	e0 e6       	ldi	r30, 0x60	; 96
+ 13a:	f0 e0       	ldi	r31, 0x00	; 0
+ 13c:	93 83       	std	Z+3, r25	; 0x03
+ 13e:	82 83       	std	Z+2, r24	; 0x02
+				motor[2] = snelheid + 25;
+ 140:	95 83       	std	Z+5, r25	; 0x05
+ 142:	84 83       	std	Z+4, r24	; 0x04
+			break;
+ 144:	08 95       	ret
+		}
+		} else {
+		motor[0] = 12;
+ 146:	e0 e6       	ldi	r30, 0x60	; 96
+ 148:	f0 e0       	ldi	r31, 0x00	; 0
+ 14a:	8c e0       	ldi	r24, 0x0C	; 12
+ 14c:	90 e0       	ldi	r25, 0x00	; 0
+ 14e:	91 83       	std	Z+1, r25	; 0x01
+ 150:	80 83       	st	Z, r24
+		motor[1] = instelsnelheid;
+ 152:	80 91 6e 00 	lds	r24, 0x006E	; 0x80006e <instelsnelheid>
+ 156:	90 91 6f 00 	lds	r25, 0x006F	; 0x80006f <instelsnelheid+0x1>
+ 15a:	93 83       	std	Z+3, r25	; 0x03
+ 15c:	82 83       	std	Z+2, r24	; 0x02
+		motor[2] = instelsnelheid;
+ 15e:	95 83       	std	Z+5, r25	; 0x05
+ 160:	84 83       	std	Z+4, r24	; 0x04
+ 162:	08 95       	ret
+
+00000164 <links>:
+	}
+	return;
+}
+
+void links () {
+	switch(motor[0]){
+ 164:	80 91 60 00 	lds	r24, 0x0060	; 0x800060 <_edata>
+ 168:	90 91 61 00 	lds	r25, 0x0061	; 0x800061 <_edata+0x1>
+ 16c:	84 30       	cpi	r24, 0x04	; 4
+ 16e:	91 05       	cpc	r25, r1
+ 170:	c1 f0       	breq	.+48     	; 0x1a2 <links+0x3e>
+ 172:	1c f4       	brge	.+6      	; 0x17a <links+0x16>
+ 174:	89 2b       	or	r24, r25
+ 176:	31 f0       	breq	.+12     	; 0x184 <links+0x20>
+ 178:	08 95       	ret
+ 17a:	88 30       	cpi	r24, 0x08	; 8
+ 17c:	91 05       	cpc	r25, r1
+ 17e:	89 f0       	breq	.+34     	; 0x1a2 <links+0x3e>
+ 180:	0c 97       	sbiw	r24, 0x0c	; 12
+ 182:	d9 f4       	brne	.+54     	; 0x1ba <links+0x56>
+		case 0:
+		case 12:
+			motor[1] = snelheid - 25;
+ 184:	80 91 6a 00 	lds	r24, 0x006A	; 0x80006a <snelheid>
+ 188:	90 91 6b 00 	lds	r25, 0x006B	; 0x80006b <snelheid+0x1>
+ 18c:	e0 e6       	ldi	r30, 0x60	; 96
+ 18e:	f0 e0       	ldi	r31, 0x00	; 0
+ 190:	9c 01       	movw	r18, r24
+ 192:	29 51       	subi	r18, 0x19	; 25
+ 194:	31 09       	sbc	r19, r1
+ 196:	33 83       	std	Z+3, r19	; 0x03
+ 198:	22 83       	std	Z+2, r18	; 0x02
+			motor[2] = snelheid + 25;
+ 19a:	49 96       	adiw	r24, 0x19	; 25
+ 19c:	95 83       	std	Z+5, r25	; 0x05
+ 19e:	84 83       	std	Z+4, r24	; 0x04
+		break;
+ 1a0:	08 95       	ret
+		
+		case 4:
+		case 8:
+			motor[0] = 8;
+ 1a2:	e0 e6       	ldi	r30, 0x60	; 96
+ 1a4:	f0 e0       	ldi	r31, 0x00	; 0
+ 1a6:	88 e0       	ldi	r24, 0x08	; 8
+ 1a8:	90 e0       	ldi	r25, 0x00	; 0
+ 1aa:	91 83       	std	Z+1, r25	; 0x01
+ 1ac:	80 83       	st	Z, r24
+			motor[1] = 50;
+ 1ae:	82 e3       	ldi	r24, 0x32	; 50
+ 1b0:	90 e0       	ldi	r25, 0x00	; 0
+ 1b2:	93 83       	std	Z+3, r25	; 0x03
+ 1b4:	82 83       	std	Z+2, r24	; 0x02
+			motor[2] = 50;
+ 1b6:	95 83       	std	Z+5, r25	; 0x05
+ 1b8:	84 83       	std	Z+4, r24	; 0x04
+ 1ba:	08 95       	ret
+
+000001bc <rechts>:
+		break;
+	}
+}
+void rechts () {
+	switch(motor[0]){
+ 1bc:	80 91 60 00 	lds	r24, 0x0060	; 0x800060 <_edata>
+ 1c0:	90 91 61 00 	lds	r25, 0x0061	; 0x800061 <_edata+0x1>
+ 1c4:	84 30       	cpi	r24, 0x04	; 4
+ 1c6:	91 05       	cpc	r25, r1
+ 1c8:	c1 f0       	breq	.+48     	; 0x1fa <rechts+0x3e>
+ 1ca:	1c f4       	brge	.+6      	; 0x1d2 <rechts+0x16>
+ 1cc:	89 2b       	or	r24, r25
+ 1ce:	31 f0       	breq	.+12     	; 0x1dc <rechts+0x20>
+ 1d0:	08 95       	ret
+ 1d2:	88 30       	cpi	r24, 0x08	; 8
+ 1d4:	91 05       	cpc	r25, r1
+ 1d6:	89 f0       	breq	.+34     	; 0x1fa <rechts+0x3e>
+ 1d8:	0c 97       	sbiw	r24, 0x0c	; 12
+ 1da:	d9 f4       	brne	.+54     	; 0x212 <rechts+0x56>
+		case 0:
+		case 12:
+			motor[1] = snelheid + 25;
+ 1dc:	80 91 6a 00 	lds	r24, 0x006A	; 0x80006a <snelheid>
+ 1e0:	90 91 6b 00 	lds	r25, 0x006B	; 0x80006b <snelheid+0x1>
+ 1e4:	e0 e6       	ldi	r30, 0x60	; 96
+ 1e6:	f0 e0       	ldi	r31, 0x00	; 0
+ 1e8:	9c 01       	movw	r18, r24
+ 1ea:	27 5e       	subi	r18, 0xE7	; 231
+ 1ec:	3f 4f       	sbci	r19, 0xFF	; 255
+ 1ee:	33 83       	std	Z+3, r19	; 0x03
+ 1f0:	22 83       	std	Z+2, r18	; 0x02
+			motor[2] = snelheid - 25;
+ 1f2:	49 97       	sbiw	r24, 0x19	; 25
+ 1f4:	95 83       	std	Z+5, r25	; 0x05
+ 1f6:	84 83       	std	Z+4, r24	; 0x04
+		break;
+ 1f8:	08 95       	ret
+		
+		case 4:
+		case 8:
+			motor[0] = 4;
+ 1fa:	e0 e6       	ldi	r30, 0x60	; 96
+ 1fc:	f0 e0       	ldi	r31, 0x00	; 0
+ 1fe:	84 e0       	ldi	r24, 0x04	; 4
+ 200:	90 e0       	ldi	r25, 0x00	; 0
+ 202:	91 83       	std	Z+1, r25	; 0x01
+ 204:	80 83       	st	Z, r24
+			motor[1] = 50;
+ 206:	82 e3       	ldi	r24, 0x32	; 50
+ 208:	90 e0       	ldi	r25, 0x00	; 0
+ 20a:	93 83       	std	Z+3, r25	; 0x03
+ 20c:	82 83       	std	Z+2, r24	; 0x02
+			motor[2] = 50;
+ 20e:	95 83       	std	Z+5, r25	; 0x05
+ 210:	84 83       	std	Z+4, r24	; 0x04
+ 212:	08 95       	ret
+
+00000214 <stop>:
+		break;
+	}
+}
+
+void stop () {
+	motor[0] = 0;
+ 214:	e0 e6       	ldi	r30, 0x60	; 96
+ 216:	f0 e0       	ldi	r31, 0x00	; 0
+ 218:	11 82       	std	Z+1, r1	; 0x01
+ 21a:	10 82       	st	Z, r1
+	motor[1] = 0;
+ 21c:	13 82       	std	Z+3, r1	; 0x03
+ 21e:	12 82       	std	Z+2, r1	; 0x02
+	motor[2] = 0;
+ 220:	15 82       	std	Z+5, r1	; 0x05
+ 222:	14 82       	std	Z+4, r1	; 0x04
+ 224:	08 95       	ret
+
+00000226 <main>:
+void stop();
+
+int main(void)
+{
+	//TODO get value buttonpressed, longdistance
+	motor[1] = 0; //opnieuw op nul zetten: wordt in de functies opnieuw aangepast.
+ 226:	e0 e6       	ldi	r30, 0x60	; 96
+ 228:	f0 e0       	ldi	r31, 0x00	; 0
+ 22a:	13 82       	std	Z+3, r1	; 0x03
+ 22c:	12 82       	std	Z+2, r1	; 0x02
+	motor[2] = 0;
+ 22e:	15 82       	std	Z+5, r1	; 0x05
+ 230:	14 82       	std	Z+4, r1	; 0x04
+	if (knop >= 128) {
+ 232:	e0 91 6c 00 	lds	r30, 0x006C	; 0x80006c <knop>
+ 236:	f0 91 6d 00 	lds	r31, 0x006D	; 0x80006d <knop+0x1>
+ 23a:	e0 38       	cpi	r30, 0x80	; 128
+ 23c:	f1 05       	cpc	r31, r1
+ 23e:	1c f0       	brlt	.+6      	; 0x246 <main+0x20>
+		stop();
+ 240:	0e 94 0a 01 	call	0x214	; 0x214 <stop>
+ 244:	27 c0       	rjmp	.+78     	; 0x294 <main+0x6e>
+	} //Als de noodstop knop ingedrukt is moeten we deze direct uitvoeren
+	else {
+		switch (knop) {
+ 246:	31 97       	sbiw	r30, 0x01	; 1
+ 248:	ea 30       	cpi	r30, 0x0A	; 10
+ 24a:	f1 05       	cpc	r31, r1
+ 24c:	18 f5       	brcc	.+70     	; 0x294 <main+0x6e>
+ 24e:	e6 5d       	subi	r30, 0xD6	; 214
+ 250:	ff 4f       	sbci	r31, 0xFF	; 255
+ 252:	0c 94 9d 01 	jmp	0x33a	; 0x33a <__tablejump2__>
+			case 0: //niks, maar mag geen error returnen
+			break;
+
+			case 1: //pijl naar boven
+			rechtdoor();
+ 256:	0e 94 48 00 	call	0x90	; 0x90 <rechtdoor>
+			break;
+ 25a:	1c c0       	rjmp	.+56     	; 0x294 <main+0x6e>
+			
+			case 2: //pijl naar onder
+			achteruit();
+ 25c:	0e 94 7c 00 	call	0xf8	; 0xf8 <achteruit>
+			break;
+ 260:	19 c0       	rjmp	.+50     	; 0x294 <main+0x6e>
+
+			case 4: //pijl naar rechts
+			rechts();
+ 262:	0e 94 de 00 	call	0x1bc	; 0x1bc <rechts>
+			break;
+ 266:	16 c0       	rjmp	.+44     	; 0x294 <main+0x6e>
+
+			case 5: //pijl naar boven & rechts
+			rechtdoor();
+ 268:	0e 94 48 00 	call	0x90	; 0x90 <rechtdoor>
+			rechts();
+ 26c:	0e 94 de 00 	call	0x1bc	; 0x1bc <rechts>
+			break;
+ 270:	11 c0       	rjmp	.+34     	; 0x294 <main+0x6e>
+
+			case 6: //pijl naar onder & rechts
+			achteruit();
+ 272:	0e 94 7c 00 	call	0xf8	; 0xf8 <achteruit>
+			rechts();
+ 276:	0e 94 de 00 	call	0x1bc	; 0x1bc <rechts>
+			break;
+ 27a:	0c c0       	rjmp	.+24     	; 0x294 <main+0x6e>
+			
+			case 8://pijl naar links
+			links();
+ 27c:	0e 94 b2 00 	call	0x164	; 0x164 <links>
+			break;
+ 280:	09 c0       	rjmp	.+18     	; 0x294 <main+0x6e>
+
+			case 9: //pijl naar boven & links
+			rechtdoor();
+ 282:	0e 94 48 00 	call	0x90	; 0x90 <rechtdoor>
+			links();
+ 286:	0e 94 b2 00 	call	0x164	; 0x164 <links>
+			break;
+ 28a:	04 c0       	rjmp	.+8      	; 0x294 <main+0x6e>
+			
+			case 10: //pijl naar onder & links
+			achteruit();
+ 28c:	0e 94 7c 00 	call	0xf8	; 0xf8 <achteruit>
+			links();
+ 290:	0e 94 b2 00 	call	0x164	; 0x164 <links>
+			default:
+			//TODO return error voor invalide combinatie.
+			break;
+		}//TODO correcte waardes toekennen
+	}
+	if (motor[1] < 0) {motor[1] = 0;}
+ 294:	80 91 62 00 	lds	r24, 0x0062	; 0x800062 <_edata+0x2>
+ 298:	90 91 63 00 	lds	r25, 0x0063	; 0x800063 <_edata+0x3>
+ 29c:	99 23       	and	r25, r25
+ 29e:	2c f4       	brge	.+10     	; 0x2aa <main+0x84>
+ 2a0:	10 92 63 00 	sts	0x0063, r1	; 0x800063 <_edata+0x3>
+ 2a4:	10 92 62 00 	sts	0x0062, r1	; 0x800062 <_edata+0x2>
+ 2a8:	0a c0       	rjmp	.+20     	; 0x2be <main+0x98>
+	if (motor[1] > 255) {motor[1] = 255;}
+ 2aa:	8f 3f       	cpi	r24, 0xFF	; 255
+ 2ac:	91 05       	cpc	r25, r1
+ 2ae:	39 f0       	breq	.+14     	; 0x2be <main+0x98>
+ 2b0:	34 f0       	brlt	.+12     	; 0x2be <main+0x98>
+ 2b2:	8f ef       	ldi	r24, 0xFF	; 255
+ 2b4:	90 e0       	ldi	r25, 0x00	; 0
+ 2b6:	90 93 63 00 	sts	0x0063, r25	; 0x800063 <_edata+0x3>
+ 2ba:	80 93 62 00 	sts	0x0062, r24	; 0x800062 <_edata+0x2>
+	if (motor[2] < 0) {motor[2] = 0;}
+ 2be:	80 91 64 00 	lds	r24, 0x0064	; 0x800064 <_edata+0x4>
+ 2c2:	90 91 65 00 	lds	r25, 0x0065	; 0x800065 <_edata+0x5>
+ 2c6:	99 23       	and	r25, r25
+ 2c8:	2c f4       	brge	.+10     	; 0x2d4 <main+0xae>
+ 2ca:	10 92 65 00 	sts	0x0065, r1	; 0x800065 <_edata+0x5>
+ 2ce:	10 92 64 00 	sts	0x0064, r1	; 0x800064 <_edata+0x4>
+ 2d2:	0a c0       	rjmp	.+20     	; 0x2e8 <main+0xc2>
+	if (motor[2] > 255) {motor[2] = 255;}
+ 2d4:	8f 3f       	cpi	r24, 0xFF	; 255
+ 2d6:	91 05       	cpc	r25, r1
+ 2d8:	39 f0       	breq	.+14     	; 0x2e8 <main+0xc2>
+ 2da:	34 f0       	brlt	.+12     	; 0x2e8 <main+0xc2>
+ 2dc:	8f ef       	ldi	r24, 0xFF	; 255
+ 2de:	90 e0       	ldi	r25, 0x00	; 0
+ 2e0:	90 93 65 00 	sts	0x0065, r25	; 0x800065 <_edata+0x5>
+ 2e4:	80 93 64 00 	sts	0x0064, r24	; 0x800064 <_edata+0x4>
+	switch(motor[0]) {
+ 2e8:	80 91 60 00 	lds	r24, 0x0060	; 0x800060 <_edata>
+ 2ec:	90 91 61 00 	lds	r25, 0x0061	; 0x800061 <_edata+0x1>
+ 2f0:	84 30       	cpi	r24, 0x04	; 4
+ 2f2:	91 05       	cpc	r25, r1
+ 2f4:	d9 f0       	breq	.+54     	; 0x32c <main+0x106>
+ 2f6:	1c f4       	brge	.+6      	; 0x2fe <main+0xd8>
+ 2f8:	89 2b       	or	r24, r25
+ 2fa:	31 f0       	breq	.+12     	; 0x308 <main+0xe2>
+ 2fc:	1b c0       	rjmp	.+54     	; 0x334 <main+0x10e>
+ 2fe:	88 30       	cpi	r24, 0x08	; 8
+ 300:	91 05       	cpc	r25, r1
+ 302:	a1 f0       	breq	.+40     	; 0x32c <main+0x106>
+ 304:	0c 97       	sbiw	r24, 0x0c	; 12
+ 306:	b1 f4       	brne	.+44     	; 0x334 <main+0x10e>
+		case 0:
+		case 12:
+		snelheid = (motor[1] + motor[2]) / 2;
+ 308:	e0 e6       	ldi	r30, 0x60	; 96
+ 30a:	f0 e0       	ldi	r31, 0x00	; 0
+ 30c:	22 81       	ldd	r18, Z+2	; 0x02
+ 30e:	33 81       	ldd	r19, Z+3	; 0x03
+ 310:	84 81       	ldd	r24, Z+4	; 0x04
+ 312:	95 81       	ldd	r25, Z+5	; 0x05
+ 314:	82 0f       	add	r24, r18
+ 316:	93 1f       	adc	r25, r19
+ 318:	99 23       	and	r25, r25
+ 31a:	0c f4       	brge	.+2      	; 0x31e <main+0xf8>
+ 31c:	01 96       	adiw	r24, 0x01	; 1
+ 31e:	95 95       	asr	r25
+ 320:	87 95       	ror	r24
+ 322:	90 93 6b 00 	sts	0x006B, r25	; 0x80006b <snelheid+0x1>
+ 326:	80 93 6a 00 	sts	0x006A, r24	; 0x80006a <snelheid>
+		break;
+ 32a:	04 c0       	rjmp	.+8      	; 0x334 <main+0x10e>
+		case 4:
+		case 8:
+		snelheid = 0;
+ 32c:	10 92 6b 00 	sts	0x006B, r1	; 0x80006b <snelheid+0x1>
+ 330:	10 92 6a 00 	sts	0x006A, r1	; 0x80006a <snelheid>
+		break;
+	}
+}
+ 334:	80 e0       	ldi	r24, 0x00	; 0
+ 336:	90 e0       	ldi	r25, 0x00	; 0
+ 338:	08 95       	ret
+
+0000033a <__tablejump2__>:
+ 33a:	ee 0f       	add	r30, r30
+ 33c:	ff 1f       	adc	r31, r31
+ 33e:	05 90       	lpm	r0, Z+
+ 340:	f4 91       	lpm	r31, Z
+ 342:	e0 2d       	mov	r30, r0
+ 344:	09 94       	ijmp
+
+00000346 <_exit>:
+ 346:	f8 94       	cli
+
+00000348 <__stop_program>:
+ 348:	ff cf       	rjmp	.-2      	; 0x348 <__stop_program>
