@@ -3,8 +3,8 @@ int motor[] = {0, 0, 0}; //Richting, motor rechts en motor links
 //Bandenrichting: 0: vooruit. 4: rechts achteruit. 8: links achteruit. 12: achteruit
 int langeafstand; //slaat op of we wel of niet voor lange afstanden bezig zijn
 int knop; //Een int met hierin de binaire representatie van welke knoppen zijn ingedrukt
-int lastbuttonpressed; //TODO juiste datatype gebruiken
-int snelheid; //snelheid die het laatste gebruikt is
+int lastbuttonpressed= 0; //TODO juiste datatype gebruiken
+int snelheid = 0; //snelheid die het laatste gebruikt is
 int instelsnelheid; //snelheid die de gebruiker in kan stellen
 
 void achteruit();
@@ -15,51 +15,52 @@ void stop();
 
 int main(void)
 {
-	//TODO get value buttonpressed, longdistance
-	motor[1] = 0; //opnieuw op nul zetten: wordt in de functies opnieuw aangepast.
-	motor[2] = 0;
+	//TODO get value buttonpressed, longdistance, instelsnelheid
 	if (knop >= 128) {
 		stop();
 	} //Als de noodstop knop ingedrukt is moeten we deze direct uitvoeren
 	else {
 		switch (knop) {
 			case 0: //niks, maar mag geen error returnen
+				if (langeafstand == 0) {
+					stop();
+				}
 			break;
 
 			case 1: //pijl naar boven
-			rechtdoor();
+				rechtdoor();
 			break;
 			
 			case 2: //pijl naar onder
-			achteruit();
+				achteruit();
 			break;
 
 			case 4: //pijl naar rechts
-			rechts();
+				rechts();
 			break;
 
 			case 5: //pijl naar boven & rechts
-			rechtdoor();
-			rechts();
+				rechtdoor();
+				rechts();
 			break;
 
 			case 6: //pijl naar onder & rechts
-			achteruit();
-			rechts();
+				achteruit();
+				rechts();
 			break;
 			
 			case 8://pijl naar links
-			links();
+				links();
 			break;
 
 			case 9: //pijl naar boven & links
-			rechtdoor();
-			links();
+				rechtdoor();
+				links();
 			break;
 			
 			case 10: //pijl naar onder & links
-			achteruit();
-			links();
+				achteruit();
+				links();
 			break;
 			
 			default:
@@ -68,17 +69,18 @@ int main(void)
 		}//TODO correcte waardes toekennen
 	}
 	if (motor[1] < 0) {motor[1] = 0;}
-	if (motor[1] > 255) {motor[1] = 255;}
+	if (motor[1] > 250) {motor[1] = 250;}
 	if (motor[2] < 0) {motor[2] = 0;}
-	if (motor[2] > 255) {motor[2] = 255;}
+	if (motor[2] > 250) {motor[2] = 250;}
 	switch(motor[0]) {
 		case 0:
 		case 12:
-		snelheid = (motor[1] + motor[2]) / 2;
+			snelheid = (motor[1] + motor[2]) / 2;
 		break;
+		
 		case 4:
 		case 8:
-		snelheid = 0;
+			snelheid = 0;
 		break;
 	}
 }
@@ -87,13 +89,14 @@ int main(void)
 //TODO pad planning implementeren
 
 void rechtdoor () {
-	if (langeafstand) {
+	if (langeafstand == 1) {
 		switch(motor[0]) {
 			case 0:
 				motor[0] = 0;
 				motor[1] = snelheid + 25;
 				motor[2] = snelheid + 25;
 			break;
+			
 			case 12:
 				motor[0] = 12;
 				motor[1] = snelheid - 25;
@@ -108,13 +111,14 @@ void rechtdoor () {
 	return;
 }
 void achteruit () {
-	if (langeafstand) {
+	if (langeafstand == 1) {
 		switch(motor[0]) {
 			case 0:
 				motor[0] = 0;
 				motor[1] = snelheid - 25;
 				motor[2] = snelheid - 25;
 			break;
+			
 			case 12:
 				motor[0] = 12;
 				motor[1] = snelheid + 25;
