@@ -6,22 +6,17 @@
  */ 
 
 #define F_CPU 16000000
-
-#include <avr/io.h>
-#include <util/delay.h>
-#include "i2c_mst.h"
-
-
 #define DEVICE_ADRES   8
 
 #include "i2c_mst.h"
 #include <avr/io.h>
+#include <util/delay.h>
 #include <stdlib.h>
 
 #define BAUDRATE		9600
 #define UBRR_BAUD	(((long)F_CPU/((long)16 * BAUDRATE))-1)
 
-
+char uart_getchar(void) ;
 void init_master() {
 	TWSR = 0;
 	// Set bit rate
@@ -97,6 +92,11 @@ void initUSART() {
 	writeString("usart werkt nog\n\r");
 }
 
+char uart_getchar(void) {
+	loop_until_bit_is_set(UCSR0A, RXC0); /* Wait until data exists. */
+	return UDR0;
+}
+
 void writeChar(char ch)
 {
 	while (!(UCSR0A & (1<<UDRE0)));
@@ -130,14 +130,9 @@ int main(void)
 	{
 		verzenden(DEVICE_ADRES,teller++);   //verzend een 1 naar de slave
 		for(uint8_t i=0;i<8;i++) _delay_ms(250);
-
+		writeChar(uart_getchar());
 		ontvangen(DEVICE_ADRES,data,1);     //ontvang 1 byte van slave
 		writeString("\n\rdata van de RP6 "); writeInteger(data[0],10);
 		for(uint8_t i=0;i<8;i++) _delay_ms(250);
-		
 	}
-
-}
-
-
 }
