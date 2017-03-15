@@ -3,7 +3,6 @@ int motor[] = {0, 0, 0}; //Richting, motor rechts en motor links
 //Bandenrichting: 0: vooruit. 4: rechts achteruit. 8: links achteruit. 12: achteruit
 int langeafstand = 1; //slaat op of we wel of niet voor lange afstanden bezig zijn
 int knop; //Een int met hierin de binaire representatie van welke knoppen zijn ingedrukt
-int lastbuttonpressed= 0; //TODO juiste datatype gebruiken
 int snelheid = 0; //snelheid die het laatste gebruikt is
 int instelsnelheid; //snelheid die de gebruiker in kan stellen
 
