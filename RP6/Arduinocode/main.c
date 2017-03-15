@@ -3,6 +3,11 @@
 #include <util/delay.h>
 #include <stdlib.h>
 
+#define F_CPU 16000000
+#define DEVICE_ADRES   8
+#define BAUDRATE		9600
+#define UBRR_BAUD	(((long)F_CPU/((long)16 * BAUDRATE))-1)
+
 int motor[] = {0, 0, 0}; //Richting, motor rechts en motor links
 //Bandenrichting: 0: vooruit. 4: rechts achteruit. 8: links achteruit. 12: achteruit
 int langeafstand = 1; //slaat op of we wel of niet voor lange afstanden bezig zijn
