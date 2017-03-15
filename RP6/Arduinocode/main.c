@@ -57,6 +57,7 @@ int main(void) {
 	verzenden(adress, (uint8_t) motor[0]);
 	verzenden(adress, (uint8_t) motor[1]);
 	verzenden(adress, (uint8_t) motor[2]);
+	_delay_ms(50);
 	}
 }
 
