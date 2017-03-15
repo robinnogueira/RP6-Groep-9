@@ -50,11 +50,10 @@ void ontvangen(uint8_t ad,uint8_t b[],uint8_t max) {
 	}while(op[tel++] == 0x50);
 
 	TWCR=(1<<TWINT)|(1<<TWSTO)|(1<<TWEN);
-
-	//   for(uint8_t i=0;i<tel;++i) {
-	//	 writeString("\n\r");writeInteger(op[i],16);
-	//	 writeString(" data ");writeInteger(b[i],10);
-	//   }
+//   for(uint8_t i=0;i<tel;++i) {
+//	 writeString("\n\r");writeInteger(op[i],16);
+//	 writeString(" data ");writeInteger(b[i],10);
+//   }
 
 }
 
