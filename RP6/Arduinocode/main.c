@@ -22,7 +22,7 @@ int main(void)
 	} //Als de noodstop knop ingedrukt is moeten we deze direct uitvoeren
 	else {
 		switch (knop) {
-			case 0: //niks, maar mag geen error returnen
+			case 0: //als we niks indrukken en we zijn niet met de instelsnelheid bezig, stop.
 				if (langeafstand == 0) {
 					stop();
 				}
