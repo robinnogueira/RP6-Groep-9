@@ -244,23 +244,23 @@ int charToInt(char in) {
 	switch(in) {
 		case 'w':
 			x = 1;
-			break;
+			break; //W will be used to go forward
 		
 		case 's':
 			x = 2;
-			break;
+			break; //S will be used to go backward
 			
 		case 'a':
 			x = 8;
-			break;
+			break; //A will be used to go left
 			
 		case 'd':
 			x = 4;
-			break;
+			break; //D will be used to go right
 			
 		case ' ':
 			x = 128;
-			break;
+			break; //Spacebar will be used as a brake
 			
 		default:
 			x = 0;
