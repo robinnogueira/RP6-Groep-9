@@ -236,7 +236,21 @@ void initUSART() {
 
 char uart_getchar(void) {
 	loop_until_bit_is_set(UCSR0A, RXC0); /* Wait until data exists. */
-	return UDR0;
+	char x = UDR0;
+	writeChar(x);
+	return x;
+}
+
+void writeChar(char ch)
+{
+	while (!(UCSR0A & (1<<UDRE0)));
+	UDR0 = (uint8_t)ch;
+}
+
+void writeString(char *string)
+{
+	while(*string)
+	writeChar(*string++);
 }
 
 int charToInt(char in) {
