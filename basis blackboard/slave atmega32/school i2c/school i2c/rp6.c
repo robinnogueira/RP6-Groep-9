@@ -40,36 +40,36 @@ void slaaftwi() {
 	static uint8_t data[40];
 	static uint8_t teller=0;
 	switch(TWSR) {
-		case 0x10:
-		case 0x08:
+		case 0x10:			//repeat start
+		case 0x08:			//start
 		break;
 		
-		case 0x60:
+		case 0x60:			//TW_SR_SLA_ACK
 
 		teller=0;
 
 		break;
-		case 0x68:
+		case 0x68:			//TW_SR_ARB_LOST_SLA_ACK
 
 		break;
-		case 0x80:
+		case 0x80:			//W_SR_DATA_ACK
 		data[teller++] = TWDR;
 
 		break;
-		case 0xA0:
+		case 0xA0:			//TW_SR_STOP
 		ontfunc(data,teller);
 		resetData();
 		break;
-		case 0xA8:
+		case 0xA8:			//TW_ST_SLA_ACK
 		teller=0;
 		TWDR=verfunc();
 		break;
-		case 0xB8:
+		case 0xB8:			//TW_ST_DATA_ACK
 		TWDR=verfunc();
 		break;
-		case 0xC0:   //NACK
+		case 0xC0:   //NACK		TW_ST_DATA_NACK
 		break;
-		case 0xC8:
+		case 0xC8:			//TW_ST_LAST_DATA
 		break;
 	}
 	TWCR |= (1<<TWINT);    // Clear TWINT Flag
