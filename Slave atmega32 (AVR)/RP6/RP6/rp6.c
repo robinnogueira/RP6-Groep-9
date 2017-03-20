@@ -25,6 +25,8 @@
 void motoren(uint8_t data, uint8_t teller);
 void (*ontfunc) (uint8_t[],uint8_t);
 uint8_t (*verfunc) ();
+uint8_t getBumperLeft();
+uint8_t getBumperRight();
 
 void init_i2c_slave(uint8_t ad) {
 	
@@ -207,3 +209,23 @@ void pwm_init()
 	DDRD|=MOTOR_R;
 	DDRD|=MOTOR_L;
 }
+
+uint8_t getBumperLeft(void)
+{
+	PORTB &= ~SL6;
+	DDRB &= ~SL6; //Sets the pin normally used for LED6 to input
+	uint8_t tmp = PINB & SL6;
+	DDRB |= SL6;
+	PORTB |= SL6; //Resets the pin for output
+	return tmp;
+} //This code returns 1(0x01) if the left bumper is pushed, otherwise 0(0x00)
+
+uint8_t getBumperRight(void)
+{
+	PORTC &= ~SL3;
+	DDRC &= ~SL3; //Sets the pin normally used for LED3 to input
+	uint8_t tmp = PINC & SL3;
+	DDRC |= SL3;
+	PORTC |= SL3; //Resets the pin for output
+	return tmp;
+} //This code returns 64(0x40) if the right bumper is pushed, otherwise 0(0x00)
