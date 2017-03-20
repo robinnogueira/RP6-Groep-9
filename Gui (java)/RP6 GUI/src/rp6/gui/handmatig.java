@@ -13,6 +13,8 @@ public class handmatig extends javax.swing.JFrame {
     public int ing_snelheid;            /* ingestelde snelheid met fader */  
     public String motor_rechts;         /* waarde voor de linker motor */
     public String motor_links;          /* waarde voor de rechter motor */
+    public int achteruit = 0;
+    public int vooruit = 0;
        
     public handmatig() {
         initComponents();
@@ -39,7 +41,7 @@ public class handmatig extends javax.swing.JFrame {
         jPanel2 = new javax.swing.JPanel();
         label4 = new java.awt.Label();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         jPanel1.setBackground(java.awt.SystemColor.textHighlight);
 
@@ -246,31 +248,49 @@ public class handmatig extends javax.swing.JFrame {
        
        /* Pijltje omhoog indrukken */
         if(evt.getKeyCode()==KeyEvent.VK_UP){
-            manual_output = 00000001;
-            /* Bij ingestelde snelheid: */
-            if(jRadioButton1.isSelected()){
-                System.out.println("Vooruit rijden ..... [");
-                ing_snelheid = jSlider1.getValue();
-                int links = jSlider1.getValue();
-                motor_links = Integer.toBinaryString(links);
-                System.out.println("      Motor links:  " + motor_links + " = " + links);
-                int rechts = jSlider1.getValue();
-                motor_rechts = Integer.toBinaryString(rechts);
-                System.out.println("      Motor rechts: " + motor_rechts + " = " + rechts);
-                System.out.println("]");
+            if(vooruit == 0){
+                manual_output = 00000001;
+                /* Bij ingestelde snelheid: */
+                if(jRadioButton1.isSelected()){
+                    System.out.println("Vooruit rijden ..... [");
+                    ing_snelheid = jSlider1.getValue();
+                    int links = jSlider1.getValue();
+                    motor_links = Integer.toBinaryString(links);
+                    System.out.println("      Motor links:  " + motor_links + " = " + links);
+                    int rechts = jSlider1.getValue();
+                    motor_rechts = Integer.toBinaryString(rechts);
+                    System.out.println("      Motor rechts: " + motor_rechts + " = " + rechts);
+                    System.out.println("]");
+                }
+                /* Bij korte afstands modus: */
+                else if(jRadioButton2.isSelected()){
+                    motor_links = "11111111";
+                    motor_rechts = "11111111";
+                    ing_snelheid = 255;
+                    System.out.println("Vooruit rijden .....");
+                }  
+                vooruit++;
+                achteruit = 0;
+            }else if(vooruit == 1){
+               manual_output = 00000000; 
+               vooruit = 0;
+               achteruit = 0;
+               System.out.println("Stoppen ......");
             }
-            /* Bij korte afstands modus: */
-            else if(jRadioButton2.isSelected()){
-                motor_links = "11111111";
-                motor_rechts = "11111111";
-                ing_snelheid = 255;
-                System.out.println("Vooruit rijden .....");
-            }    
         
         /* Pijltje omlaag indrukken */
         }else if(evt.getKeyCode()==KeyEvent.VK_DOWN){
-            System.out.println("Achteruit rijden .....");
-            manual_output = 00000010;
+            if(achteruit == 0){
+               manual_output = 00000000; 
+               achteruit++;
+               vooruit = 0;
+               System.out.println("Stoppen ......");
+            }else if(achteruit == 1){
+                manual_output = 00000010;
+                achteruit = 0;
+                vooruit = 0;
+                System.out.println("Achteruit rijden .....");
+            }
         
          /* Pijltje naar rechts indrukken */
         }else if(evt.getKeyCode()==KeyEvent.VK_RIGHT){            
@@ -344,9 +364,6 @@ public class handmatig extends javax.swing.JFrame {
         jTextField1.requestFocus(); 
     }//GEN-LAST:event_jButton1ActionPerformed
 
-    /**
-     * @param args the command line arguments
-     */
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
@@ -388,9 +405,6 @@ public class handmatig extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
-    private javax.swing.JPanel jPanel4;
-    private javax.swing.JPanel jPanel5;
-    private javax.swing.JPanel jPanel6;
     private javax.swing.JPanel jPanel7;
     private javax.swing.JRadioButton jRadioButton1;
     private javax.swing.JRadioButton jRadioButton2;
@@ -399,8 +413,5 @@ public class handmatig extends javax.swing.JFrame {
     private javax.swing.JTextField jTextField2;
     private java.awt.Label label3;
     private java.awt.Label label4;
-    private java.awt.Label label5;
-    private java.awt.Label label6;
-    private java.awt.Label label7;
     // End of variables declaration//GEN-END:variables
 }
