@@ -53,8 +53,6 @@ void slaaftwi() {
 		break;
 		case 0x80:
 		data[teller++] = TWDR;
-		motoren(data,teller);
-
 		break;
 		case 0xA0:
 		ontfunc(data,teller);
