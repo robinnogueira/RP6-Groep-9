@@ -352,9 +352,15 @@ public class GUI extends javax.swing.JFrame {
 
         jPanel14.setBackground(java.awt.SystemColor.controlHighlight);
 
-        jButton2.setFont(new java.awt.Font("Verdana", 0, 11)); // NOI18N
+        jButton2.setFont(new java.awt.Font("Verdana", 1, 11)); // NOI18N
         jButton2.setText("Route Programmeren");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
 
+        jButton5.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         jButton5.setText("Handmatige besturing");
         jButton5.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -437,6 +443,13 @@ public class GUI extends javax.swing.JFrame {
         JFrame frame = new handmatig(); 
         frame.setVisible(true); 
     }//GEN-LAST:event_jButton5ActionPerformed
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+       
+        /* open route programmeren */
+        JFrame frame = new route(); 
+        frame.setVisible(true); 
+    }//GEN-LAST:event_jButton2ActionPerformed
 
     public static void main(String args[]) {
               

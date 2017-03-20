@@ -41,7 +41,7 @@ public class handmatig extends javax.swing.JFrame {
         jPanel2 = new javax.swing.JPanel();
         label4 = new java.awt.Label();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         jPanel1.setBackground(java.awt.SystemColor.textHighlight);
 
@@ -405,9 +405,6 @@ public class handmatig extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
-    private javax.swing.JPanel jPanel4;
-    private javax.swing.JPanel jPanel5;
-    private javax.swing.JPanel jPanel6;
     private javax.swing.JPanel jPanel7;
     private javax.swing.JRadioButton jRadioButton1;
     private javax.swing.JRadioButton jRadioButton2;
@@ -416,8 +413,5 @@ public class handmatig extends javax.swing.JFrame {
     private javax.swing.JTextField jTextField2;
     private java.awt.Label label3;
     private java.awt.Label label4;
-    private java.awt.Label label5;
-    private java.awt.Label label6;
-    private java.awt.Label label7;
     // End of variables declaration//GEN-END:variables
 }
