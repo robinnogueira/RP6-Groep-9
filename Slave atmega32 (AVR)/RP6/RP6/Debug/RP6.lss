@@ -3,31 +3,31 @@ RP6.elf:     file format elf32-avr
 
 Sections:
 Idx Name          Size      VMA       LMA       File off  Algn
-  0 .text         00000252  00000000  00000000  00000094  2**1
+  0 .text         000001e0  00000000  00000000  00000094  2**1
                   CONTENTS, ALLOC, LOAD, READONLY, CODE
-  1 .data         00000018  00800060  00000252  000002e6  2**0
+  1 .data         00000012  00800060  000001e0  00000274  2**0
                   CONTENTS, ALLOC, LOAD, DATA
-  2 .bss          00000042  00800078  00800078  000002fe  2**0
+  2 .bss          0000000a  00800072  00800072  00000286  2**0
                   ALLOC
-  3 .comment      00000030  00000000  00000000  000002fe  2**0
+  3 .comment      00000030  00000000  00000000  00000286  2**0
                   CONTENTS, READONLY
-  4 .note.gnu.avr.deviceinfo 0000003c  00000000  00000000  00000330  2**2
+  4 .note.gnu.avr.deviceinfo 0000003c  00000000  00000000  000002b8  2**2
                   CONTENTS, READONLY
-  5 .debug_aranges 00000088  00000000  00000000  0000036c  2**0
+  5 .debug_aranges 00000068  00000000  00000000  000002f4  2**0
                   CONTENTS, READONLY, DEBUGGING
-  6 .debug_info   00000a8c  00000000  00000000  000003f4  2**0
+  6 .debug_info   000008be  00000000  00000000  0000035c  2**0
                   CONTENTS, READONLY, DEBUGGING
-  7 .debug_abbrev 0000072a  00000000  00000000  00000e80  2**0
+  7 .debug_abbrev 00000699  00000000  00000000  00000c1a  2**0
                   CONTENTS, READONLY, DEBUGGING
-  8 .debug_line   0000043d  00000000  00000000  000015aa  2**0
+  8 .debug_line   00000381  00000000  00000000  000012b3  2**0
                   CONTENTS, READONLY, DEBUGGING
-  9 .debug_frame  00000158  00000000  00000000  000019e8  2**2
+  9 .debug_frame  00000118  00000000  00000000  00001634  2**2
                   CONTENTS, READONLY, DEBUGGING
- 10 .debug_str    000003f9  00000000  00000000  00001b40  2**0
+ 10 .debug_str    000003ab  00000000  00000000  0000174c  2**0
                   CONTENTS, READONLY, DEBUGGING
- 11 .debug_loc    00000327  00000000  00000000  00001f39  2**0
+ 11 .debug_loc    00000280  00000000  00000000  00001af7  2**0
                   CONTENTS, READONLY, DEBUGGING
- 12 .debug_ranges 00000078  00000000  00000000  00002260  2**0
+ 12 .debug_ranges 00000058  00000000  00000000  00001d77  2**0
                   CONTENTS, READONLY, DEBUGGING
 
 Disassembly of section .text:
@@ -52,7 +52,7 @@ Disassembly of section .text:
   40:	0c 94 47 00 	jmp	0x8e	; 0x8e <__bad_interrupt>
   44:	0c 94 47 00 	jmp	0x8e	; 0x8e <__bad_interrupt>
   48:	0c 94 47 00 	jmp	0x8e	; 0x8e <__bad_interrupt>
-  4c:	0c 94 03 01 	jmp	0x206	; 0x206 <__vector_19>
+  4c:	0c 94 ca 00 	jmp	0x194	; 0x194 <__vector_19>
   50:	0c 94 47 00 	jmp	0x8e	; 0x8e <__bad_interrupt>
 
 00000054 <__ctors_end>:
@@ -67,18 +67,18 @@ Disassembly of section .text:
   60:	10 e0       	ldi	r17, 0x00	; 0
   62:	a0 e6       	ldi	r26, 0x60	; 96
   64:	b0 e0       	ldi	r27, 0x00	; 0
-  66:	e2 e5       	ldi	r30, 0x52	; 82
-  68:	f2 e0       	ldi	r31, 0x02	; 2
+  66:	e0 ee       	ldi	r30, 0xE0	; 224
+  68:	f1 e0       	ldi	r31, 0x01	; 1
   6a:	02 c0       	rjmp	.+4      	; 0x70 <__do_copy_data+0x10>
   6c:	05 90       	lpm	r0, Z+
   6e:	0d 92       	st	X+, r0
-  70:	a8 37       	cpi	r26, 0x78	; 120
+  70:	a2 37       	cpi	r26, 0x72	; 114
   72:	b1 07       	cpc	r27, r17
   74:	d9 f7       	brne	.-10     	; 0x6c <__do_copy_data+0xc>
 
 00000076 <__do_clear_bss>:
   76:	20 e0       	ldi	r18, 0x00	; 0
-  78:	a8 e7       	ldi	r26, 0x78	; 120
+  78:	a2 e7       	ldi	r26, 0x72	; 114
   7a:	b0 e0       	ldi	r27, 0x00	; 0
   7c:	01 c0       	rjmp	.+2      	; 0x80 <.do_clear_bss_start>
 
@@ -86,334 +86,261 @@ Disassembly of section .text:
   7e:	1d 92       	st	X+, r1
 
 00000080 <.do_clear_bss_start>:
-  80:	aa 3b       	cpi	r26, 0xBA	; 186
+  80:	ac 37       	cpi	r26, 0x7C	; 124
   82:	b2 07       	cpc	r27, r18
   84:	e1 f7       	brne	.-8      	; 0x7e <.do_clear_bss_loop>
-  86:	0e 94 8d 00 	call	0x11a	; 0x11a <main>
-  8a:	0c 94 27 01 	jmp	0x24e	; 0x24e <_exit>
+  86:	0e 94 71 00 	call	0xe2	; 0xe2 <main>
+  8a:	0c 94 ee 00 	jmp	0x1dc	; 0x1dc <_exit>
 
 0000008e <__bad_interrupt>:
   8e:	0c 94 00 00 	jmp	0	; 0x0 <__vectors>
 
-00000092 <verzendByte>:
+00000092 <init_i2c_slave>:
 void writeInteger(int16_t number, uint8_t base)
 {
 	char buffer[17];
 	itoa(number, &buffer[0], base);
 	writeString(&buffer[0]);
 }
-  92:	80 91 60 00 	lds	r24, 0x0060	; 0x800060 <__data_start>
-  96:	91 e0       	ldi	r25, 0x01	; 1
-  98:	98 0f       	add	r25, r24
-  9a:	90 93 60 00 	sts	0x0060, r25	; 0x800060 <__data_start>
-  9e:	08 95       	ret
+  92:	11 b8       	out	0x01, r1	; 1
+  94:	90 e2       	ldi	r25, 0x20	; 32
+  96:	90 b9       	out	0x00, r25	; 0
+  98:	95 e4       	ldi	r25, 0x45	; 69
+  9a:	96 bf       	out	0x36, r25	; 54
+  9c:	88 0f       	add	r24, r24
+  9e:	82 b9       	out	0x02, r24	; 2
+  a0:	08 95       	ret
 
-000000a0 <init_i2c_slave>:
-  a0:	11 b8       	out	0x01, r1	; 1
-  a2:	90 e2       	ldi	r25, 0x20	; 32
-  a4:	90 b9       	out	0x00, r25	; 0
-  a6:	95 e4       	ldi	r25, 0x45	; 69
-  a8:	96 bf       	out	0x36, r25	; 54
-  aa:	88 0f       	add	r24, r24
-  ac:	82 b9       	out	0x02, r24	; 2
-  ae:	08 95       	ret
+000000a2 <writeChar>:
+  a2:	5d 9b       	sbis	0x0b, 5	; 11
+  a4:	fe cf       	rjmp	.-4      	; 0xa2 <writeChar>
+  a6:	8c b9       	out	0x0c, r24	; 12
+  a8:	08 95       	ret
 
-000000b0 <writeChar>:
-  b0:	5d 9b       	sbis	0x0b, 5	; 11
-  b2:	fe cf       	rjmp	.-4      	; 0xb0 <writeChar>
-  b4:	8c b9       	out	0x0c, r24	; 12
-  b6:	08 95       	ret
+000000aa <writeString>:
+  aa:	cf 93       	push	r28
+  ac:	df 93       	push	r29
+  ae:	ec 01       	movw	r28, r24
+  b0:	88 81       	ld	r24, Y
+  b2:	88 23       	and	r24, r24
+  b4:	31 f0       	breq	.+12     	; 0xc2 <writeString+0x18>
+  b6:	21 96       	adiw	r28, 0x01	; 1
+  b8:	0e 94 51 00 	call	0xa2	; 0xa2 <writeChar>
+  bc:	89 91       	ld	r24, Y+
+  be:	81 11       	cpse	r24, r1
+  c0:	fb cf       	rjmp	.-10     	; 0xb8 <writeString+0xe>
+  c2:	df 91       	pop	r29
+  c4:	cf 91       	pop	r28
+  c6:	08 95       	ret
 
-000000b8 <writeString>:
-  b8:	cf 93       	push	r28
-  ba:	df 93       	push	r29
-  bc:	ec 01       	movw	r28, r24
-  be:	88 81       	ld	r24, Y
-  c0:	88 23       	and	r24, r24
-  c2:	31 f0       	breq	.+12     	; 0xd0 <writeString+0x18>
-  c4:	21 96       	adiw	r28, 0x01	; 1
-  c6:	0e 94 58 00 	call	0xb0	; 0xb0 <writeChar>
-  ca:	89 91       	ld	r24, Y+
-  cc:	81 11       	cpse	r24, r1
-  ce:	fb cf       	rjmp	.-10     	; 0xc6 <writeString+0xe>
-  d0:	df 91       	pop	r29
-  d2:	cf 91       	pop	r28
-  d4:	08 95       	ret
+000000c8 <initUSART>:
+  c8:	10 bc       	out	0x20, r1	; 32
+  ca:	8c e0       	ldi	r24, 0x0C	; 12
+  cc:	89 b9       	out	0x09, r24	; 9
+  ce:	1b b8       	out	0x0b, r1	; 11
+  d0:	86 e8       	ldi	r24, 0x86	; 134
+  d2:	80 bd       	out	0x20, r24	; 32
+  d4:	88 e1       	ldi	r24, 0x18	; 24
+  d6:	8a b9       	out	0x0a, r24	; 10
+  d8:	80 e6       	ldi	r24, 0x60	; 96
+  da:	90 e0       	ldi	r25, 0x00	; 0
+  dc:	0e 94 55 00 	call	0xaa	; 0xaa <writeString>
+  e0:	08 95       	ret
 
-000000d6 <initUSART>:
-  d6:	10 bc       	out	0x20, r1	; 32
-  d8:	8c e0       	ldi	r24, 0x0C	; 12
-  da:	89 b9       	out	0x09, r24	; 9
-  dc:	1b b8       	out	0x0b, r1	; 11
-  de:	86 e8       	ldi	r24, 0x86	; 134
-  e0:	80 bd       	out	0x20, r24	; 32
-  e2:	88 e1       	ldi	r24, 0x18	; 24
-  e4:	8a b9       	out	0x0a, r24	; 10
-  e6:	81 e6       	ldi	r24, 0x61	; 97
-  e8:	90 e0       	ldi	r25, 0x00	; 0
-  ea:	0e 94 5c 00 	call	0xb8	; 0xb8 <writeString>
-  ee:	08 95       	ret
-
-000000f0 <ontvangData>:
-  f0:	66 23       	and	r22, r22
-  f2:	59 f0       	breq	.+22     	; 0x10a <ontvangData+0x1a>
-  f4:	fc 01       	movw	r30, r24
-  f6:	a6 ea       	ldi	r26, 0xA6	; 166
-  f8:	b0 e0       	ldi	r27, 0x00	; 0
-  fa:	9c 01       	movw	r18, r24
-  fc:	26 0f       	add	r18, r22
-  fe:	31 1d       	adc	r19, r1
- 100:	91 91       	ld	r25, Z+
- 102:	9d 93       	st	X+, r25
- 104:	e2 17       	cp	r30, r18
- 106:	f3 07       	cpc	r31, r19
- 108:	d9 f7       	brne	.-10     	; 0x100 <ontvangData+0x10>
- 10a:	8f ef       	ldi	r24, 0xFF	; 255
- 10c:	80 93 a1 00 	sts	0x00A1, r24	; 0x8000a1 <data_flag>
- 110:	83 e7       	ldi	r24, 0x73	; 115
- 112:	90 e0       	ldi	r25, 0x00	; 0
- 114:	0e 94 5c 00 	call	0xb8	; 0xb8 <writeString>
- 118:	08 95       	ret
-
-0000011a <main>:
-uint8_t verzendByte();
+000000e2 <main>:
+volatile uint8_t data_flag = FALSE;
 
 int main(void)
 {
 
 	DDRC=0xFF;
- 11a:	8f ef       	ldi	r24, 0xFF	; 255
- 11c:	84 bb       	out	0x14, r24	; 20
+  e2:	8f ef       	ldi	r24, 0xFF	; 255
+  e4:	84 bb       	out	0x14, r24	; 20
 	initUSART();
- 11e:	0e 94 6b 00 	call	0xd6	; 0xd6 <initUSART>
+  e6:	0e 94 64 00 	call	0xc8	; 0xc8 <initUSART>
 	init_i2c_slave(8);
- 122:	88 e0       	ldi	r24, 0x08	; 8
- 124:	0e 94 50 00 	call	0xa0	; 0xa0 <init_i2c_slave>
-	writeString("usart werkt nog\n\r");
-}
-
-
-void init_i2c_ontvang( void (*ontvanger) (uint8_t [],uint8_t)) {
-	ontfunc=ontvanger;
- 128:	88 e7       	ldi	r24, 0x78	; 120
- 12a:	90 e0       	ldi	r25, 0x00	; 0
- 12c:	90 93 a5 00 	sts	0x00A5, r25	; 0x8000a5 <ontfunc+0x1>
- 130:	80 93 a4 00 	sts	0x00A4, r24	; 0x8000a4 <ontfunc>
-}
-
-void init_i2c_verzend( uint8_t (*verzender) ()) {
-	verfunc=verzender;
- 134:	89 e4       	ldi	r24, 0x49	; 73
- 136:	90 e0       	ldi	r25, 0x00	; 0
- 138:	90 93 a3 00 	sts	0x00A3, r25	; 0x8000a3 <verfunc+0x1>
- 13c:	80 93 a2 00 	sts	0x00A2, r24	; 0x8000a2 <verfunc>
-	
-	/*verzendByte is de functie die aangeroepen wordt
-	wanneer de slave een byte naar de master verzend*/
-	init_i2c_verzend(verzendByte);
-	
+  ea:	88 e0       	ldi	r24, 0x08	; 8
+  ec:	0e 94 49 00 	call	0x92	; 0x92 <init_i2c_slave>
 	sei(); //De slave van i2c werkt met interrupt
- 140:	78 94       	sei
-	
-    /* Replace with your application code */
+  f0:	78 94       	sei
     while (1) 
     {    
 
     }
- 142:	ff cf       	rjmp	.-2      	; 0x142 <main+0x28>
+  f2:	ff cf       	rjmp	.-2      	; 0xf2 <main+0x10>
 
-00000144 <motoren>:
-		return databyte++;
+000000f4 <rijden>:
+	
 }
 
-void motoren(uint8_t data, uint8_t teller)
+void rijden()
 {
-	switch (teller)
- 144:	61 30       	cpi	r22, 0x01	; 1
- 146:	49 f0       	breq	.+18     	; 0x15a <motoren+0x16>
- 148:	18 f0       	brcs	.+6      	; 0x150 <motoren+0xc>
- 14a:	62 30       	cpi	r22, 0x02	; 2
- 14c:	51 f0       	breq	.+20     	; 0x162 <motoren+0x1e>
- 14e:	08 95       	ret
-	{
-		case 0:
-		PORTC|=(12&data);									//motor richting instellen
- 150:	95 b3       	in	r25, 0x15	; 21
- 152:	8c 70       	andi	r24, 0x0C	; 12
- 154:	89 2b       	or	r24, r25
- 156:	85 bb       	out	0x15, r24	; 21
-		
-		break;
- 158:	08 95       	ret
-		case 1:
-		OCR1A = data;										//motor snelheid links
- 15a:	90 e0       	ldi	r25, 0x00	; 0
- 15c:	9b bd       	out	0x2b, r25	; 43
- 15e:	8a bd       	out	0x2a, r24	; 42
-		
-		break;
- 160:	08 95       	ret
-		case 2:
-		OCR1B = data;
- 162:	90 e0       	ldi	r25, 0x00	; 0
- 164:	99 bd       	out	0x29, r25	; 41
- 166:	88 bd       	out	0x28, r24	; 40
- 168:	08 95       	ret
+	PORTC|=(12&motoren[0]);
+  f4:	e9 e7       	ldi	r30, 0x79	; 121
+  f6:	f0 e0       	ldi	r31, 0x00	; 0
+  f8:	80 81       	ld	r24, Z
+  fa:	95 b3       	in	r25, 0x15	; 21
+  fc:	8c 70       	andi	r24, 0x0C	; 12
+  fe:	89 2b       	or	r24, r25
+ 100:	85 bb       	out	0x15, r24	; 21
+	OCR1A = motoren[1];
+ 102:	81 81       	ldd	r24, Z+1	; 0x01
+ 104:	90 e0       	ldi	r25, 0x00	; 0
+ 106:	9b bd       	out	0x2b, r25	; 43
+ 108:	8a bd       	out	0x2a, r24	; 42
+	OCR1B = motoren[2];
+ 10a:	82 81       	ldd	r24, Z+2	; 0x02
+ 10c:	90 e0       	ldi	r25, 0x00	; 0
+ 10e:	99 bd       	out	0x29, r25	; 41
+ 110:	88 bd       	out	0x28, r24	; 40
+ 112:	08 95       	ret
 
-0000016a <slaaftwi>:
+00000114 <slaaftwi>:
+	TWAR = ad<<1;
 }
 
 void slaaftwi() {
-	static uint8_t data[40];
 	static uint8_t teller=0;
 	switch(TWSR) {
- 16a:	81 b1       	in	r24, 0x01	; 1
- 16c:	80 3a       	cpi	r24, 0xA0	; 160
- 16e:	11 f1       	breq	.+68     	; 0x1b4 <slaaftwi+0x4a>
- 170:	28 f4       	brcc	.+10     	; 0x17c <slaaftwi+0x12>
- 172:	80 36       	cpi	r24, 0x60	; 96
- 174:	41 f0       	breq	.+16     	; 0x186 <slaaftwi+0x1c>
- 176:	80 38       	cpi	r24, 0x80	; 128
- 178:	69 f0       	breq	.+26     	; 0x194 <slaaftwi+0x2a>
- 17a:	41 c0       	rjmp	.+130    	; 0x1fe <slaaftwi+0x94>
- 17c:	88 3a       	cpi	r24, 0xA8	; 168
- 17e:	61 f1       	breq	.+88     	; 0x1d8 <slaaftwi+0x6e>
- 180:	88 3b       	cpi	r24, 0xB8	; 184
- 182:	b9 f1       	breq	.+110    	; 0x1f2 <slaaftwi+0x88>
- 184:	3c c0       	rjmp	.+120    	; 0x1fe <slaaftwi+0x94>
-		case 0x10:
-		case 0x08:
-		break;
-		
-		case 0x60:
-		if (teller>1)
- 186:	80 91 a0 00 	lds	r24, 0x00A0	; 0x8000a0 <teller.1668>
- 18a:	82 30       	cpi	r24, 0x02	; 2
- 18c:	c0 f1       	brcs	.+112    	; 0x1fe <slaaftwi+0x94>
-		teller=0;
- 18e:	10 92 a0 00 	sts	0x00A0, r1	; 0x8000a0 <teller.1668>
- 192:	35 c0       	rjmp	.+106    	; 0x1fe <slaaftwi+0x94>
-		break;
-		case 0x68:
+ 114:	81 b1       	in	r24, 0x01	; 1
+ 116:	80 38       	cpi	r24, 0x80	; 128
+ 118:	c1 f0       	breq	.+48     	; 0x14a <slaaftwi+0x36>
+ 11a:	38 f4       	brcc	.+14     	; 0x12a <slaaftwi+0x16>
+ 11c:	80 31       	cpi	r24, 0x10	; 16
+ 11e:	61 f0       	breq	.+24     	; 0x138 <slaaftwi+0x24>
+ 120:	80 36       	cpi	r24, 0x60	; 96
+ 122:	81 f0       	breq	.+32     	; 0x144 <slaaftwi+0x30>
+ 124:	88 30       	cpi	r24, 0x08	; 8
+ 126:	91 f5       	brne	.+100    	; 0x18c <slaaftwi+0x78>
+ 128:	07 c0       	rjmp	.+14     	; 0x138 <slaaftwi+0x24>
+ 12a:	88 3a       	cpi	r24, 0xA8	; 168
+ 12c:	e9 f0       	breq	.+58     	; 0x168 <slaaftwi+0x54>
+ 12e:	88 3b       	cpi	r24, 0xB8	; 184
+ 130:	11 f1       	breq	.+68     	; 0x176 <slaaftwi+0x62>
+ 132:	80 3a       	cpi	r24, 0xA0	; 160
+ 134:	59 f5       	brne	.+86     	; 0x18c <slaaftwi+0x78>
+ 136:	15 c0       	rjmp	.+42     	; 0x162 <slaaftwi+0x4e>
+	case 0x10:			//repeat start
+	case 0x08:			//start
+	for (int i=0;i<3;i++)
+		motoren[i]=0;
+ 138:	e9 e7       	ldi	r30, 0x79	; 121
+ 13a:	f0 e0       	ldi	r31, 0x00	; 0
+ 13c:	10 82       	st	Z, r1
+ 13e:	11 82       	std	Z+1, r1	; 0x01
+ 140:	12 82       	std	Z+2, r1	; 0x02
+ 142:	24 c0       	rjmp	.+72     	; 0x18c <slaaftwi+0x78>
+	break;
+	
+	case 0x60:			//TW_SR_SLA_ACK
 
-		break;
-		case 0x80:
-		data[teller++] = TWDR;
- 194:	e0 91 a0 00 	lds	r30, 0x00A0	; 0x8000a0 <teller.1668>
- 198:	61 e0       	ldi	r22, 0x01	; 1
- 19a:	6e 0f       	add	r22, r30
- 19c:	60 93 a0 00 	sts	0x00A0, r22	; 0x8000a0 <teller.1668>
- 1a0:	83 b1       	in	r24, 0x03	; 3
- 1a2:	f0 e0       	ldi	r31, 0x00	; 0
- 1a4:	e8 58       	subi	r30, 0x88	; 136
- 1a6:	ff 4f       	sbci	r31, 0xFF	; 255
- 1a8:	80 83       	st	Z, r24
-		motoren(data,teller);
- 1aa:	88 e7       	ldi	r24, 0x78	; 120
- 1ac:	90 e0       	ldi	r25, 0x00	; 0
- 1ae:	0e 94 a2 00 	call	0x144	; 0x144 <motoren>
+	teller=0;
+ 144:	10 92 72 00 	sts	0x0072, r1	; 0x800072 <__data_end>
 
-		break;
- 1b2:	25 c0       	rjmp	.+74     	; 0x1fe <slaaftwi+0x94>
-		case 0xA0:
-		ontfunc(data,teller);
- 1b4:	e0 91 a4 00 	lds	r30, 0x00A4	; 0x8000a4 <ontfunc>
- 1b8:	f0 91 a5 00 	lds	r31, 0x00A5	; 0x8000a5 <ontfunc+0x1>
- 1bc:	60 91 a0 00 	lds	r22, 0x00A0	; 0x8000a0 <teller.1668>
- 1c0:	88 e7       	ldi	r24, 0x78	; 120
- 1c2:	90 e0       	ldi	r25, 0x00	; 0
- 1c4:	09 95       	icall
- 1c6:	e8 e7       	ldi	r30, 0x78	; 120
- 1c8:	f0 e0       	ldi	r31, 0x00	; 0
- 1ca:	8c e8       	ldi	r24, 0x8C	; 140
- 1cc:	90 e0       	ldi	r25, 0x00	; 0
-		resetData();
- 1ce:	11 92       	st	Z+, r1
- 1d0:	e8 17       	cp	r30, r24
- 1d2:	f9 07       	cpc	r31, r25
- 1d4:	e1 f7       	brne	.-8      	; 0x1ce <slaaftwi+0x64>
- 1d6:	13 c0       	rjmp	.+38     	; 0x1fe <slaaftwi+0x94>
-		break;
-		case 0xA8:
-		if (teller>1)
- 1d8:	80 91 a0 00 	lds	r24, 0x00A0	; 0x8000a0 <teller.1668>
- 1dc:	82 30       	cpi	r24, 0x02	; 2
- 1de:	10 f0       	brcs	.+4      	; 0x1e4 <slaaftwi+0x7a>
-		teller=0;
- 1e0:	10 92 a0 00 	sts	0x00A0, r1	; 0x8000a0 <teller.1668>
-		TWDR=verfunc();
- 1e4:	e0 91 a2 00 	lds	r30, 0x00A2	; 0x8000a2 <verfunc>
- 1e8:	f0 91 a3 00 	lds	r31, 0x00A3	; 0x8000a3 <verfunc+0x1>
- 1ec:	09 95       	icall
- 1ee:	83 b9       	out	0x03, r24	; 3
-		break;
- 1f0:	06 c0       	rjmp	.+12     	; 0x1fe <slaaftwi+0x94>
-		case 0xB8:
-		TWDR=verfunc();
- 1f2:	e0 91 a2 00 	lds	r30, 0x00A2	; 0x8000a2 <verfunc>
- 1f6:	f0 91 a3 00 	lds	r31, 0x00A3	; 0x8000a3 <verfunc+0x1>
- 1fa:	09 95       	icall
- 1fc:	83 b9       	out	0x03, r24	; 3
-		case 0xC0:   //NACK
-		break;
-		case 0xC8:
-		break;
+	break;
+ 148:	21 c0       	rjmp	.+66     	; 0x18c <slaaftwi+0x78>
+	case 0x68:			//TW_SR_ARB_LOST_SLA_ACK
+
+	break;
+	case 0x80:			//W_SR_DATA_ACK
+	motoren[teller++] = TWDR;
+ 14a:	e0 91 72 00 	lds	r30, 0x0072	; 0x800072 <__data_end>
+ 14e:	81 e0       	ldi	r24, 0x01	; 1
+ 150:	8e 0f       	add	r24, r30
+ 152:	80 93 72 00 	sts	0x0072, r24	; 0x800072 <__data_end>
+ 156:	f0 e0       	ldi	r31, 0x00	; 0
+ 158:	83 b1       	in	r24, 0x03	; 3
+ 15a:	e7 58       	subi	r30, 0x87	; 135
+ 15c:	ff 4f       	sbci	r31, 0xFF	; 255
+ 15e:	80 83       	st	Z, r24
+
+	break;
+ 160:	15 c0       	rjmp	.+42     	; 0x18c <slaaftwi+0x78>
+	case 0xA0:			//TW_SR_STOP
+	rijden();
+ 162:	0e 94 7a 00 	call	0xf4	; 0xf4 <rijden>
+	break;
+ 166:	12 c0       	rjmp	.+36     	; 0x18c <slaaftwi+0x78>
+	case 0xA8:			//TW_ST_SLA_ACK
+	teller=0;
+	TWDR=sensoren[teller++];
+ 168:	81 e0       	ldi	r24, 0x01	; 1
+ 16a:	80 93 72 00 	sts	0x0072, r24	; 0x800072 <__data_end>
+ 16e:	80 91 73 00 	lds	r24, 0x0073	; 0x800073 <sensoren>
+ 172:	83 b9       	out	0x03, r24	; 3
+	break;
+ 174:	0b c0       	rjmp	.+22     	; 0x18c <slaaftwi+0x78>
+	case 0xB8:			//TW_ST_DATA_ACK
+	TWDR=sensoren[teller++];
+ 176:	e0 91 72 00 	lds	r30, 0x0072	; 0x800072 <__data_end>
+ 17a:	81 e0       	ldi	r24, 0x01	; 1
+ 17c:	8e 0f       	add	r24, r30
+ 17e:	80 93 72 00 	sts	0x0072, r24	; 0x800072 <__data_end>
+ 182:	f0 e0       	ldi	r31, 0x00	; 0
+ 184:	ed 58       	subi	r30, 0x8D	; 141
+ 186:	ff 4f       	sbci	r31, 0xFF	; 255
+ 188:	80 81       	ld	r24, Z
+ 18a:	83 b9       	out	0x03, r24	; 3
+	case 0xC0:   //NACK		TW_ST_DATA_NACK
+	break;
+	case 0xC8:			//TW_ST_LAST_DATA
+	break;
 	}
 	TWCR |= (1<<TWINT);    // Clear TWINT Flag
- 1fe:	86 b7       	in	r24, 0x36	; 54
- 200:	80 68       	ori	r24, 0x80	; 128
- 202:	86 bf       	out	0x36, r24	; 54
- 204:	08 95       	ret
+ 18c:	86 b7       	in	r24, 0x36	; 54
+ 18e:	80 68       	ori	r24, 0x80	; 128
+ 190:	86 bf       	out	0x36, r24	; 54
+ 192:	08 95       	ret
 
-00000206 <__vector_19>:
+00000194 <__vector_19>:
 
 /*de interrupt routine van de i2c
 de functie slaaftwi() staat in de library
 */
 
 ISR(TWI_vect) {
- 206:	1f 92       	push	r1
- 208:	0f 92       	push	r0
- 20a:	0f b6       	in	r0, 0x3f	; 63
- 20c:	0f 92       	push	r0
- 20e:	11 24       	eor	r1, r1
- 210:	2f 93       	push	r18
- 212:	3f 93       	push	r19
- 214:	4f 93       	push	r20
- 216:	5f 93       	push	r21
- 218:	6f 93       	push	r22
- 21a:	7f 93       	push	r23
- 21c:	8f 93       	push	r24
- 21e:	9f 93       	push	r25
- 220:	af 93       	push	r26
- 222:	bf 93       	push	r27
- 224:	ef 93       	push	r30
- 226:	ff 93       	push	r31
+ 194:	1f 92       	push	r1
+ 196:	0f 92       	push	r0
+ 198:	0f b6       	in	r0, 0x3f	; 63
+ 19a:	0f 92       	push	r0
+ 19c:	11 24       	eor	r1, r1
+ 19e:	2f 93       	push	r18
+ 1a0:	3f 93       	push	r19
+ 1a2:	4f 93       	push	r20
+ 1a4:	5f 93       	push	r21
+ 1a6:	6f 93       	push	r22
+ 1a8:	7f 93       	push	r23
+ 1aa:	8f 93       	push	r24
+ 1ac:	9f 93       	push	r25
+ 1ae:	af 93       	push	r26
+ 1b0:	bf 93       	push	r27
+ 1b2:	ef 93       	push	r30
+ 1b4:	ff 93       	push	r31
 
 	slaaftwi();
- 228:	0e 94 b5 00 	call	0x16a	; 0x16a <slaaftwi>
+ 1b6:	0e 94 8a 00 	call	0x114	; 0x114 <slaaftwi>
 
 }
- 22c:	ff 91       	pop	r31
- 22e:	ef 91       	pop	r30
- 230:	bf 91       	pop	r27
- 232:	af 91       	pop	r26
- 234:	9f 91       	pop	r25
- 236:	8f 91       	pop	r24
- 238:	7f 91       	pop	r23
- 23a:	6f 91       	pop	r22
- 23c:	5f 91       	pop	r21
- 23e:	4f 91       	pop	r20
- 240:	3f 91       	pop	r19
- 242:	2f 91       	pop	r18
- 244:	0f 90       	pop	r0
- 246:	0f be       	out	0x3f, r0	; 63
- 248:	0f 90       	pop	r0
- 24a:	1f 90       	pop	r1
- 24c:	18 95       	reti
+ 1ba:	ff 91       	pop	r31
+ 1bc:	ef 91       	pop	r30
+ 1be:	bf 91       	pop	r27
+ 1c0:	af 91       	pop	r26
+ 1c2:	9f 91       	pop	r25
+ 1c4:	8f 91       	pop	r24
+ 1c6:	7f 91       	pop	r23
+ 1c8:	6f 91       	pop	r22
+ 1ca:	5f 91       	pop	r21
+ 1cc:	4f 91       	pop	r20
+ 1ce:	3f 91       	pop	r19
+ 1d0:	2f 91       	pop	r18
+ 1d2:	0f 90       	pop	r0
+ 1d4:	0f be       	out	0x3f, r0	; 63
+ 1d6:	0f 90       	pop	r0
+ 1d8:	1f 90       	pop	r1
+ 1da:	18 95       	reti
 
-0000024e <_exit>:
- 24e:	f8 94       	cli
+000001dc <_exit>:
+ 1dc:	f8 94       	cli
 
-00000250 <__stop_program>:
- 250:	ff cf       	rjmp	.-2      	; 0x250 <__stop_program>
+000001de <__stop_program>:
+ 1de:	ff cf       	rjmp	.-2      	; 0x1de <__stop_program>

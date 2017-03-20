@@ -7,7 +7,7 @@
 #include <util/twi.h>
 
 
-void verzenden(uint8_t ad,uint8_t b);
+void verzenden();
 void ontvangen(uint8_t ad,uint8_t[],uint8_t);
 void init_master();
 

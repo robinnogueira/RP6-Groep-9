@@ -1,4 +1,3 @@
-[0-
 /*
  * i2cw.c
  *
@@ -20,12 +19,10 @@
 
 #define BAUDRATE		38400
 #define UBRR_BAUD	(((long)F_CPU/((long)16 * BAUDRATE))-1)
-#define resetData()  for(uint8_t i=0;i<20;++i) data[i]=0
 
 
-void motoren(uint8_t data, uint8_t teller);
-void (*ontfunc) (uint8_t[],uint8_t);
-uint8_t (*verfunc) ();
+void rijden();
+volatile uint8_t motoren[3]={0,0,0},sensoren[6]={0,0,0,0,0,0};
 
 void init_i2c_slave(uint8_t ad) {
 	
@@ -36,40 +33,40 @@ void init_i2c_slave(uint8_t ad) {
 }
 
 void slaaftwi() {
-	static uint8_t data[40];
 	static uint8_t teller=0;
 	switch(TWSR) {
-		case 0x10:
-		case 0x08:
-		break;
-		
-		case 0x60:
-		if (teller>1)
-		teller=0;
+	case 0x10:			//repeat start
+	case 0x08:			//start
+	for (int i=0;i<3;i++)
+		motoren[i]=0;
+	break;
+	
+	case 0x60:			//TW_SR_SLA_ACK
 
-		break;
-		case 0x68:
+	teller=0;
 
-		break;
-		case 0x80:
-		data[teller++] = TWDR;
-		break;
-		case 0xA0:
-		ontfunc(data,teller);
-		resetData();
-		break;
-		case 0xA8:
-		if (teller>1)
-		teller=0;
-		TWDR=verfunc();
-		break;
-		case 0xB8:
-		TWDR=verfunc();
-		break;
-		case 0xC0:   //NACK
-		break;
-		case 0xC8:
-		break;
+	break;
+	case 0x68:			//TW_SR_ARB_LOST_SLA_ACK
+
+	break;
+	case 0x80:			//W_SR_DATA_ACK
+	motoren[teller++] = TWDR;
+
+	break;
+	case 0xA0:			//TW_SR_STOP
+	rijden();
+	break;
+	case 0xA8:			//TW_ST_SLA_ACK
+	teller=0;
+	TWDR=sensoren[teller++];
+	break;
+	case 0xB8:			//TW_ST_DATA_ACK
+	TWDR=sensoren[teller++];
+	break;
+	case 0xC0:   //NACK		TW_ST_DATA_NACK
+	break;
+	case 0xC8:			//TW_ST_LAST_DATA
+	break;
 	}
 	TWCR |= (1<<TWINT);    // Clear TWINT Flag
 }
@@ -82,15 +79,6 @@ void initUSART() {
 	UCSRC = (1<<URSEL)|(1<<UCSZ1)|(1<<UCSZ0);
 	UCSRB = (1 << TXEN) | (1 << RXEN);
 	writeString("usart werkt nog\n\r");
-}
-
-
-void init_i2c_ontvang( void (*ontvanger) (uint8_t [],uint8_t)) {
-	ontfunc=ontvanger;
-}
-
-void init_i2c_verzend( uint8_t (*verzender) ()) {
-	verfunc=verzender;
 }
 
 void writeChar(char ch)
@@ -123,12 +111,7 @@ ISR(TWI_vect) {
 
 }
 
-uint8_t data_ont[20]; //max 20
 volatile uint8_t data_flag = FALSE;
-volatile uint8_t databyte=0x33;
-
-void ontvangData(uint8_t [],uint8_t);
-uint8_t verzendByte();
 
 int main(void)
 {
@@ -136,60 +119,19 @@ int main(void)
 	DDRC=0xFF;
 	initUSART();
 	init_i2c_slave(8);
-	
-	/*ontvangData is de functie die uitgevoerd wordt 
-	wanneer een byte via de i2c bus ontvangen wordt
-	*/
-	init_i2c_ontvang(ontvangData); 
-	
-	/*verzendByte is de functie die aangeroepen wordt
-	wanneer de slave een byte naar de master verzend*/
-	init_i2c_verzend(verzendByte);
-	
 	sei(); //De slave van i2c werkt met interrupt
-	
-    /* Replace with your application code */
     while (1) 
     {    
 
     }
 	
 }
- /*slave heeft data ontvangen van de master
- data[] een array waarin de ontvangen data staat
- tel het aantal bytes dat ontvangen is*/
- 
-void ontvangData(uint8_t data[],uint8_t tel){
-	for(int i=0;i<tel;++i)
-	    data_ont[i]=data[i];
-	data_flag = TRUE;
-	writeString("o\n\r");
-}
 
-/* het byte dat de slave verzend naar de master
-in dit voorbeeld een eenvoudige teller
-*/
-
-uint8_t verzendByte() {
-		return databyte++;
-}
-
-void motoren(uint8_t data, uint8_t teller)
+void rijden()
 {
-	switch (teller)
-	{
-		case 0:
-		PORTC|=(12&data);									//motor richting instellen
-		
-		break;
-		case 1:
-		OCR1A = data;										//motor snelheid links
-		
-		break;
-		case 2:
-		OCR1B = data;
-		break;
-	}
+	PORTC|=(12&motoren[0]);
+	OCR1A = motoren[1];
+	OCR1B = motoren[2];
 }
 
 void pwm_init()
@@ -199,10 +141,10 @@ void pwm_init()
 	TCCR1B = (1 << WGM13) | (0 << WGM12) | (1 << CS10);
 
 	ICR1 = 0xFF;
-	OCR1A = 0x50;
-	OCR1B = 0x50;
+	//OCR1A = 0x50;
+	//OCR1B = 0x50;
 
 	// make sure to make OC0 pin (pin PB3 for atmega32) as output pin
-	DDRD|=MOTOR_R;
-	DDRD|=MOTOR_L;
+	DDRD|=0x30;
+	DDRC|=0x0C;
 }

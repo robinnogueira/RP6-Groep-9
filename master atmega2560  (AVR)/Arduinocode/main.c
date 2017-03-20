@@ -8,7 +8,7 @@
 #define BAUDRATE		9600
 #define UBRR_BAUD	(((long)F_CPU/((long)16 * BAUDRATE))-1)
 
-int motor[] = {0, 0, 0}; //Richting, motor rechts en motor links
+uint8_t motor[] = {0, 0, 0}; //Richting, motor rechts en motor links
 //Bandenrichting: 0: vooruit. 4: rechts achteruit. 8: links achteruit. 12: achteruit
 int langeafstand = 1; //slaat op of we wel of niet voor lange afstanden bezig zijn
 int knop; //Een int met hierin de binaire representatie van welke knoppen zijn ingedrukt
@@ -25,7 +25,6 @@ void doStuff();
 void initUSART();
 char uart_getchar(void);
 int charToInt(char);
-void verzenden(uint8_t,uint8_t);
 //Prototypes voor de functies
 
 int main(void) {
@@ -54,9 +53,7 @@ int main(void) {
 				snelheid = 0;
 			break;
 		}//Hier slaan we de huidige snelheid op
-	verzenden(adress, (uint8_t) motor[0]);
-	verzenden(adress, (uint8_t) motor[1]);
-	verzenden(adress, (uint8_t) motor[2]);
+	verzenden();
 	_delay_ms(50);
 	}
 }
@@ -283,18 +280,22 @@ int charToInt(char in) {
 	return x;
 } // Used to take input from command line for now
 
-void verzenden(uint8_t ad,uint8_t b) {
+void verzenden() 
+{
 	//  uint8_t op[5];
 
 	TWCR |= (1<<TWSTA);
 	while(!(TWCR & (1<<TWINT)));
 	//   op[0] = TWSR;
-	TWDR=(ad<<1);
-	TWCR=(1<<TWINT)|(1<<TWEN);
-	while(!(TWCR & (1<<TWINT)));
-	//    op[1] = TWSR;
+	TWDR=(8<<1);
+	for (int i=0; i<3;i++)
+	{
+		TWCR=(1<<TWINT)|(1<<TWEN);
+		while(!(TWCR & (1<<TWINT)));
+		//    op[1] = TWSR;
+		TWDR=motor[i];
+	}
 
-	TWDR=b;
 	TWCR=(1<<TWINT)|(1<<TWEN);
 	while(!(TWCR & (1<<TWINT)));
 	//  op[2] = TWSR;
