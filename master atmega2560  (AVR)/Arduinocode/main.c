@@ -15,6 +15,7 @@ int knop; //Een int met hierin de binaire representatie van welke knoppen zijn i
 int snelheid = 0; //snelheid die het laatste gebruikt is
 int instelsnelheid; //snelheid die de gebruiker in kan stellen
 uint8_t adress = 0;
+int route[5][2];
 
 void achteruit();
 void links();
@@ -22,17 +23,23 @@ void rechts();
 void rechtdoor();
 void stop();
 void doStuff();
+void prog();
+void draai(int, int);
 void initUSART();
+void rijden(int);
 char uart_getchar(void);
 int charToInt(char);
 void verzenden(uint8_t,uint8_t);
 //Prototypes voor de functies
 
 int main(void) {
+	route[0][0] = 0;
 	initUSART();
 	while(1) {
-		knop = charToInt(uart_getchar());
-		if (knop >= 128) {
+		knop = charToInt(uart_getchar()); //TODO actuele variabelen van GUI opvragen
+		if (route[0][0] != 0) {
+			prog();
+		} else if (knop >= 128) {
 			stop();
 		} //Als de noodstop knop ingedrukt is moeten we deze direct uitvoeren
 		else {
@@ -231,7 +238,7 @@ void initUSART() {
 	UCSR0A = 0x00;
 	UCSR0C = (1<<UCSZ01)|(1<<UCSZ00);
 	UCSR0B = (1 << TXEN0) | (1 << RXEN0);
-	writeString("usart werkt nog\n\r");
+	//writeString("usart werkt nog\n\r");
 }
 
 char uart_getchar(void) {
@@ -291,4 +298,49 @@ void verzenden(uint8_t ad,uint8_t b) {
 	// writeString("\n\r");writeInteger(op[0],16);
 	// writeString(" ");writeInteger(op[1],16);
 	// writeString(" ");writeInteger(op[2],16);
+}
+
+//Onderstaande code nog niet gebruiken: opzet voor ingeprogrammeerde route
+
+void prog() {
+	stop();
+	int stand = 0;
+	int afstand = 0;
+	langeafstand = 0;
+	instelsnelheid = 250;
+	int x = 0;
+	while (route[x][1] != 0) {
+		//TODO stop opvragen, programma verlaten
+		if (route[x][2] != stand) {
+			draai(route[x][2], stand);
+			stand = route[x][2];				
+		}
+		rijden(route[x][1]);
+		x++;
+	}
+	//TODO een respons verzenden dat we zijn aangekomen
+	return;
+}
+
+void draai(int x, int huidig) {
+	int i;
+	if (huidig - x < 180) {
+		for (i = 0; i < huidig - x; i++) {
+			rechts();
+		}
+		stop();
+	} else {
+		for (i = 360; i > huidig - x; i--) {
+			links();
+		}
+		stop();
+	}
+}
+
+void rijden(int afstand) {
+	int i;
+	for(i = 0; i < (afstand / 10); i++) {
+		rechtdoor();
+	}
+	stop();
 }
