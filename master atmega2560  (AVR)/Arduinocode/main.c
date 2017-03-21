@@ -46,10 +46,10 @@ int main(void) {
 			doStuff();
 		}
 		if (motor[1] < 0) {motor[1] = 0;}
-		if (motor[1] > 250) {motor[1] = 250;}
+		if (motor[1] > 250) {motor[1] = 125;}
 		if (motor[2] < 0) {motor[2] = 0;}
-		if (motor[2] > 250) {motor[2] = 250;}
-		//Onze snelheid mag niet meer dan 250 zijn, maar ook niet minder dan 0.
+		if (motor[2] > 250) {motor[2] = 125;}
+		//Onze snelheid mag niet meer dan 125 zijn, maar ook niet minder dan 0.
 		switch(motor[0]) {
 			case 0:
 			case 12:
@@ -307,7 +307,7 @@ void prog() {
 	int stand = 0;
 	int afstand = 0;
 	langeafstand = 0;
-	instelsnelheid = 250;
+	instelsnelheid = 125;
 	int x = 0;
 	while (route[x][1] != 0) {
 		//TODO stop opvragen, programma verlaten
