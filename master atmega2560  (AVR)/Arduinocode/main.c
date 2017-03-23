@@ -24,7 +24,8 @@ void rechtdoor();
 void stop();
 void doStuff();
 void prog();
-void draai(int, int);
+int omObjectHeen();
+void draai(int);
 void initUSART();
 void rijden(int);
 char uart_getchar(void);
@@ -39,16 +40,16 @@ int main(void) {
 		knop = charToInt(uart_getchar()); //TODO actuele variabelen van GUI opvragen
 		if (route[0][0] != 0) {
 			prog();
-		} else if (knop >= 128) {
+		} else if (knop >= 127) {
 			stop();
 		} //Als de noodstop knop ingedrukt is moeten we deze direct uitvoeren
 		else {
 			doStuff();
 		}
 		if (motor[1] < 0) {motor[1] = 0;}
-		if (motor[1] > 250) {motor[1] = 125;}
+		if (motor[1] > 125) {motor[1] = 125;}
 		if (motor[2] < 0) {motor[2] = 0;}
-		if (motor[2] > 250) {motor[2] = 125;}
+		if (motor[2] > 125) {motor[2] = 125;}
 		//Onze snelheid mag niet meer dan 125 zijn, maar ook niet minder dan 0.
 		switch(motor[0]) {
 			case 0:
@@ -266,7 +267,7 @@ int charToInt(char in) {
 			break; //D will be used to go right
 			
 		case ' ':
-			x = 128;
+			x = 127;
 			break; //Spacebar will be used as a brake
 			
 		default:
@@ -312,7 +313,7 @@ void prog() {
 	while (route[x][1] != 0) {
 		//TODO stop opvragen, programma verlaten
 		if (route[x][2] != stand) {
-			draai(route[x][2], stand);
+			draai(abs(route[x][2] - stand));
 			stand = route[x][2];				
 		}
 		rijden(route[x][1]);
@@ -322,25 +323,67 @@ void prog() {
 	return;
 }
 
-void draai(int x, int huidig) {
+void draai(int x) {
 	int i;
-	if (huidig - x < 180) {
-		for (i = 0; i < huidig - x; i++) {
-			rechts();
-		}
-		stop();
-	} else {
-		for (i = 360; i > huidig - x; i--) {
-			links();
-		}
-		stop();
+	switch(x) {
+		case 1:
+			for (i = 0; i < 45; i++) {
+				rechts();
+			}
+			break;
+			
+		case 2: 
+			for (i = 0; i < 90; i++) {
+				rechts();
+			}
+			break;
+			
+		case 3:
+			for (i = 0; i < 45; i++) {
+				links();
+			}
+			break;
 	}
+	stop();
 }
 
 void rijden(int afstand) {
 	int i;
-	for(i = 0; i < (afstand / 10); i++) {
+	for (i = 0; i < (afstand / 10); i++) {
 		rechtdoor();
 	}
 	stop();
+}
+
+int omObjectHeen() {
+	draai(1);
+	int passed = 0;
+	int x = 0;
+	int ret = 0;
+	int afstand;
+	while (passed == 0) {
+		rijden(10);
+		x++;
+		draai(3);
+		afstand = 10;//TODO check afstand tot object
+		if (afstand > 100) {
+			passed++;
+		} else {
+			draai(1);
+		}
+	}
+	while (passed == 1) {
+		rijden(10);
+		ret++;
+		draai(3);
+		afstand = 10;//TODO check afstand tot object
+		if (afstand > 100) {
+			passed++;
+			} else {
+			draai(1);
+		}
+	}
+	rijden(x*10);
+	draai(1);
+	return ret;
 }
