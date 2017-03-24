@@ -1,0 +1,5 @@
+-Djava.library.path=libs\native\Windows\win64
+
+Ga naar properties van het project
+naar Tab Run
+Plak in de VM opties: -Djava.library.path=libs\native\Windows\win64
