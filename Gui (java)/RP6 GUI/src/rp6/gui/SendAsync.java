@@ -90,9 +90,9 @@ public class SendAsync {
 			
 		} catch (XBeeException e) {
 
-			System.out.println("Error");
-			e.printStackTrace();
-			System.exit(1);
+			System.out.println("Error: niet verzonden");
+			//e.printStackTrace();
+			//System.exit(1);
 		} finally {
 			//myDevice.close();
 		}
