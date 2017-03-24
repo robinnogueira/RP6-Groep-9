@@ -20,7 +20,18 @@ public class handmatig extends javax.swing.JFrame {
     public handmatig() {
         initComponents();
     }
-
+    public static int conv(int x){
+      
+      
+         String snd = "";
+         char add = (char) x;
+         snd += add;
+         SendAsync.main(snd);
+      
+      
+      
+      return 0;
+  }
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -337,6 +348,7 @@ public class handmatig extends javax.swing.JFrame {
                     motor_rechts = 128;
                     ing_snelheid = 128;
                     System.out.println("Vooruit rijden .....");
+                    conv(manual_output);
                 }  
                 vooruit++;
                 achteruit = 0;
@@ -345,6 +357,8 @@ public class handmatig extends javax.swing.JFrame {
                vooruit = 0;
                achteruit = 0;
                System.out.println("Stoppen ......");
+               conv(manual_output);
+
             }
         
         /* Pijltje omlaag indrukken */
@@ -353,12 +367,16 @@ public class handmatig extends javax.swing.JFrame {
                manual_output = 0; 
                achteruit++;
                vooruit = 0;
-               System.out.println("Stoppen ......");
+               System.out.println("Stoppen ......");                                 
+               conv(manual_output);
+
             }else if(achteruit == 1){
                 manual_output = 2;
                 achteruit = 0;
                 vooruit = 0;
                 System.out.println("Achteruit rijden .....");
+                conv(manual_output);
+
             }
         
          /* Pijltje naar rechts indrukken */
@@ -382,8 +400,8 @@ public class handmatig extends javax.swing.JFrame {
         /* Spatiebalk / NOODSTOP */
         }else if(evt.getKeyCode()==KeyEvent.VK_SPACE){
             System.out.println("STOP");
-            manual_output = 0;
-        
+            manual_output = 127;
+            conv(manual_output);
          /* Enter / Wisselen tussen ingestelde afstand en de korte afstands modus */
         }else if(evt.getKeyCode()==KeyEvent.VK_ENTER){
             if(jRadioButton1.isSelected()){
