@@ -64,7 +64,7 @@ public class SendAsync {
                         deviceOpen = 1;
                         
                 }
-			                System.out.println("device opent");
+			                System.out.println("Verbinding wordt tot stand gebracht");
 
 			// Obtain the remote XBee device from the XBee network.
 			//XBeeNetwork xbeeNetwork = myDevice.getNetwork();
@@ -80,7 +80,7 @@ public class SendAsync {
 				System.exit(1);
 			}
 			
-			System.out.format("Sending data to %s >> %s | %s... ", remoteDevice.get64BitAddress(), 
+			System.out.format("Data versturen naar %s >> %s | %s... ", remoteDevice.get64BitAddress(), 
 					HexUtils.prettyHexString(HexUtils.byteArrayToHexString(dataToSend)), 
 					new String(dataToSend));
 			
