@@ -1,5 +1,6 @@
 package rp6.gui;
 
+import java.awt.Color;
 import javax.swing.JFrame;
 
 /**
@@ -9,6 +10,31 @@ import javax.swing.JFrame;
 
 public class GUI extends javax.swing.JFrame {
 
+    int huidige_snelheid;
+    int afgelegde_afstand;
+    int bumper_rechts = 0;
+    int bumper_links = 0;
+    
+            
+        /*
+        
+        //bumper rechts verandert kleur
+        if(bumper_rechts == 1){
+            jPanel4.setBackground(Color.RED);
+        }else if(bumper_rechts == 0){
+            jPanel4.setBackground(Color.GREEN);
+        }
+        //bumper links verandert kleur
+        if(bumper_links == 1){
+            jPanel3.setBackground(Color.RED);
+        }else if(bumper_links == 0){
+            jPanel3.setBackground(Color.GREEN);
+        }
+        
+        
+        */       
+    
+
     public GUI() {
         initComponents();
     }    
@@ -17,6 +43,7 @@ public class GUI extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jFormattedTextField1 = new javax.swing.JFormattedTextField();
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
@@ -53,6 +80,8 @@ public class GUI extends javax.swing.JFrame {
         jButton5 = new javax.swing.JButton();
         jButton4 = new javax.swing.JButton();
         jButton3 = new javax.swing.JButton();
+
+        jFormattedTextField1.setText("jFormattedTextField1");
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("[RP6] Control Panel");
@@ -158,7 +187,7 @@ public class GUI extends javax.swing.JFrame {
         jTextField4.setToolTipText("");
 
         jLabel10.setFont(new java.awt.Font("Verdana", 0, 11)); // NOI18N
-        jLabel10.setText("km");
+        jLabel10.setText("m");
 
         jButton6.setText("Kompas");
 
@@ -370,6 +399,11 @@ public class GUI extends javax.swing.JFrame {
 
         jButton4.setFont(new java.awt.Font("Verdana", 0, 11)); // NOI18N
         jButton4.setText("Console");
+        jButton4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton4ActionPerformed(evt);
+            }
+        });
 
         jButton3.setFont(new java.awt.Font("Verdana", 0, 11)); // NOI18N
         jButton3.setText("Verbindings controle");
@@ -394,12 +428,12 @@ public class GUI extends javax.swing.JFrame {
             .addGroup(jPanel14Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel14Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jButton5, javax.swing.GroupLayout.DEFAULT_SIZE, 87, Short.MAX_VALUE)
-                    .addComponent(jButton2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGroup(jPanel14Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton4)
-                    .addComponent(jButton3))
+                    .addComponent(jButton2, javax.swing.GroupLayout.DEFAULT_SIZE, 68, Short.MAX_VALUE)
+                    .addComponent(jButton5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jPanel14Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jButton4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jButton3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
 
@@ -451,8 +485,15 @@ public class GUI extends javax.swing.JFrame {
         frame.setVisible(true); 
     }//GEN-LAST:event_jButton2ActionPerformed
 
+    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+        
+        /* open console */
+        JFrame frame = new console(); 
+        frame.setVisible(true);
+    }//GEN-LAST:event_jButton4ActionPerformed
+
     public static void main(String args[]) {
-              
+               
         try {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
                 if ("Nimbus".equals(info.getName())) {
@@ -474,6 +515,12 @@ public class GUI extends javax.swing.JFrame {
         java.awt.EventQueue.invokeLater(() -> {
             new GUI().setVisible(true);
         });  
+        
+        
+
+        
+
+        
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -482,6 +529,7 @@ public class GUI extends javax.swing.JFrame {
     private javax.swing.JButton jButton4;
     private javax.swing.JButton jButton5;
     private javax.swing.JButton jButton6;
+    private javax.swing.JFormattedTextField jFormattedTextField1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel2;
