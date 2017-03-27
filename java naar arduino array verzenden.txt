@@ -1,0 +1,10 @@
+{[modus], [instelsnelheid], [buttonpressed]}
+buttonpressed:
+	vooruit: 1 
+	achteruit: 2
+	rechts: 4
+	links: 8
+	noodstop: 127
+	
+In geval van modus route:
+verzend een array van [10][2]

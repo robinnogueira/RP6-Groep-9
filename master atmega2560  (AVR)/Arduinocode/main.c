@@ -15,7 +15,7 @@ int knop; //Een int met hierin de binaire representatie van welke knoppen zijn i
 int snelheid = 0; //snelheid die het laatste gebruikt is
 int instelsnelheid; //snelheid die de gebruiker in kan stellen
 uint8_t adress = 0;
-int route[5][2];
+int route[10][2];
 
 void achteruit();
 void links();
@@ -318,6 +318,9 @@ void prog() {
 		}
 		rijden(route[x][1]);
 		x++;
+		if (x == 10) {
+			break;
+		}
 	}
 	//TODO een respons verzenden dat we zijn aangekomen
 	return;
