@@ -76,6 +76,9 @@ public class handmatig extends javax.swing.JFrame {
             public void keyReleased(java.awt.event.KeyEvent evt) {
                 jTextField1KeyReleased(evt);
             }
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                jTextField1KeyTyped(evt);
+            }
         });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
@@ -330,55 +333,32 @@ public class handmatig extends javax.swing.JFrame {
        
        /* Pijltje omhoog indrukken */
         if(evt.getKeyCode()==KeyEvent.VK_UP){
-            if(vooruit == 0){
-                manual_output = 1;
-                /* Bij ingestelde snelheid: */
-                if(jRadioButton1.isSelected()){
-                    System.out.println("Vooruit rijden ..... [");
-                    ing_snelheid = jSlider1.getValue();
-                    motor_links = jSlider1.getValue();
-                    System.out.println("      Motor links:  " + motor_links + " = " + motor_links);
-                    motor_rechts = jSlider1.getValue();
-                    System.out.println("      Motor rechts: " + motor_rechts + " = " + motor_rechts);
-                    System.out.println("]");
-                }
-                /* Bij korte afstands modus: */
-                else if(jRadioButton2.isSelected()){
-                    motor_links = 128;
-                    motor_rechts = 128;
-                    ing_snelheid = 128;
-                    System.out.println("Vooruit rijden .....");
-                    conv(manual_output);
-                }  
-                vooruit++;
-                achteruit = 0;
-            }else if(vooruit == 1){
-               manual_output = 0; 
-               vooruit = 0;
-               achteruit = 0;
-               System.out.println("Stoppen ......");
-               conv(manual_output);
-
+            manual_output = 1;
+            /* Bij ingestelde snelheid: */
+            if(jRadioButton1.isSelected()){
+                System.out.println("Vooruit rijden ..... [");
+                ing_snelheid = jSlider1.getValue();
+                motor_links = jSlider1.getValue();
+                System.out.println("      Motor links:  " + motor_links + " = " + motor_links);
+                motor_rechts = jSlider1.getValue();
+                System.out.println("      Motor rechts: " + motor_rechts + " = " + motor_rechts);
+                System.out.println("]");
             }
-        
+            /* Bij korte afstands modus: */
+            else if(jRadioButton2.isSelected()){
+                motor_links = 128;
+                motor_rechts = 128;
+                ing_snelheid = 128;
+                System.out.println("Vooruit rijden .....");
+                conv(manual_output);
+            }  
+
         /* Pijltje omlaag indrukken */
         }else if(evt.getKeyCode()==KeyEvent.VK_DOWN){
-            if(achteruit == 0){
-               manual_output = 0; 
-               achteruit++;
-               vooruit = 0;
-               System.out.println("Stoppen ......");                                 
-               conv(manual_output);
+            manual_output = 2;
+            System.out.println("Achteruit rijden .....");
+            conv(manual_output);
 
-            }else if(achteruit == 1){
-                manual_output = 2;
-                achteruit = 0;
-                vooruit = 0;
-                System.out.println("Achteruit rijden .....");
-                conv(manual_output);
-
-            }
-        
          /* Pijltje naar rechts indrukken */
         }else if(evt.getKeyCode()==KeyEvent.VK_RIGHT){            
             manual_output = 4;
@@ -387,6 +367,7 @@ public class handmatig extends javax.swing.JFrame {
             } else{
                 System.out.println("Naar rechts rijden .....");
             } 
+            conv(manual_output);
         
          /* Pijltje naar links indrukken */
         }else if(evt.getKeyCode()==KeyEvent.VK_LEFT){
@@ -395,13 +376,15 @@ public class handmatig extends javax.swing.JFrame {
                 System.out.println("Om as naar links draaien .....");
             } else{
                 System.out.println("Naar links rijden .....");
-            }  
+            }
+            conv(manual_output);
         
         /* Spatiebalk / NOODSTOP */
         }else if(evt.getKeyCode()==KeyEvent.VK_SPACE){
             System.out.println("STOP");
             manual_output = 127;
             conv(manual_output);
+  
          /* Enter / Wisselen tussen ingestelde afstand en de korte afstands modus */
         }else if(evt.getKeyCode()==KeyEvent.VK_ENTER){
             if(jRadioButton1.isSelected()){
@@ -453,8 +436,28 @@ public class handmatig extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jTextField1KeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField1KeyReleased
-        // TODO add your handling code here:
+        if(evt.getKeyCode()==KeyEvent.VK_UP){
+            manual_output = 0;
+            System.out.println("STOP");
+            conv(manual_output);
+        }else if(evt.getKeyCode()==KeyEvent.VK_DOWN){
+            manual_output = 0;
+            System.out.println("STOP");
+            conv(manual_output);
+        }else if(evt.getKeyCode()==KeyEvent.VK_RIGHT){
+            manual_output = 0;
+            System.out.println("STOP");
+            conv(manual_output);
+        }else if(evt.getKeyCode()==KeyEvent.VK_LEFT){
+            manual_output = 0;
+            System.out.println("STOP");
+            conv(manual_output);
+        }
     }//GEN-LAST:event_jTextField1KeyReleased
+
+    private void jTextField1KeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField1KeyTyped
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTextField1KeyTyped
 
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
