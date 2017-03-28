@@ -270,7 +270,7 @@ int charToInt(char in) {
 		x = 127;
 		break; //Spacebar will be used as a brake
 		
-		case '.';
+		case '.':
 			route[0][0] = 50;
 			route[0][1] = 0;
 			route[1][0] = 25;
