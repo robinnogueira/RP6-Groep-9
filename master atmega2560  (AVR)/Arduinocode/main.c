@@ -51,7 +51,8 @@ void voorObject();
 ISR(USART0_RX_vect)
 {
 	char x=UDR0;
-	knop=charToInt(x);
+	knop=x;
+	//ChartoInt for USART
 	writeChar(x);
 }
 
