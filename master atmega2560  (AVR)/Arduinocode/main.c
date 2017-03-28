@@ -75,7 +75,12 @@ int main(void)
 			stop();
 		} //Als de noodstop knop ingedrukt is moeten we deze direct uitvoeren
 		else
-		{
+		{ 
+		if (knop!=vorigeknop)
+			{
+				stop();
+				vorigeknop=knop;
+			}
 		doStuff();
 		}
 		if (motor[1] < 0) {motor[1] = 0;}
