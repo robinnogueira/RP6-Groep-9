@@ -9,32 +9,17 @@ import javax.swing.JFrame;
  */
 
 public class GUI extends javax.swing.JFrame {
+    
     public static int dataOntvangen[];
     int huidige_snelheid;
     int afgelegde_afstand;
+    
     int bumper_rechts = 0;
     int bumper_links = 0;
     
-            
-        /*
-        
-        //bumper rechts verandert kleur
-        if(bumper_rechts == 1){
-            jPanel4.setBackground(Color.RED);
-        }else if(bumper_rechts == 0){
-            jPanel4.setBackground(Color.GREEN);
-        }
-        //bumper links verandert kleur
-        if(bumper_links == 1){
-            jPanel3.setBackground(Color.RED);
-        }else if(bumper_links == 0){
-            jPanel3.setBackground(Color.GREEN);
-        }
-        
-        
-        */       
+    int compas = 0;
+    int ultrasoon = 0;  
     
-
     public GUI() {
         initComponents();
     }    
@@ -539,37 +524,59 @@ public class GUI extends javax.swing.JFrame {
         /* open route programmeren */
         JFrame frame = new route(); 
         frame.setVisible(true); 
+        
+        updategui();
+        
     }//GEN-LAST:event_jButton2ActionPerformed
 
+    public void updategui() {
+ 
+        //live update ultrasoon afstand
+        jTextField1.setText(Integer.toString(ultrasoon));
+
+        //live update compass
+        String compas_dir = null;
+        switch (compas) {
+            case 1:  compas_dir = "N";
+                     break;
+            case 2:  compas_dir = "NW";
+                     break;
+            case 3:  compas_dir = "W";
+                     break;
+            case 4:  compas_dir = "ZW";
+                     break;
+            case 5:  compas_dir = "Z";
+                     break;
+            case 6:  compas_dir = "ZO";
+                     break;
+            case 7:  compas_dir = "O";
+                     break;
+            case 8:  compas_dir = "NO";
+                     break;
+        } 
+        jTextField6.setText(compas_dir);
+        
+        
+        //bumper reechts verandert kleur
+        if(bumper_rechts == 1){
+            jPanel4.setBackground(Color.RED);
+        }else if(bumper_rechts == 0){
+            jPanel4.setBackground(Color.GREEN);
+        }
+        //bumper links verandert kleur
+        if(bumper_links == 1){
+            jPanel3.setBackground(Color.RED);
+        }else if(bumper_links == 0){
+            jPanel3.setBackground(Color.GREEN);
+        }
+        
+    }
+    
     public static void main(String args[]) {
                
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(GUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(GUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(GUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(GUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-
-        java.awt.EventQueue.invokeLater(() -> {
-            new GUI().setVisible(true);
-        });  
-        
-        
-
-        
-
-        
+        JFrame frame = new GUI(); 
+        frame.setVisible(true); 
+  
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
