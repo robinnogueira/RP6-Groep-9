@@ -70,7 +70,7 @@ int main(void)
 		getultrasoondistance();
 		//writeInteger(afstand,10);
 		//knop = uart_getchar();//charToInt(uart_getchar());
-		if (knop >= 128)
+		if (knop >= 127)
 		{
 			if (knop!=vorigeknop)
 			{
