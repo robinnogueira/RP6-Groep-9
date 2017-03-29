@@ -72,7 +72,12 @@ int main(void)
 		//knop = uart_getchar();//charToInt(uart_getchar());
 		if (knop >= 128)
 		{
-			stop();
+			if (knop!=vorigeknop)
+			{
+				stop();
+				vorigeknop=knop;
+			}
+		{
 		} //Als de noodstop knop ingedrukt is moeten we deze direct uitvoeren
 		else
 		{
