@@ -16,7 +16,6 @@ public class GUI extends javax.swing.JFrame {
     
     int bumper_rechts = 0;
     int bumper_links = 0;
-    
     int compas = 0;
     int ultrasoon = 0;  
     
@@ -525,8 +524,6 @@ public class GUI extends javax.swing.JFrame {
         JFrame frame = new route(); 
         frame.setVisible(true); 
         
-        updategui();
-        
     }//GEN-LAST:event_jButton2ActionPerformed
 
     public void updategui() {
@@ -555,15 +552,15 @@ public class GUI extends javax.swing.JFrame {
                      break;
         } 
         jTextField6.setText(compas_dir);
-        
-        
-        //bumper reechts verandert kleur
+  
+        //live bumper rechts update
         if(bumper_rechts == 1){
             jPanel4.setBackground(Color.RED);
         }else if(bumper_rechts == 0){
             jPanel4.setBackground(Color.GREEN);
         }
-        //bumper links verandert kleur
+        
+        //live bumper links update
         if(bumper_links == 1){
             jPanel3.setBackground(Color.RED);
         }else if(bumper_links == 0){
