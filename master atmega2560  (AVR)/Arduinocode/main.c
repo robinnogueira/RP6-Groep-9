@@ -37,6 +37,7 @@ void doStuff();
 void initUSART();
 char uart_getchar(void);
 int charToInt(char);
+void preprog();
 void verzenden(uint8_t ,uint8_t ,uint8_t ,uint8_t);
 void prog();
 void draai(int);
@@ -72,12 +73,7 @@ int main(void)
 		//knop = uart_getchar();//charToInt(uart_getchar());
 		if (knop >= 127)
 		{
-			if (knop!=vorigeknop)
-			{
-				stop();
-				vorigeknop=knop;
-			}
-		{
+			stop();
 		} //Als de noodstop knop ingedrukt is moeten we deze direct uitvoeren
 		else
 		{
@@ -327,6 +323,10 @@ void doStuff()
 		links();
 		break;
 
+		case 100:
+		preprog();
+		break;
+		
 		default:
 		//TODO return error voor invalide combinatie.
 		break;
@@ -357,19 +357,7 @@ int charToInt(char in) {
 		break; //Spacebar will be used as a brake
 		
 		case 'l':
-		route[0][0] = 50;
-		route[0][1] = 0;
-		route[1][0] = 50;
-		route[1][1] = 1;
-		route[2][0] = 50;
-		route[2][1] = 3;
-		route[3][0] = 50;
-		route[3][1] = 2;
-		route[4][0] = 50;
-		route[4][1] = 1;
-		route[5][0] = 0;
-		route[5][1] = 0;
-		prog();
+		x = 100;
 		break;
 
 		default:
@@ -578,6 +566,7 @@ void prog() {
 		}
 		rijden(route[x][0]);
 		x++;
+		stand = 0;
 	}
 	//TODO een respons verzenden dat we zijn aangekomen
 	writeString("Ben klaar met rijden wah \n");
@@ -659,4 +648,20 @@ void voorObject() {
 	rijden(5);
 	writeString("Ik wil hier niet tegenaan rijden wah \n");
 	verzenden(adress, 0, 0, 0);
+}
+
+void preprog() {
+	route[0][0] = 50;
+	route[0][1] = 0;
+	route[1][0] = 50;
+	route[1][1] = 1;
+	route[2][0] = 50;
+	route[2][1] = 3;
+	route[3][0] = 50;
+	route[3][1] = 2;
+	route[4][0] = 50;
+	route[4][1] = 1;
+	route[5][0] = 50;
+	route[5][1] = 3;
+	prog();
 }
