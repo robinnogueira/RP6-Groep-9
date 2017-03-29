@@ -1,14 +1,15 @@
-
 #include <avr/io.h>
 #include "i2c_mst.h"
 #include <util/delay.h>
 #include <stdlib.h>
 #include <avr/interrupt.h>
+#include <string.h>
 
 #define F_CPU 16000000
 #define DEVICE_ADRES   8
 #define BAUDRATE 9600
 #define UBRR_BAUD (((long)F_CPU/((long)16 * BAUDRATE))-1)
+#define KOMPAS_ADRES 0X60
 
 uint8_t motor[] = {0, 0, 0}; //Richting, motor rechts en motor links
 //Bandenrichting: 0: vooruit. 4: rechts achteruit. 8: links achteruit. 12: achteruit
@@ -19,6 +20,7 @@ int instelsnelheid=125; //snelheid die de gebruiker in kan stellen
 uint8_t adress = 8;
 int route[6][2];
 int ultrasoon; //ultrasone afstand gedeeld
+uint8_t kompasstand;
 
 #define US_PORT PORTA
 #define US_PIN  PINA
@@ -47,6 +49,8 @@ void init_master();
 void getultrasoondistance();
 uint16_t getPulseWidth();
 void voorObject();
+uint8_t kompas();
+void verzendData();
 //Prototypes voor de functies
 
 ISR(USART0_RX_vect)
@@ -77,7 +81,7 @@ int main(void)
 		} //Als de noodstop knop ingedrukt is moeten we deze direct uitvoeren
 		else
 		{
-		doStuff();
+			doStuff();
 		}
 		if (motor[1] < 0) {motor[1] = 0;}
 		if (motor[1] > 250) {motor[1] = 250;}
@@ -107,6 +111,8 @@ int main(void)
 		writeInteger(sensoren[0],10);
 		if (sensoren[1]!=128)
 		writeInteger(sensoren[1],10);
+		kompasstand = kompas();
+		verzendData();
 	}
 }
 
@@ -664,4 +670,47 @@ void preprog() {
 	route[5][0] = 50;
 	route[5][1] = 3;
 	prog();
+}
+
+uint8_t kompas(){
+	uint8_t data[10];
+	int a;//omzetten naar een windrichting
+	static int windrichting=0;//omgezette waarde moet nog een int zijn
+	verzenden(KOMPAS_ADRES, 1, 0, 0);
+	ontvangen(KOMPAS_ADRES,data,1);
+	a = data [0];
+	if (a > 240 || a < 15){
+		windrichting = 1;
+	}
+	
+	if (a >= 17 && a <= 46){
+		windrichting = 2;
+	}
+	if (a >= 48 && a <= 76){
+		windrichting = 3;
+	}
+	if (a >= 78 && a <= 110){
+		windrichting = 4;
+	}
+	if (a >= 112 && a <= 142){
+		windrichting = 5;
+	}
+	if (a >= 144 && a <= 174){
+		windrichting = 6;
+	}
+	if (a >= 176 && a <= 206){
+		windrichting = 7;
+	}
+	if (a > 208 && a < 238){
+		windrichting = 8;
+	}
+	
+	return windrichting;
+}
+
+void verzendData() {
+	char x[10];
+	x[0] = ultrasoon;
+	x[1] = kompasstand;
+	writeString(x);
 }
