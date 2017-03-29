@@ -75,12 +75,7 @@ int main(void)
 			stop();
 		} //Als de noodstop knop ingedrukt is moeten we deze direct uitvoeren
 		else
-		{ 
-		if (knop!=vorigeknop)
-			{
-				stop();
-				vorigeknop=knop;
-			}
+		{
 		doStuff();
 		}
 		if (motor[1] < 0) {motor[1] = 0;}
@@ -189,9 +184,9 @@ void links ()
 	switch(motor[0])
 	{
 		case 0:
-		case 12:
 		if (snelheid != 0)
 		{ //Als de RP6 aan het rijden is willen we dat deze een bocht maakt
+			motor[0] = 0;
 			motor[1] = snelheid - 25;
 			motor[2] = snelheid + 25;
 		}
@@ -211,6 +206,21 @@ void links ()
 		motor[2] = 100;
 		break;
 		//In dit geval is de RP6 al om zijn as aan het draaien
+		
+		case 12: 
+		if (snelheid != 0)
+		{ //Als de RP6 aan het rijden is willen we dat deze een bocht maakt
+			motor[0] = 12;
+			motor[1] = snelheid - 25;
+			motor[2] = snelheid + 25;
+		}
+		else
+		{
+			motor[0] = 8;
+			motor[1] = 100;
+			motor[2] = 100;
+		} //Als de RP6 stilstaat willen we dat deze om zijn as draait
+		break;
 	}
 }
 void rechts ()
@@ -218,9 +228,9 @@ void rechts ()
 	switch(motor[0])
 	{
 		case 0:
-		case 12:
 		if (snelheid != 0)
 		{ //Als de RP6 aan het rijden is willen we dat deze een bocht maakt
+			motor[0] = 0;
 			motor[1] = snelheid + 25;
 			motor[2] = snelheid - 25;
 		}
@@ -240,6 +250,22 @@ void rechts ()
 		motor[2] = 100;
 		break;
 		//In dit geval is de RP6 al om zijn as aan het draaien
+		
+		
+		case 12:
+		if (snelheid != 0)
+		{ //Als de RP6 aan het rijden is willen we dat deze een bocht maakt
+			motor[0] = 12;
+			motor[1] = snelheid + 25;
+			motor[2] = snelheid - 25;
+		}
+		else
+		{
+			motor[0] = 4;
+			motor[1] = 100;
+			motor[2] = 100;
+		} //Als de RP6 stilstaat willen we dat deze om zijn as draait
+		break;
 	}
 }
 
@@ -302,9 +328,8 @@ void doStuff()
 	}//TODO correcte waardes toekennen
 }
 
-int charToInt(char in)
-{
-	int x;
+int charToInt(char in) {
+	int x = 0;
 	switch(in) {
 		case 'w':
 		x = 1;
@@ -534,7 +559,6 @@ void prog() {
 	writeString("Rijden wah \n");
 	verzenden(adress, 0, 0, 0);
 	int stand = 0;
-	int afstand = 0;
 	langeafstand = 0;
 	instelsnelheid = 125;
 	int x = 0;
