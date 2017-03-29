@@ -20,6 +20,8 @@ public class handmatig extends javax.swing.JFrame {
     public static int teller = 0;
     public static String snd = "";
     
+    public int bc = 0;
+    
     public handmatig() {
         initComponents();
     }
@@ -338,7 +340,8 @@ public class handmatig extends javax.swing.JFrame {
 
     private void jTextField1KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField1KeyPressed
        
-        /* Pijltje omhoog indrukken */
+        if(bc==0){
+            /* Pijltje omhoog indrukken */
         if(evt.getKeyCode()==KeyEvent.VK_UP){
             manual_output = 1;
             /* Bij ingestelde snelheid: */
@@ -358,6 +361,7 @@ public class handmatig extends javax.swing.JFrame {
                 ing_snelheid = 128;
                 System.out.println("Vooruit rijden .....");
                 conv(manual_output);
+                bc++;
             }  
 
         /* Pijltje omlaag indrukken */
@@ -365,6 +369,7 @@ public class handmatig extends javax.swing.JFrame {
             manual_output = 2;
             System.out.println("Achteruit rijden .....");
             conv(manual_output);
+            bc++;
 
          /* Pijltje naar rechts indrukken */
         }else if(evt.getKeyCode()==KeyEvent.VK_RIGHT){            
@@ -375,6 +380,7 @@ public class handmatig extends javax.swing.JFrame {
                 System.out.println("Naar rechts rijden .....");
             } 
             conv(manual_output);
+            bc++;
         
          /* Pijltje naar links indrukken */
         }else if(evt.getKeyCode()==KeyEvent.VK_LEFT){
@@ -385,6 +391,9 @@ public class handmatig extends javax.swing.JFrame {
                 System.out.println("Naar links rijden .....");
             }
             conv(manual_output);
+            bc++;  
+        }
+        
         
         /* Spatiebalk / NOODSTOP */
         }else if(evt.getKeyCode()==KeyEvent.VK_SPACE){
@@ -446,20 +455,21 @@ public class handmatig extends javax.swing.JFrame {
         if(evt.getKeyCode()==KeyEvent.VK_UP){
             manual_output = 0;
             System.out.println("STOP");
-            conv(manual_output);
+            //conv(manual_output);
         }else if(evt.getKeyCode()==KeyEvent.VK_DOWN){
             manual_output = 0;
             System.out.println("STOP");
-            conv(manual_output);
+            //conv(manual_output);
         }else if(evt.getKeyCode()==KeyEvent.VK_RIGHT){
             manual_output = 0;
             System.out.println("STOP");
-            conv(manual_output);
+            //conv(manual_output);
         }else if(evt.getKeyCode()==KeyEvent.VK_LEFT){
             manual_output = 0;
             System.out.println("STOP");
-            conv(manual_output);
+            //conv(manual_output);
         }
+        bc=0;
     }//GEN-LAST:event_jTextField1KeyReleased
 
     public static void main(String args[]) {
