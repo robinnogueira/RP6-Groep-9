@@ -373,7 +373,7 @@ public class handmatig extends javax.swing.JFrame {
 
          /* Pijltje naar rechts indrukken */
         }else if(evt.getKeyCode()==KeyEvent.VK_RIGHT){            
-            manual_output = 8;
+            manual_output = 4;
             if(ing_snelheid == 0){
                 System.out.println("Om as naar rechts draaien .....");
             } else{
@@ -384,7 +384,7 @@ public class handmatig extends javax.swing.JFrame {
         
          /* Pijltje naar links indrukken */
         }else if(evt.getKeyCode()==KeyEvent.VK_LEFT){
-            manual_output = 4;
+            manual_output = 8;
             if(ing_snelheid == 0){
                 System.out.println("Om as naar links draaien .....");
             } else{
