@@ -11,6 +11,7 @@ import javax.swing.JFrame;
 public class GUI extends javax.swing.JFrame {
     
     public static int dataOntvangen[];
+    
     int huidige_snelheid;
     int afgelegde_afstand;
     
@@ -527,7 +528,10 @@ public class GUI extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton2ActionPerformed
 
     public void updategui() {
- 
+        
+        ultrasoon = dataOntvangen[0];
+        compas = dataOntvangen[1];
+        
         //live update ultrasoon afstand
         jTextField1.setText(Integer.toString(ultrasoon));
 
