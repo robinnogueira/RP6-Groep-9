@@ -16,17 +16,29 @@ public class handmatig extends javax.swing.JFrame {
     
     public int achteruit = 0;
     public int vooruit = 0;
-       
+    
+    public static int teller = 0;
+    public static String snd = "";
+    
     public handmatig() {
         initComponents();
     }
     public static int conv(int x){
-      
-        //niets versturen naar XBee
-        String snd = "";
+        
         char add = (char) x;
         snd += add;
+        
+        teller++; 
+        
+        if(teller >= 1){  
+            
         SendAsync.main(snd);
+        teller = 0;
+        snd = "";
+        System.out.println("verstuurd");
+
+      
+        }
       
       return 0;
   }

@@ -30,15 +30,21 @@ import com.digi.xbee.api.utils.HexUtils;
  * @see IDataReceiveListener
  *
  */
+
 public class MyDataReceiveListener implements IDataReceiveListener {
 	/*
 	 * (non-Javadoc)
 	 * @see com.digi.xbee.api.listeners.IDataReceiveListener#dataReceived(com.digi.xbee.api.models.XBeeMessage)
 	 */
+    String data;
 	@Override
 	public void dataReceived(XBeeMessage xbeeMessage) {
 		System.out.format("From %s >> %s | %s%n", xbeeMessage.getDevice().get64BitAddress(), 
 				HexUtils.prettyHexString(HexUtils.byteArrayToHexString(xbeeMessage.getData())), 
-				new String(xbeeMessage.getData()));
+				data=new String(xbeeMessage.getData()));
+                                for(int i = 0;i < 2; i++)
+                                {
+                                    GUI.dataOntvangen[i] = data.charAt(i);
+                                }
 	}
 }

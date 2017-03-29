@@ -9,7 +9,7 @@ import javax.swing.JFrame;
  */
 
 public class GUI extends javax.swing.JFrame {
-
+    public static int dataOntvangen[];
     int huidige_snelheid;
     int afgelegde_afstand;
     int bumper_rechts = 0;
