@@ -32,18 +32,15 @@ public class handmatig extends javax.swing.JFrame {
         
         teller++; 
         
-        if(teller >= 1){  
-            
-        SendAsync.main(snd);
-        teller = 0;
-        snd = "";
-        System.out.println("verstuurd");
-
-      
+        if(teller >= 1){   
+            SendAsync.main(snd);
+            teller = 0;
+            snd = "";
+            System.out.println("Commando verstuurd!");
         }
       
-      return 0;
-  }
+        return 0;
+    }
     
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
