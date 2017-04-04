@@ -14,17 +14,17 @@ public class SendAsync {
     
         public static void main(String args){    
 
-            XBeeDevice myXBeeDevice = new XBeeDevice("COM3", 9600);
+            XBeeDevice myXBeeDevice = new XBeeDevice("COM6", 9600);
             try
             {    
-                if(first == 0){
+                //if(first == 0){
                     myXBeeDevice.open();
                     myXBeeDevice.addDataListener(new MyDataReceiveListener());
                     System.out.println("Verbinden met XBee is succesvol tot stand gebracht!");
                     first=0;
-                }else{
+               // }else{
                     System.out.println(first);
-                }
+                //}
 
                 // Instantiate an XBee device object.
                 // Get the XBee Network object from the XBee device.
@@ -43,7 +43,7 @@ public class SendAsync {
 
                 System.out.println("Succesvol geconverteerd!");
                 
-                myXBeeDevice.close();
+              //  myXBeeDevice.close();
                 
                 
            }
