@@ -576,7 +576,8 @@ public class GUI extends javax.swing.JFrame {
     public static void main(String args[]) {
                
         JFrame frame = new GUI(); 
-        frame.setVisible(true); 
+        frame.setVisible(true);
+
   
     }
 
