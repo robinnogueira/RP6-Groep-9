@@ -555,10 +555,10 @@ public class GUI extends javax.swing.JFrame {
     public static void xbeeConCheck() {
         
     }
-    
-    
+      
     public void updategui() {
         
+        //info uit array uitlezen
         ultrasoon = dataOntvangen[0];
         compas = dataOntvangen[1];
         
