@@ -540,15 +540,7 @@ public class GUI extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        //refresh knop
-        int q = 0; //SomeFishCatching
-        while (q < 10) {
-            updategui();
-            q=0;
-            Thread.sleep(1000);
-        }
-
-        
+        //refresh knop     
         updategui();
     }//GEN-LAST:event_jButton1ActionPerformed
 
@@ -603,18 +595,10 @@ public class GUI extends javax.swing.JFrame {
         
     }
     
-    public static void main(String args[]) {
-               
+    public static void main(String args[]) {              
         JFrame frame = new GUI(); 
-<<<<<<< HEAD
-        frame.setVisible(true); 
-        
-        xbeeConCheck();
-=======
         frame.setVisible(true);
-
->>>>>>> origin/master
-  
+        xbeeConCheck();
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
