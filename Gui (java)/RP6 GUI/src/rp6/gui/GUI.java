@@ -606,12 +606,14 @@ public class GUI extends javax.swing.JFrame {
     public static void main(String args[]) {
                
         JFrame frame = new GUI(); 
-
-        frame.setVisible(true);         
+<<<<<<< HEAD
+        frame.setVisible(true); 
+        
         xbeeConCheck();
+=======
+        frame.setVisible(true);
 
-
-
+>>>>>>> origin/master
   
     }
 
