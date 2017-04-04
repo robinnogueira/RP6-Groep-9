@@ -46,6 +46,6 @@ public class MyDataReceiveListener implements IDataReceiveListener {
                                 {
                                     GUI.dataOntvangen[i] = data.charAt(i);
                                 }
-                                GUI.updategui();
+                                //GUI.updategui();
 	}
 }
