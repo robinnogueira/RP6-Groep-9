@@ -549,12 +549,15 @@ public class GUI extends javax.swing.JFrame {
 
     public void updategui() {
         
-        //info uit array uitlezen
-        //ultrasoon = dataOntvangen[0];
-        //compas = dataOntvangen[1];
+        dataOntvangen[0] = 10;
+        dataOntvangen[1] = 3;
         
-        ultrasoon = 56;
-        compas = 5;
+        //info uit array uitlezen
+        ultrasoon = dataOntvangen[0];
+        compas = dataOntvangen[1];
+        
+        //ultrasoon = 56;
+        //compas = 5;
         
         //live update ultrasoon afstand
         jTextField1.setText(Integer.toString(ultrasoon));
@@ -599,8 +602,7 @@ public class GUI extends javax.swing.JFrame {
     
     public void call_update(){
         new Thread() {
-            @Override
-            public void run() {
+            public void run_update() {
                 while(true){
                     try {
                         Thread.sleep(1000);

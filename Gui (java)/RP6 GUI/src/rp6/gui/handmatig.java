@@ -1,6 +1,8 @@
 package rp6.gui;
 
 import java.awt.event.KeyEvent;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -38,7 +40,6 @@ public class handmatig extends javax.swing.JFrame {
             snd = "";
             System.out.println("Commando verstuurd!");
         }
-      
         return 0;
     }
     
@@ -340,6 +341,7 @@ public class handmatig extends javax.swing.JFrame {
         if(bc==0){
             /* Pijltje omhoog indrukken */
         if(evt.getKeyCode()==KeyEvent.VK_UP){
+            
             manual_output = 1;
             /* Bij ingestelde snelheid: */
             if(jRadioButton1.isSelected()){
@@ -392,9 +394,9 @@ public class handmatig extends javax.swing.JFrame {
             bc++;  
         }
         
-        
+        }
         /* Spatiebalk / NOODSTOP */
-        }else if(evt.getKeyCode()==KeyEvent.VK_SPACE){
+        if(evt.getKeyCode()==KeyEvent.VK_SPACE){
             System.out.println("STOP");
             manual_output = 127;
             conv(manual_output);
@@ -452,9 +454,11 @@ public class handmatig extends javax.swing.JFrame {
 
     private void jTextField1KeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField1KeyReleased
         if(evt.getKeyCode()==KeyEvent.VK_UP){
-            manual_output = 127;
-            System.out.println("STOP");
-            conv(manual_output);
+            if(jRadioButton2.isSelected()){
+                manual_output = 127;
+                System.out.println("STOP");
+                conv(manual_output);
+            }
         }else if(evt.getKeyCode()==KeyEvent.VK_DOWN){
             manual_output = 127;
             System.out.println("STOP");
@@ -471,6 +475,14 @@ public class handmatig extends javax.swing.JFrame {
         bc=0;
     }//GEN-LAST:event_jTextField1KeyReleased
 
+    public static void delay(){
+        try {
+            Thread.sleep(1000);
+        } catch (InterruptedException ex) {
+            Logger.getLogger(handmatig.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
