@@ -20,8 +20,8 @@ public class GUI extends javax.swing.JFrame {
     int bumper_rechts = 0;
     int bumper_links = 0;
     
-   public static int compas = 3;
-   public static int ultrasoon = 10; 
+    public static int compas = 3;
+    public static int ultrasoon = 10; 
     
     
     
@@ -551,26 +551,16 @@ public class GUI extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton1ActionPerformed
 
     public void updategui() {
-        
-<<<<<<< HEAD
-  
-=======
-        
->>>>>>> origin/master
-        //info uit array uitlezen
+
+       //info uit array uitlezen
        // ultrasoon = dataOntvangen[0];
        // compas =  dataOntvangen[1];
-        
-<<<<<<< HEAD
-        ultrasoon = 56;
-        compas = 5;
-=======
+
        // ultrasoon = 56;
        // compas = 5;
        
        // dataOntvangen[0] = 10;
        // dataOntvangen[1] = 3;
->>>>>>> origin/master
         
         //live update ultrasoon afstand
         jTextField1.setText(Integer.toString(ultrasoon));

@@ -50,7 +50,7 @@ public class SendAsync {
 
            catch(XBeeException e)
             {
-                e.printStackTrace();
+               // e.printStackTrace();
             }           	
 
         }                       

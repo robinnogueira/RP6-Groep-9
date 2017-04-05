@@ -19,15 +19,23 @@ public class handmatig extends javax.swing.JFrame {
     public int achteruit = 0;
     public int vooruit = 0;
     
+    public int v;
+    
     public static int teller = 0;
     public static String snd = "";
     
     public int bc = 0;
     
+    boolean delayChecker;
     public handmatig() {
         initComponents();
     }
-    public static int conv(int x){
+    public int conv(int x){
+        
+        jButton3.setEnabled(false);
+        jButton2.setEnabled(false);
+        jButton5.setEnabled(false);
+        jButton6.setEnabled(false);
         
         char add = (char) x;
         snd += add;
@@ -40,6 +48,19 @@ public class handmatig extends javax.swing.JFrame {
             snd = "";
             System.out.println("Commando verstuurd!");
         }
+        
+        try {
+            Thread.sleep(2500);
+            jButton3.setEnabled(true);
+            jButton2.setEnabled(true);
+            jButton5.setEnabled(true);
+            jButton6.setEnabled(true);
+           // delayChecker = true;
+        } catch (InterruptedException ex) {
+            Logger.getLogger(handmatig.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        
         return 0;
     }
     
@@ -67,6 +88,10 @@ public class handmatig extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
+        jButton2 = new javax.swing.JButton();
+        jButton3 = new javax.swing.JButton();
+        jButton5 = new javax.swing.JButton();
+        jButton6 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Handmatige besturing");
@@ -150,7 +175,7 @@ public class handmatig extends javax.swing.JFrame {
 
         jRadioButton1.setBackground(java.awt.SystemColor.controlHighlight);
         jRadioButton1.setFont(new java.awt.Font("Verdana", 0, 11)); // NOI18N
-        jRadioButton1.setText("Ingestelde Snelheid");
+        jRadioButton1.setText("Lange afstanden");
         jRadioButton1.addChangeListener(new javax.swing.event.ChangeListener() {
             public void stateChanged(javax.swing.event.ChangeEvent evt) {
                 jRadioButton1StateChanged(evt);
@@ -308,6 +333,34 @@ public class handmatig extends javax.swing.JFrame {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
+        jButton2.setText("ACHTER");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
+
+        jButton3.setText("VOOR");
+        jButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton3ActionPerformed(evt);
+            }
+        });
+
+        jButton5.setText("LINKS");
+        jButton5.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton5ActionPerformed(evt);
+            }
+        });
+
+        jButton6.setText("RECHTS");
+        jButton6.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton6ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -316,10 +369,19 @@ public class handmatig extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jPanel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(jPanel7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jPanel7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 288, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                .addGroup(layout.createSequentialGroup()
+                                    .addComponent(jButton5, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(jButton6, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 284, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addComponent(jPanel6, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -329,7 +391,16 @@ public class handmatig extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jPanel6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jPanel7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jPanel7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(jButton5, javax.swing.GroupLayout.DEFAULT_SIZE, 35, Short.MAX_VALUE)
+                            .addComponent(jButton6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -337,69 +408,32 @@ public class handmatig extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jTextField1KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField1KeyPressed
-       
+         if(delayChecker){
         if(bc==0){
             /* Pijltje omhoog indrukken */
         if(evt.getKeyCode()==KeyEvent.VK_UP){
+          
+            jButton3.doClick();
             
-            manual_output = 1;
-            /* Bij ingestelde snelheid: */
-            if(jRadioButton1.isSelected()){
-                System.out.println("Vooruit rijden ..... [");
-                ing_snelheid = jSlider1.getValue();
-                motor_links = jSlider1.getValue();
-                System.out.println("      Motor links:  " + motor_links + " = " + motor_links);
-                motor_rechts = jSlider1.getValue();
-                System.out.println("      Motor rechts: " + motor_rechts + " = " + motor_rechts);
-                System.out.println("]");
-                conv(manual_output);
-            }
-            /* Bij korte afstands modus: */
-            else if(jRadioButton2.isSelected()){
-                motor_links = 128;
-                motor_rechts = 128;
-                ing_snelheid = 128;
-                System.out.println("Vooruit rijden .....");
-                conv(manual_output);
-                bc++;
-            }  
-
         /* Pijltje omlaag indrukken */
         }else if(evt.getKeyCode()==KeyEvent.VK_DOWN){
-            manual_output = 2;
-            System.out.println("Achteruit rijden .....");
-            conv(manual_output);
-            bc++;
+            jButton2.doClick();
 
          /* Pijltje naar rechts indrukken */
         }else if(evt.getKeyCode()==KeyEvent.VK_RIGHT){            
-            manual_output = 8;
-            if(ing_snelheid == 0){
-                System.out.println("Om as naar rechts draaien .....");
-            } else{
-                System.out.println("Naar rechts rijden .....");
-            } 
-            conv(manual_output);
-            bc++;
+            jButton6.doClick();
         
          /* Pijltje naar links indrukken */
         }else if(evt.getKeyCode()==KeyEvent.VK_LEFT){
-            manual_output = 4;
-            if(ing_snelheid == 0){
-                System.out.println("Om as naar links draaien .....");
-            } else{
-                System.out.println("Naar links rijden .....");
-            }
-            conv(manual_output);
-            bc++;  
-        }
+            jButton5.doClick();
+               
         
-        }
         /* Spatiebalk / NOODSTOP */
-        if(evt.getKeyCode()==KeyEvent.VK_SPACE){
+        }else if(evt.getKeyCode()==KeyEvent.VK_SPACE){
             System.out.println("STOP");
             manual_output = 127;
             conv(manual_output);
+            v = 0;
   
          /* Enter / Wisselen tussen ingestelde afstand en de korte afstands modus */
         }else if(evt.getKeyCode()==KeyEvent.VK_ENTER){
@@ -412,7 +446,7 @@ public class handmatig extends javax.swing.JFrame {
                 jRadioButton2.setSelected(false);
                 System.out.println("Korte afstand modus");
             }
-        }
+        }}}
     }//GEN-LAST:event_jTextField1KeyPressed
 
     private void jSlider1StateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_jSlider1StateChanged
@@ -453,27 +487,128 @@ public class handmatig extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jTextField1KeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField1KeyReleased
+        
+        // pijltje omhoog loslatenn
         if(evt.getKeyCode()==KeyEvent.VK_UP){
             if(jRadioButton2.isSelected()){
                 manual_output = 127;
                 System.out.println("STOP");
                 conv(manual_output);
+                v = 0;
             }
+            
+        // pijltje omlaag loslaten   
         }else if(evt.getKeyCode()==KeyEvent.VK_DOWN){
-            manual_output = 127;
-            System.out.println("STOP");
-            conv(manual_output);
+            if(jRadioButton2.isSelected()){
+                manual_output = 127;
+                System.out.println("STOP");
+                conv(manual_output);
+                v = 0;
+            }
+            
+         
+        // pijltje naar rechts loslaten
         }else if(evt.getKeyCode()==KeyEvent.VK_RIGHT){
-            manual_output = 127;
-            System.out.println("STOP");
+            if(jRadioButton2.isSelected()){
+                if(v==1){
+                    manual_output = 1;
+                    System.out.println("Weer naar voor .....");
+                }else{
+                    manual_output = 127;
+                    System.out.println("STOP");
+                }
+            }else if(jRadioButton1.isSelected() && v==1){
+                manual_output = 1;
+                System.out.println("Weer naar voor .....");
+                conv(manual_output);
+            }
             conv(manual_output);
+            
+            
+        //pijtlje naar links loslaten    
         }else if(evt.getKeyCode()==KeyEvent.VK_LEFT){
-            manual_output = 127;
-            System.out.println("STOP");
+            if(jRadioButton2.isSelected()){
+               if(v==1){
+                    manual_output = 1;
+                    System.out.println("Weer naar voor .....");
+                }else{
+                    manual_output = 127;
+                    System.out.println("STOP");
+                }
+            }else if(jRadioButton1.isSelected() && v==1){
+                manual_output = 1;
+                System.out.println("Weer naar voor .....");
+                conv(manual_output);
+            }
+            conv(manual_output);
+        
+        }bc=0;
+    }//GEN-LAST:event_jTextField1KeyReleased
+
+    //pijltje omhoog KNOP
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+        v = 1;
+        if(delayChecker){
+        manual_output = 1;
+        /* Bij ingestelde snelheid: */
+        if(jRadioButton1.isSelected()){
+            System.out.println("Vooruit rijden ..... [");
+            ing_snelheid = jSlider1.getValue();
+            motor_links = jSlider1.getValue();
+            System.out.println("      Motor links:  " + motor_links + " = " + motor_links);
+            motor_rechts = jSlider1.getValue();
+            System.out.println("      Motor rechts: " + motor_rechts + " = " + motor_rechts);
+            System.out.println("]");
             conv(manual_output);
         }
-        bc=0;
-    }//GEN-LAST:event_jTextField1KeyReleased
+        /* Bij korte afstands modus: */
+        else if(jRadioButton2.isSelected()){
+            if(delayChecker){
+            motor_links = 128;
+            motor_rechts = 128;
+            ing_snelheid = 128;
+            System.out.println("Vooruit rijden .....");
+            delayChecker = false;
+            conv(manual_output);
+            bc++;
+            }
+        }  }
+    }//GEN-LAST:event_jButton3ActionPerformed
+
+    // pijltje omlaag KNOP
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        manual_output = 2;
+        System.out.println("Achteruit rijden .....");
+        conv(manual_output);
+        bc++;
+    }//GEN-LAST:event_jButton2ActionPerformed
+
+    // pijltje naar links KNOP
+    private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
+        if(v==1){
+            manual_output = 5;
+            System.out.println("Naar links + voor rijden .....");
+        }else{
+            manual_output = 4;
+            System.out.println("Naar links rijden .....");
+        }
+        conv(manual_output);
+        bc++;  
+    }//GEN-LAST:event_jButton5ActionPerformed
+
+    // pijltje naar rechts KNOP
+    private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
+        
+        if(v==1){
+            manual_output = 9;
+            System.out.println("Naar rechts + voor rijden .....");
+        }else{
+            manual_output = 8;
+            System.out.println("Naar rechts rijden .....");
+        } 
+        conv(manual_output);
+        bc++;
+    }//GEN-LAST:event_jButton6ActionPerformed
 
     public static void delay(){
         try {
@@ -517,6 +652,10 @@ public class handmatig extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButton2;
+    private javax.swing.JButton jButton3;
+    private javax.swing.JButton jButton5;
+    private javax.swing.JButton jButton6;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
