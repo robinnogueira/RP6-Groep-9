@@ -1,4 +1,3 @@
-
 package rp6.gui;
 
 import static rp6.gui.handmatig.snd;
@@ -8,6 +7,7 @@ import static rp6.gui.handmatig.teller;
  *
  * @author Jop Veth
  */
+
 public class route extends javax.swing.JFrame {
     
     public static String output = "";
@@ -425,8 +425,7 @@ public class route extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private String stringtoint(int input)
-    {
+    private String stringtoint(int input){
         String route="";
         int x=input/128;
         int y=input%128;
@@ -581,7 +580,7 @@ public class route extends javax.swing.JFrame {
             teller = 0;
             snd = "";
             System.out.println("Commando verstuurd!" + snd);
-        } 
+        }
         
         return 0;
     }
@@ -592,13 +591,10 @@ public class route extends javax.swing.JFrame {
 
     public static void main(String args[]) {
 
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new route().setVisible(true);
-            }
+        java.awt.EventQueue.invokeLater(() -> {
+            new route().setVisible(true);
         });
-        
-        
+             
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

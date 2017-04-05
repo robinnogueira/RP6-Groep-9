@@ -1,6 +1,7 @@
 package rp6.gui;
 
 import java.awt.event.KeyEvent;
+import java.util.concurrent.TimeUnit;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -25,14 +26,31 @@ public class handmatig extends javax.swing.JFrame {
     public static int teller = 0;
     public static String snd = "";
     
+    public int hoi = 0;
+    
     public int bc = 0;
     
     public handmatig() {
         initComponents();
     }
     
+   
+    public void delay(){
+        int countdown = 1;
+        while (countdown < 10000){
+
+            ++countdown;
+            if(countdown == 10000 ){
+                countdown = 10001;
+                hoi = 0;
+                System.out.println(countdown);
+            }
+        }
+    }
+    
     public int conv(int x){
         
+        hoi = 1;
         char add = (char ) x;
         snd += add;
         
@@ -44,6 +62,8 @@ public class handmatig extends javax.swing.JFrame {
             snd = "";
             System.out.println("Commando verstuurd!");
         } 
+        
+        delay();
         
         return 0;
     }
@@ -392,7 +412,9 @@ public class handmatig extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jTextField1KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField1KeyPressed
-        
+    
+        if(hoi==0){
+            
         if(bc==0){
             /* Pijltje omhoog indrukken */
         if(evt.getKeyCode()==KeyEvent.VK_UP){
@@ -429,7 +451,7 @@ public class handmatig extends javax.swing.JFrame {
                 jRadioButton2.setSelected(false);
                 System.out.println("Korte afstand modus");
             }
-        }}
+        }}  }
     }//GEN-LAST:event_jTextField1KeyPressed
 
     private void jSlider1StateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_jSlider1StateChanged
@@ -470,7 +492,7 @@ public class handmatig extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jTextField1KeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField1KeyReleased
-        
+        if(hoi==0){
         // pijltje omhoog loslatenn
         if(evt.getKeyCode()==KeyEvent.VK_UP){
             if(jRadioButton2.isSelected()){
@@ -523,7 +545,7 @@ public class handmatig extends javax.swing.JFrame {
             }
             conv(manual_output);
         
-        }bc=0;
+        }bc=0;  }
     }//GEN-LAST:event_jTextField1KeyReleased
 
     //pijltje omhoog KNOP
@@ -601,13 +623,6 @@ public class handmatig extends javax.swing.JFrame {
         bc++;
     }//GEN-LAST:event_jButton6ActionPerformed
 
-    public static void delay(){
-        try {
-            Thread.sleep(1000);
-        } catch (InterruptedException ex) {
-            Logger.getLogger(handmatig.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }
     
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
