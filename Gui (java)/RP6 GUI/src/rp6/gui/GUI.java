@@ -17,9 +17,7 @@ public class GUI extends javax.swing.JFrame {
     int huidige_snelheid;
     int afgelegde_afstand;
     
-    int bumper_rechts = 0;
-    int bumper_links = 0;
-    
+    public static int bumper = 3; 
     public static int compas = 3;
     public static int ultrasoon = 10; 
     
@@ -588,18 +586,18 @@ public class GUI extends javax.swing.JFrame {
         jTextField6.setText(compas_dir);
   
         //live bumper rechts update
-        if(bumper_rechts == 1){
-            jPanel4.setBackground(Color.RED);
-        }else if(bumper_rechts == 0){
+        if(bumper == 0){
             jPanel4.setBackground(Color.GREEN);
+        }else if(bumper== 1){
+            jPanel3.setBackground(Color.RED);
+        }else if(bumper== 2){
+            jPanel4.setBackground(Color.RED);
+        }else if(bumper== 3){
+            jPanel3.setBackground(Color.RED);
+            jPanel4.setBackground(Color.RED);
         }
         
-        //live bumper links update
-        if(bumper_links == 1){
-            jPanel3.setBackground(Color.RED);
-        }else if(bumper_links == 0){
-            jPanel3.setBackground(Color.GREEN);
-        }
+        
         System.out.println("GUI updated!");
     }
     

@@ -523,9 +523,9 @@ public class handmatig extends javax.swing.JFrame {
             conv(manual_output);
                      
         //pijtlje naar links loslaten    
-        }else if(jRadioButton2.isSelected() || jRadioButton1.isSelected()){
-            if(jRadioButton2.isSelected()){
-               if(v==1){
+        }else if(evt.getKeyCode()==KeyEvent.VK_LEFT){
+            if(jRadioButton2.isSelected() || jRadioButton1.isSelected()){
+                if(v==1){
                     manual_output = 1;
                     System.out.println("Weer naar voor .....");
                 }else{
@@ -577,6 +577,7 @@ public class handmatig extends javax.swing.JFrame {
 
     // pijltje omlaag KNOP
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        v = 0;
         if(stop==1){
             manual_output = 127;
             System.out.println("STOP");

@@ -52,6 +52,9 @@ public class MyDataReceiveListener implements IDataReceiveListener {
                                         case 1:
                                             GUI.compas=data.charAt(i);
                                             break;
+                                        case 3:
+                                            GUI.bumper=data.charAt(i);
+                                            break;    
                                     }
                                 }                          
 	}
