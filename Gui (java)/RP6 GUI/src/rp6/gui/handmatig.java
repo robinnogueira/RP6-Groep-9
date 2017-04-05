@@ -26,7 +26,6 @@ public class handmatig extends javax.swing.JFrame {
     
     public int bc = 0;
     
-    boolean delayChecker;
     public handmatig() {
         initComponents();
     }
@@ -49,17 +48,11 @@ public class handmatig extends javax.swing.JFrame {
             System.out.println("Commando verstuurd!");
         }
         
-        try {
-            Thread.sleep(2500);
             jButton3.setEnabled(true);
             jButton2.setEnabled(true);
             jButton5.setEnabled(true);
             jButton6.setEnabled(true);
-           // delayChecker = true;
-        } catch (InterruptedException ex) {
-            Logger.getLogger(handmatig.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        
+
         
         return 0;
     }
@@ -408,7 +401,7 @@ public class handmatig extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jTextField1KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField1KeyPressed
-         if(delayChecker){
+        
         if(bc==0){
             /* Pijltje omhoog indrukken */
         if(evt.getKeyCode()==KeyEvent.VK_UP){
@@ -446,7 +439,7 @@ public class handmatig extends javax.swing.JFrame {
                 jRadioButton2.setSelected(false);
                 System.out.println("Korte afstand modus");
             }
-        }}}
+        }}
     }//GEN-LAST:event_jTextField1KeyPressed
 
     private void jSlider1StateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_jSlider1StateChanged
@@ -548,7 +541,6 @@ public class handmatig extends javax.swing.JFrame {
     //pijltje omhoog KNOP
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
         v = 1;
-        if(delayChecker){
         manual_output = 1;
         /* Bij ingestelde snelheid: */
         if(jRadioButton1.isSelected()){
@@ -563,16 +555,14 @@ public class handmatig extends javax.swing.JFrame {
         }
         /* Bij korte afstands modus: */
         else if(jRadioButton2.isSelected()){
-            if(delayChecker){
             motor_links = 128;
             motor_rechts = 128;
             ing_snelheid = 128;
             System.out.println("Vooruit rijden .....");
-            delayChecker = false;
             conv(manual_output);
             bc++;
             }
-        }  }
+        
     }//GEN-LAST:event_jButton3ActionPerformed
 
     // pijltje omlaag KNOP
