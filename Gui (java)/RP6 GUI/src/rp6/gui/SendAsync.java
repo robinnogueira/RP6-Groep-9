@@ -9,49 +9,55 @@ import com.digi.xbee.api.models.XBee64BitAddress;
 import com.digi.xbee.api.utils.HexUtils;
 
 public class SendAsync {
-
         
-         public static void main(String args){    
-             
+   static boolean first = true;
+    
+        public static void main(String args){    
 
-        XBeeDevice myXBeeDevice = new XBeeDevice("COM6", 9600);
-        try
-        {    
-            myXBeeDevice.open();
+            XBeeDevice myXBeeDevice = new XBeeDevice("COM6", 9600);
+            try
+            {    
+                
+                    myXBeeDevice.open();
 
+                    
+                    myXBeeDevice.addDataListener(new MyDataReceiveListener());
+                    first = false;
+                    System.out.println(first);
+                    
+               
+                    System.out.println("Verbinden met XBee is succesvol tot stand gebracht!");
+                    
+               
+                   
+                
 
-            myXBeeDevice.addDataListener(new MyDataReceiveListener());
+                // Instantiate an XBee device object.
+                // Get the XBee Network object from the XBee device.
+                XBeeNetwork network = myXBeeDevice.getNetwork();
 
-            //myDevice.open();
-            System.out.println("device opent");
+                // Instantiate a remote XBee device.
+                XBee64BitAddress remoteAddress = new XBee64BitAddress("0013A2004146A180");
+                RemoteXBeeDevice remoteDevice = new RemoteXBeeDevice(myXBeeDevice, remoteAddress);
 
-            // Instantiate an XBee device object.
+                // Add the remote XBee device to the network.
+                network.addRemoteDevice(remoteDevice);
 
+                byte[] dataToSend = args.getBytes();
 
-           // Get the XBee Network object from the XBee device.
-           XBeeNetwork network = myXBeeDevice.getNetwork();
+                // myXBeeDevice.sendDataAsync(remoteDevice, dataToSend);
+                myXBeeDevice.sendData(remoteDevice, dataToSend);
+                System.out.println("Succesvol geconverteerd!");
+                
+              //  myXBeeDevice.close();
+                
+                
+           }
 
-           // Instantiate a remote XBee device.
-           XBee64BitAddress remoteAddress = new XBee64BitAddress("0013A2004146A180");
-           RemoteXBeeDevice remoteDevice = new RemoteXBeeDevice(myXBeeDevice, remoteAddress);
-
-           // Add the remote XBee device to the network.
-           network.addRemoteDevice(remoteDevice);
-
-           byte[] dataToSend = args.getBytes();
-
-           myXBeeDevice.sendDataAsync(remoteDevice, dataToSend);
-           
-          
-
-           System.out.println("Success");
-       }
-        
-       catch(XBeeException e)
-        {
-            e.printStackTrace();
-        
-        }           	
+           catch(XBeeException e)
+            {
+                e.printStackTrace();
+            }           	
 
         }                       
 }

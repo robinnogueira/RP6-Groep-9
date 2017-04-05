@@ -1,6 +1,8 @@
 package rp6.gui;
 
 import java.awt.Color;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JFrame;
 
 /**
@@ -10,15 +12,18 @@ import javax.swing.JFrame;
 
 public class GUI extends javax.swing.JFrame {
     
-    public static int dataOntvangen[];
+    public static  int dataOntvangen[];
     
     int huidige_snelheid;
     int afgelegde_afstand;
     
     int bumper_rechts = 0;
     int bumper_links = 0;
-    int compas = 0;
-    int ultrasoon = 0;  
+    
+    public static int compas = 3;
+    public static int ultrasoon = 10; 
+    
+    
     
     public GUI() {
         initComponents();
@@ -64,6 +69,7 @@ public class GUI extends javax.swing.JFrame {
         jPanel14 = new javax.swing.JPanel();
         jButton2 = new javax.swing.JButton();
         jButton5 = new javax.swing.JButton();
+        jButton1 = new javax.swing.JButton();
         jPanel8 = new javax.swing.JPanel();
         jPanel9 = new javax.swing.JPanel();
         label6 = new java.awt.Label();
@@ -94,7 +100,7 @@ public class GUI extends javax.swing.JFrame {
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, 64, Short.MAX_VALUE)
                 .addContainerGap())
@@ -357,7 +363,7 @@ public class GUI extends javax.swing.JFrame {
             .addGroup(jPanel11Layout.createSequentialGroup()
                 .addComponent(jPanel13, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jProgressBar1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jProgressBar1, javax.swing.GroupLayout.DEFAULT_SIZE, 167, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jTextField5, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -379,7 +385,7 @@ public class GUI extends javax.swing.JFrame {
 
         jPanel14.setBackground(java.awt.SystemColor.controlHighlight);
 
-        jButton2.setFont(new java.awt.Font("Verdana", 1, 11)); // NOI18N
+        jButton2.setFont(new java.awt.Font("Verdana", 0, 11)); // NOI18N
         jButton2.setText("Route Programmeren");
         jButton2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -387,11 +393,18 @@ public class GUI extends javax.swing.JFrame {
             }
         });
 
-        jButton5.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         jButton5.setText("Handmatige besturing");
         jButton5.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton5ActionPerformed(evt);
+            }
+        });
+
+        jButton1.setFont(new java.awt.Font("Verdana", 0, 11)); // NOI18N
+        jButton1.setText("Start updaten");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
             }
         });
 
@@ -401,9 +414,11 @@ public class GUI extends javax.swing.JFrame {
             jPanel14Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel14Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 182, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(jPanel14Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jButton2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jButton5, javax.swing.GroupLayout.DEFAULT_SIZE, 179, Short.MAX_VALUE)
+                .addComponent(jButton5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addContainerGap())
         );
         jPanel14Layout.setVerticalGroup(
@@ -411,9 +426,12 @@ public class GUI extends javax.swing.JFrame {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel14Layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(jPanel14Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jButton2, javax.swing.GroupLayout.DEFAULT_SIZE, 68, Short.MAX_VALUE)
+                    .addGroup(jPanel14Layout.createSequentialGroup()
+                        .addComponent(jButton2, javax.swing.GroupLayout.DEFAULT_SIZE, 27, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(jButton5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap())
+                .addGap(16, 16, 16))
         );
 
         jPanel8.setBackground(java.awt.SystemColor.controlHighlight);
@@ -527,10 +545,22 @@ public class GUI extends javax.swing.JFrame {
         
     }//GEN-LAST:event_jButton2ActionPerformed
 
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+       call_update();
+       jButton1.setEnabled(false);
+    }//GEN-LAST:event_jButton1ActionPerformed
+
     public void updategui() {
-        
-        ultrasoon = dataOntvangen[0];
-        compas = dataOntvangen[1];
+
+       //info uit array uitlezen
+       // ultrasoon = dataOntvangen[0];
+       // compas =  dataOntvangen[1];
+
+       // ultrasoon = 56;
+       // compas = 5;
+       
+       // dataOntvangen[0] = 10;
+       // dataOntvangen[1] = 3;
         
         //live update ultrasoon afstand
         jTextField1.setText(Integer.toString(ultrasoon));
@@ -538,22 +568,22 @@ public class GUI extends javax.swing.JFrame {
         //live update compass
         String compas_dir = null;
         switch (compas) {
-            case 1:  compas_dir = "N";
-                     break;
-            case 2:  compas_dir = "NW";
-                     break;
-            case 3:  compas_dir = "W";
-                     break;
-            case 4:  compas_dir = "ZW";
-                     break;
-            case 5:  compas_dir = "Z";
-                     break;
-            case 6:  compas_dir = "ZO";
-                     break;
-            case 7:  compas_dir = "O";
-                     break;
-            case 8:  compas_dir = "NO";
-                     break;
+            case 1: compas_dir = "N";
+                    break;
+            case 2: compas_dir = "NW";
+                    break;
+            case 3: compas_dir = "W";
+                    break;
+            case 4: compas_dir = "ZW";
+                    break;
+            case 5: compas_dir = "Z";
+                    break;
+            case 6: compas_dir = "ZO";
+                    break;
+            case 7: compas_dir = "O";
+                    break;
+            case 8: compas_dir = "NO";
+                    break;
         } 
         jTextField6.setText(compas_dir);
   
@@ -570,17 +600,33 @@ public class GUI extends javax.swing.JFrame {
         }else if(bumper_links == 0){
             jPanel3.setBackground(Color.GREEN);
         }
-        
+        System.out.println("GUI updated!");
     }
     
-    public static void main(String args[]) {
-               
+    public void call_update(){
+        new Thread() {
+            public void run() {
+                while(true){
+                    try {
+                        Thread.sleep(1000);
+                        updategui();      
+                    } catch (InterruptedException ex) {
+                        Logger.getLogger(GUI.class.getName()).log(Level.SEVERE, null, ex);
+                    }      
+                }
+            }
+        }.start();
+    }
+    
+    public static void main(String args[]) {       
+        
+        
         JFrame frame = new GUI(); 
-        frame.setVisible(true); 
-  
+        frame.setVisible(true);
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton5;
     private javax.swing.JFormattedTextField jFormattedTextField1;

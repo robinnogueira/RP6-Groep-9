@@ -44,8 +44,15 @@ public class MyDataReceiveListener implements IDataReceiveListener {
 				data=new String(xbeeMessage.getData()));
                                 for(int i = 0;i < 2; i++)
                                 {
-                                    GUI.dataOntvangen[i] = data.charAt(i);
-                                }
-                                GUI.updategui();
+                                    switch (i)
+                                    {
+                                        case 0:
+                                            GUI.ultrasoon=data.charAt(i);
+                                            break;
+                                        case 1:
+                                            GUI.compas=data.charAt(i);
+                                            break;
+                                    }
+                                }                          
 	}
 }
