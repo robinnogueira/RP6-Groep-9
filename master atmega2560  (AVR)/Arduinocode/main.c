@@ -18,9 +18,14 @@ int knop,vorigeknop=0; //Een int met hierin de binaire representatie van welke k
 int snelheid = 0; //snelheid die het laatste gebruikt is
 int instelsnelheid=125; //snelheid die de gebruiker in kan stellen
 uint8_t adress = 8;
-int route[6][2];
+int route[9][2];
 int ultrasoon; //ultrasone afstand gedeeld
 uint8_t kompasstand;
+uint8_t dataprog = 0;
+int progafstand;
+int progcounter = 0;
+int progposition = 0;
+int progstop = 0;
 
 #define US_PORT PORTA
 #define US_PIN  PINA
@@ -51,14 +56,19 @@ uint16_t getPulseWidth();
 void voorObject();
 uint8_t kompas();
 void verzendData();
+void progData(char);
 //Prototypes voor de functies
 
 ISR(USART0_RX_vect)
 {
-	char x=UDR0;
-	knop=x;
+	char x = UDR0;
+	if ((int) x == 50 || dataprog == 1) {
+		dataprog = 1;
+		progData(x);
+	} else {
+		knop = (int) x;
+	}
 	//ChartoInt for USART
-	writeChar(x);
 }
 
 int main(void)
@@ -100,7 +110,6 @@ int main(void)
 			snelheid = 0;
 			break;
 		}//Hier slaan we de huidige snelheid op
-		writeInteger(ultrasoon, 10);
 		if (ultrasoon < 5) {
 			voorObject();
 		}
@@ -108,16 +117,13 @@ int main(void)
 		_delay_ms(50);
 		ontvangen(8,sensoren,2);
 		if (sensoren[0]!=128)
-		writeInteger(sensoren[0],10);
+		//writeInteger(sensoren[0],10);
 		if (sensoren[1]!=128)
-		writeInteger(sensoren[1],10);
+		//writeInteger(sensoren[1],10);
 		kompasstand = kompas();
 		verzendData();
 	}
 }
-
-//TODO doe iets met sensoren
-//TODO pad planning implementeren
 
 void rechtdoor ()
 {
@@ -230,8 +236,8 @@ void links ()
 		break;
 	}
 }
-void rechts ()
-{ //Wordt aangeroepen als we willen dat de Arduino naar rechts gaat
+
+void rechts () { //Wordt aangeroepen als we willen dat de Arduino naar rechts gaat
 	switch(motor[0])
 	{
 		case 0:
@@ -276,15 +282,13 @@ void rechts ()
 	}
 }
 
-void stop ()
-{ //Wordt aangeroepen als de RP6 compleet stil moet zijn
+void stop () { //Wordt aangeroepen als de RP6 compleet stil moet zijn
 	motor[0] = 0;
 	motor[1] = 0;
 	motor[2] = 0;
 }
 
-void doStuff()
-{
+void doStuff() {
 	switch (knop) {
 		case 0: //als we niks indrukken en we zijn niet met de instelsnelheid bezig, stop.
 		if (langeafstand == 0)
@@ -372,9 +376,6 @@ int charToInt(char in) {
 	}
 	return x;
 } // Used to take input from command line for now
-
-
-
 
 void init_master() {
 	TWSR = 0;
@@ -562,7 +563,7 @@ void prog() {
 	instelsnelheid = 125;
 	int x = 0;
 	writeString("Ik ga loopje in wah \n");
-	while (x < 6 && route[x][0] != 0) {
+	while (x < 8 && route[x][0] != 0) {
 		writeString("Weer ff loopen jwz jonguh \n");
 		//TODO stop opvragen, programma verlaten
 		if (route[x][1] != stand) {
@@ -592,7 +593,7 @@ void draai(int x) {
 		
 		case 2:
 		verzenden(adress, 4, 100, 100);
-		for (i = 0; i < 24; i++){
+		for (i = 0; i < 20; i++){
 			_delay_ms(240);
 		}
 		break;
@@ -610,10 +611,19 @@ void rijden(int afstand) {
 	verzenden(adress, 0, 125, 125);
 	writeString("lekker rijden wah \n");
 	int i;
+	int x;
 	for (i = 0; i < afstand; i++){
+		getultrasoondistance();
+		if (ultrasoon < 10) {
+			x = omObjectHeen();
+			i = i + x;
+		}
+		if (knop == 127) {
+			stop();
+			return;
+		}
 		_delay_ms(95);
 	}
-	writeString("delay \n");
 }
 
 int omObjectHeen() {
@@ -621,54 +631,52 @@ int omObjectHeen() {
 	int passed = 0;
 	int x = 0;
 	int ret = 0;
-	int afstand;
 	while (passed == 0) {
-		rijden(10);
+		rijden(20);
 		x++;
 		draai(3);
-		afstand = 10;//TODO check afstand tot object
-		if (afstand > 100) {
+		getultrasoondistance();
+		if (ultrasoon > 20) {
 			passed++;
 			} else {
 			draai(1);
 		}
 	}
 	while (passed == 1) {
-		rijden(10);
+		rijden(20);
 		ret++;
 		draai(3);
-		afstand = 10;//TODO check afstand tot object
-		if (afstand > 100) {
+		getultrasoondistance();
+		if (ultrasoon > 20) {
 			passed++;
 			} else {
 			draai(1);
 		}
 	}
-	rijden(x*10);
+	rijden(x*20);
 	draai(1);
-	return ret;
+	return ret * 20;
 }
 
 void voorObject() {
 	draai(2);
-	rijden(5);
 	writeString("Ik wil hier niet tegenaan rijden wah \n");
 	verzenden(adress, 0, 0, 0);
 }
 
 void preprog() {
-	route[0][0] = 50;
+	route[0][0] = 200;
 	route[0][1] = 0;
-	route[1][0] = 50;
-	route[1][1] = 1;
-	route[2][0] = 50;
-	route[2][1] = 3;
-	route[3][0] = 50;
-	route[3][1] = 2;
-	route[4][0] = 50;
-	route[4][1] = 1;
-	route[5][0] = 50;
-	route[5][1] = 3;
+	route[1][0] = 0;
+	route[1][1] = 0;
+	route[2][0] = 0;
+	route[2][1] = 0;
+	route[3][0] = 0;
+	route[3][1] = 0;
+	route[4][0] = 0;
+	route[4][1] = 0;
+	route[5][0] = 0;
+	route[5][1] = 0;
 	prog();
 }
 
@@ -709,8 +717,80 @@ uint8_t kompas(){
 }
 
 void verzendData() {
-	char x[10];
-	x[0] = ultrasoon;
-	x[1] = kompasstand;
-	writeString(x);
+	writeString("Afstand tot object: ");
+	writeInteger(ultrasoon, 10);
+	writeString(". We staan nu richting: ");
+	switch(kompasstand) {
+		case 1:
+		writeString("Noord");
+		break;
+		
+		case 2:
+		writeString("Noord-Oost");
+		break;
+		
+		case 3:
+		writeString("Oost");
+		break;
+		
+		case 4:
+		writeString("Zuid-Oost");
+		break;
+		
+		case 5:
+		writeString("Zuid");
+		break;
+		
+		case 6:
+		writeString("Zuid-West");
+		break;
+		
+		case 7:
+		writeString("West");
+		break;
+		
+		case 8:
+		writeString("Noord-West");
+		break;
+	}
+	writeChar('\n');
+}
+
+void progData(char x) {
+	switch (progcounter) {
+		case 0:
+			progafstand = 0;
+			progafstand = progafstand + (int) x * 128;
+			progcounter++;
+		break;
+		
+		case 1:
+			progafstand = progafstand + (int) x;
+			progcounter++;
+			route[progposition][0] = progafstand;
+			if (progafstand == 0) {
+				for (progposition; progposition < 9; progposition++) {
+					route[progposition][0] = 0;
+					route[progposition][1] = 0;
+				}
+				progcounter = 3;
+			}
+		break;
+		
+		case 2:
+			route[progposition][1] = (int) x;
+			if (progposition == 8) {
+				progcounter = 3;
+			} else {
+				progcounter = 0;	
+			}
+		break;	
+		
+		case 3:
+			progstop = (int) x;
+			progcounter = 0;
+			progposition = 0;
+			dataprog == 0;
+		break;
+	}
 }
