@@ -20,6 +20,7 @@ public class handmatig extends javax.swing.JFrame {
     public int vooruit = 0;
     
     public int v;
+    public int stop;
     
     public static int teller = 0;
     public static String snd = "";
@@ -31,11 +32,6 @@ public class handmatig extends javax.swing.JFrame {
     }
     public int conv(int x){
         
-        jButton3.setEnabled(false);
-        jButton2.setEnabled(false);
-        jButton5.setEnabled(false);
-        jButton6.setEnabled(false);
-        
         char add = (char) x;
         snd += add;
         
@@ -46,13 +42,7 @@ public class handmatig extends javax.swing.JFrame {
             teller = 0;
             snd = "";
             System.out.println("Commando verstuurd!");
-        }
-        
-            jButton3.setEnabled(true);
-            jButton2.setEnabled(true);
-            jButton5.setEnabled(true);
-            jButton6.setEnabled(true);
-
+        } 
         
         return 0;
     }
@@ -405,7 +395,6 @@ public class handmatig extends javax.swing.JFrame {
         if(bc==0){
             /* Pijltje omhoog indrukken */
         if(evt.getKeyCode()==KeyEvent.VK_UP){
-          
             jButton3.doClick();
             
         /* Pijltje omlaag indrukken */
@@ -498,8 +487,7 @@ public class handmatig extends javax.swing.JFrame {
                 conv(manual_output);
                 v = 0;
             }
-            
-         
+                
         // pijltje naar rechts loslaten
         }else if(evt.getKeyCode()==KeyEvent.VK_RIGHT){
             if(jRadioButton2.isSelected()){
@@ -516,8 +504,7 @@ public class handmatig extends javax.swing.JFrame {
                 conv(manual_output);
             }
             conv(manual_output);
-            
-            
+                     
         //pijtlje naar links loslaten    
         }else if(evt.getKeyCode()==KeyEvent.VK_LEFT){
             if(jRadioButton2.isSelected()){
@@ -541,36 +528,49 @@ public class handmatig extends javax.swing.JFrame {
     //pijltje omhoog KNOP
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
         v = 1;
-        manual_output = 1;
-        /* Bij ingestelde snelheid: */
-        if(jRadioButton1.isSelected()){
-            System.out.println("Vooruit rijden ..... [");
-            ing_snelheid = jSlider1.getValue();
-            motor_links = jSlider1.getValue();
-            System.out.println("      Motor links:  " + motor_links + " = " + motor_links);
-            motor_rechts = jSlider1.getValue();
-            System.out.println("      Motor rechts: " + motor_rechts + " = " + motor_rechts);
-            System.out.println("]");
-            conv(manual_output);
-        }
-        /* Bij korte afstands modus: */
-        else if(jRadioButton2.isSelected()){
-            motor_links = 128;
-            motor_rechts = 128;
-            ing_snelheid = 128;
-            System.out.println("Vooruit rijden .....");
-            conv(manual_output);
-            bc++;
+        if(stop==1){
+            manual_output = 127;
+            System.out.println("STOP");
+            stop = 0;
+        }else{
+            manual_output = 1;
+            /* Bij ingestelde snelheid: */
+            if(jRadioButton1.isSelected()){
+                stop = 1;
+                System.out.println("Vooruit rijden ..... [");
+                ing_snelheid = jSlider1.getValue();
+                motor_links = jSlider1.getValue();
+                System.out.println("      Motor links:  " + motor_links + " = " + motor_links);
+                motor_rechts = jSlider1.getValue();
+                System.out.println("      Motor rechts: " + motor_rechts + " = " + motor_rechts);
+                System.out.println("]");
+
             }
-        
+            /* Bij korte afstands modus: */
+            else if(jRadioButton2.isSelected()){
+                motor_links = 128;
+                motor_rechts = 128;
+                ing_snelheid = 128;
+                System.out.println("Vooruit rijden .....");
+                bc++;
+            }
+        }
+        conv(manual_output);
     }//GEN-LAST:event_jButton3ActionPerformed
 
     // pijltje omlaag KNOP
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        manual_output = 2;
-        System.out.println("Achteruit rijden .....");
-        conv(manual_output);
+        if(stop==1){
+            manual_output = 127;
+            System.out.println("STOP");
+            stop = 0;
+        }else{
+            manual_output = 2;
+            System.out.println("Achteruit rijden .....");   
+            stop = 1;
+        }
         bc++;
+        conv(manual_output);
     }//GEN-LAST:event_jButton2ActionPerformed
 
     // pijltje naar links KNOP
