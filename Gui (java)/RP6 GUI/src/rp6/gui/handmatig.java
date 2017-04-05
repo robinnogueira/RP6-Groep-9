@@ -30,9 +30,10 @@ public class handmatig extends javax.swing.JFrame {
     public handmatig() {
         initComponents();
     }
+    
     public int conv(int x){
         
-        char add = (char) x;
+        char add = (char ) x;
         snd += add;
         
         teller++; 
