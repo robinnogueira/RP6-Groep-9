@@ -17,15 +17,15 @@ int langeafstand = 0; //slaat op of we wel of niet voor lange afstanden bezig zi
 int knop,vorigeknop=0; //Een int met hierin de binaire representatie van welke knoppen zijn ingedrukt
 int snelheid = 0; //snelheid die het laatste gebruikt is
 int instelsnelheid=125; //snelheid die de gebruiker in kan stellen
-uint8_t adress = 8;
-int route[9][2];
+uint8_t adress = 8; //het adres wat we gaan aanspreken
+int route[9][2]; //in deze 2 dimensionale array slaan we de waardes voor het rijden van een route op.
 int ultrasoon; //ultrasone afstand gedeeld
-uint8_t kompasstand;
-uint8_t dataprog = 0;
+uint8_t kompasstand; //de stand van het kompas
+uint8_t dataprog = 0; 
 int progafstand;
 int progcounter = 0;
 int progposition = 0;
-int progstop = 0;
+int progstop = 0; //deze data wordt gebruikt om data te kunnen ontvangen voor het routerijden
 
 #define US_PORT PORTA
 #define US_PIN  PINA
@@ -65,6 +65,8 @@ ISR(USART0_RX_vect)
 	if ((int) x == 50 || dataprog == 1) {
 		dataprog = 1;
 		progData(x);
+		/*Deze code wordt uitgevoerd als we een route willen rijden
+		en gooit de data naar een functie die deze vertaald */
 	} else {
 		knop = (int) x;
 	}
@@ -104,11 +106,15 @@ int main(void)
 			case 12:
 			snelheid = (motor[1] + motor[2]) / 2;
 			break;
+			/* Als we naar voren of naar achter gaan is de snelheid het 
+			gemiddelde van de twee motorwaarden */
 
 			case 4:
 			case 8:
 			snelheid = 0;
 			break;
+			/* Als we aan het draaien zijn is de snelheid langs de 
+			longtitudinale as 0	*/
 		}//Hier slaan we de huidige snelheid op
 		if (ultrasoon < 5) {
 			voorObject();
@@ -122,6 +128,7 @@ int main(void)
 		//writeInteger(sensoren[1],10);
 		kompasstand = kompas();
 		verzendData();
+		//Data verzenden
 	}
 }
 
@@ -368,7 +375,7 @@ int charToInt(char in) {
 		
 		case 'l':
 		x = 100;
-		break;
+		break; //L will be used to trigger a preprogrammed route
 
 		default:
 		x = 0;
@@ -382,7 +389,7 @@ void init_master() {
 	// Set bit rate
 	TWBR = ( ( F_CPU / SCL_frequentie ) - 16) / 2;
 	TWCR = (1<<TWEN);
-}
+} // initiates communication
 
 void ontvangen(uint8_t ad,uint8_t b[],uint8_t max) {
 	uint8_t op[15];
@@ -414,7 +421,7 @@ void ontvangen(uint8_t ad,uint8_t b[],uint8_t max) {
 	// writeString(" data ");writeInteger(b[i],10);
 	//   }
 
-}
+} // Used to receive data
 
 void verzenden(uint8_t ad,uint8_t b1,uint8_t b2,uint8_t b3)
 {
@@ -444,7 +451,7 @@ void verzenden(uint8_t ad,uint8_t b1,uint8_t b2,uint8_t b3)
 	// writeString("\n\r");writeInteger(op[0],16);
 	// writeString(" ");writeInteger(op[1],16);
 	// writeString(" ");writeInteger(op[2],16);
-}
+} // used to send data
 
 void initUSART() {
 
@@ -454,29 +461,26 @@ void initUSART() {
 	UCSR0C = (1<<UCSZ01)|(1<<UCSZ00);
 	UCSR0B = (1 << TXEN0) | (1 << RXEN0)|(1<<RXCIE0);
 	writeString("usart werkt nog\n\r");
-}
+} // initiates USART communication
 
-void writeChar(char ch)
-{
+void writeChar(char ch) {
 	while (!(UCSR0A & (1<<UDRE0)));
 	UDR0 = (uint8_t)ch;
-}
+} //writes a char over USART
 
-void writeString(char *string)
-{
+void writeString(char *string) {
 	while(*string)
 	writeChar(*string++);
-}
+} // writes a string over USART
 
 void writeInteger(int16_t number, uint8_t base)
 {
 	char buffer[17];
 	itoa(number, &buffer[0], base);
 	writeString(&buffer[0]);
-}
+} //writes an integer over USART
 
-uint16_t getPulseWidth() //functie om US uittelezen
-{
+uint16_t getPulseWidth() {
 	uint32_t i,result;
 
 	//wacht op input
@@ -520,9 +524,9 @@ uint16_t getPulseWidth() //functie om US uittelezen
 	return 0xfffe; //geen obstakel
 	else
 	return (result>>1);
-}
+} //functie om US uittelezen
 
-void getultrasoondistance(){//regel afstand omgezet naar cm
+void getultrasoondistance() {//regel afstand omgezet naar cm
 	uint16_t r;
 	//US port op output
 	US_DDR|=(1<<US_POS);
@@ -553,7 +557,7 @@ void getultrasoondistance(){//regel afstand omgezet naar cm
 		ultrasoon = 200;
 	}
 	ultrasoon = ultrasoon / 2;
-}
+} // leest data van de ultrasone sensor uit
 
 void prog() {
 	writeString("Rijden wah \n");
@@ -562,20 +566,22 @@ void prog() {
 	langeafstand = 0;
 	instelsnelheid = 125;
 	int x = 0;
+	//RP6 stilzetten en data initieren
 	writeString("Ik ga loopje in wah \n");
 	while (x < 8 && route[x][0] != 0) {
 		writeString("Weer ff loopen jwz jonguh \n");
-		//TODO stop opvragen, programma verlaten
 		if (route[x][1] != stand) {
 			writeString("Kmoet draaien wah \n");
 			draai(abs(route[x][1] - stand));
 			stand = route[x][1];
-		}
+		}// draait als de rp6 niet in de juiste richting staat
 		rijden(route[x][0]);
+		if (knop == 127) {
+			return;
+		} // noodstop verlaat het routerijden
 		x++;
 		stand = 0;
 	}
-	//TODO een respons verzenden dat we zijn aangekomen
 	writeString("Ben klaar met rijden wah \n");
 	verzenden(adress, 0, 0, 0);
 	return;
@@ -588,21 +594,21 @@ void draai(int x) {
 		verzenden(adress, 4, 100, 100);
 		for (i = 0; i < 10; i++){
 			_delay_ms(240);
-		}
+		} //draait 90 graden links
 		break;
 		
 		case 2:
 		verzenden(adress, 4, 100, 100);
 		for (i = 0; i < 20; i++){
 			_delay_ms(240);
-		}
+		} //draait 180 graden
 		break;
 		
 		case 3:
 		verzenden(adress, 8, 100, 100);
 		for (i = 0; i < 10; i++){
 			_delay_ms(240);
-		}
+		} //draait 90 graden rechts
 		break;
 	}
 }
@@ -612,16 +618,17 @@ void rijden(int afstand) {
 	writeString("lekker rijden wah \n");
 	int i;
 	int x;
+	//initialisatie
 	for (i = 0; i < afstand; i++){
 		getultrasoondistance();
 		if (ultrasoon < 10) {
 			x = omObjectHeen();
 			i = i + x;
-		}
+		} // initialiseert het om een pbject heen rijden
 		if (knop == 127) {
 			stop();
 			return;
-		}
+		} // noodstop
 		_delay_ms(95);
 	}
 }
@@ -631,6 +638,7 @@ int omObjectHeen() {
 	int passed = 0;
 	int x = 0;
 	int ret = 0;
+	//initialiseren, naar links draaien
 	while (passed == 0) {
 		rijden(20);
 		x++;
@@ -641,7 +649,7 @@ int omObjectHeen() {
 			} else {
 			draai(1);
 		}
-	}
+	} // checkt per 20cm of we al naast het object zijn
 	while (passed == 1) {
 		rijden(20);
 		ret++;
@@ -652,7 +660,7 @@ int omObjectHeen() {
 			} else {
 			draai(1);
 		}
-	}
+	} // checkt per 20cm of we het object al voorbij zijn
 	rijden(x*20);
 	draai(1);
 	return ret * 20;
@@ -662,6 +670,7 @@ void voorObject() {
 	draai(2);
 	writeString("Ik wil hier niet tegenaan rijden wah \n");
 	verzenden(adress, 0, 0, 0);
+	//draait en stopt als we vlak voor een object staan
 }
 
 void preprog() {
@@ -678,7 +687,7 @@ void preprog() {
 	route[5][0] = 0;
 	route[5][1] = 0;
 	prog();
-}
+} //voorgeprogrammeerde route instellen
 
 uint8_t kompas(){
 	uint8_t data[10];
@@ -714,7 +723,7 @@ uint8_t kompas(){
 	}
 	
 	return windrichting;
-}
+} //kompas omzetten naar een windrichting
 
 void verzendData() {
 	writeString("Afstand tot object: ");
@@ -754,7 +763,7 @@ void verzendData() {
 		break;
 	}
 	writeChar('\n');
-}
+} // verzend data
 
 void progData(char x) {
 	switch (progcounter) {
@@ -762,7 +771,7 @@ void progData(char x) {
 			progafstand = 0;
 			progafstand = progafstand + (int) x * 128;
 			progcounter++;
-		break;
+		break; //leest de eerste afstandsbyte
 		
 		case 1:
 			progafstand = progafstand + (int) x;
@@ -775,7 +784,7 @@ void progData(char x) {
 				}
 				progcounter = 3;
 			}
-		break;
+		break; //leest de tweede afstandsbyte
 		
 		case 2:
 			route[progposition][1] = (int) x;
@@ -784,13 +793,13 @@ void progData(char x) {
 			} else {
 				progcounter = 0;	
 			}
-		break;	
+		break; //leest de richting
 		
 		case 3:
 			progstop = (int) x;
 			progcounter = 0;
 			progposition = 0;
 			dataprog == 0;
-		break;
+		break; //leest de stopafstand
 	}
 }
