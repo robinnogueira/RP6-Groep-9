@@ -22,6 +22,7 @@ public class handmatig extends javax.swing.JFrame {
     
     public int v;
     public int stop;
+    public int lr = 0;
     
     public static int teller = 0;
     public static String snd = "";
@@ -506,7 +507,7 @@ public class handmatig extends javax.swing.JFrame {
                 
         // pijltje naar rechts loslaten
         }else if(evt.getKeyCode()==KeyEvent.VK_RIGHT){
-            if(jRadioButton2.isSelected()){
+            if(jRadioButton2.isSelected() || jRadioButton1.isSelected()){
                 if(v==1){
                     manual_output = 1;
                     System.out.println("Weer naar voor .....");
@@ -522,7 +523,7 @@ public class handmatig extends javax.swing.JFrame {
             conv(manual_output);
                      
         //pijtlje naar links loslaten    
-        }else if(evt.getKeyCode()==KeyEvent.VK_LEFT){
+        }else if(jRadioButton2.isSelected() || jRadioButton1.isSelected()){
             if(jRadioButton2.isSelected()){
                if(v==1){
                     manual_output = 1;
