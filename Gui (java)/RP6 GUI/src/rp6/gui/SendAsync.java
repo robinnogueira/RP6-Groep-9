@@ -10,21 +10,27 @@ import com.digi.xbee.api.utils.HexUtils;
 
 public class SendAsync {
         
-    public static int first = 0;
+   static boolean first = true;
     
         public static void main(String args){    
 
             XBeeDevice myXBeeDevice = new XBeeDevice("COM6", 9600);
             try
             {    
-                //if(first == 0){
+                
                     myXBeeDevice.open();
+                if(first){
+                    
                     myXBeeDevice.addDataListener(new MyDataReceiveListener());
-                    System.out.println("Verbinden met XBee is succesvol tot stand gebracht!");
-                    first=0;
-               // }else{
+                    first = false;
                     System.out.println(first);
-                //}
+                    
+                }
+                    System.out.println("Verbinden met XBee is succesvol tot stand gebracht!");
+                    
+               
+                   
+                
 
                 // Instantiate an XBee device object.
                 // Get the XBee Network object from the XBee device.
