@@ -36,12 +36,24 @@ public class MyDataReceiveListener implements IDataReceiveListener {
 	 * (non-Javadoc)
 	 * @see com.digi.xbee.api.listeners.IDataReceiveListener#dataReceived(com.digi.xbee.api.models.XBeeMessage)
 	 */
-    String data;
-	@Override
+        
+    
+         String data;
+	
+         
+        @Override
 	public void dataReceived(XBeeMessage xbeeMessage) {
+            
+                // print 64 bit address van de verzender, vervolgens print hij de Hex waardes uit en daarna de waardes in 
 		System.out.format("From %s >> %s | %s%n", xbeeMessage.getDevice().get64BitAddress(), 
 				HexUtils.prettyHexString(HexUtils.byteArrayToHexString(xbeeMessage.getData())), 
-				data=new String(xbeeMessage.getData()));
+				 data=new String(xbeeMessage.getData()));
+                                
+                              //  int dataint = Integer.parseInt(data);
+                                
+                               // System.out.println("ontvangen: %d", dataint);
+                               
+                                //loopt om de ontvangen data uit te lezen in de juiste volgorde
                                 for(int i = 0;i < 2; i++)
                                 {
                                     switch (i)
