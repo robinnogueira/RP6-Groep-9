@@ -19,13 +19,13 @@ public class SendAsync {
             {    
                 
                     myXBeeDevice.open();
-                if(first){
+
                     
                     myXBeeDevice.addDataListener(new MyDataReceiveListener());
                     first = false;
                     System.out.println(first);
                     
-                }
+               
                     System.out.println("Verbinden met XBee is succesvol tot stand gebracht!");
                     
                
@@ -45,8 +45,8 @@ public class SendAsync {
 
                 byte[] dataToSend = args.getBytes();
 
-                myXBeeDevice.sendDataAsync(remoteDevice, dataToSend);
-
+                // myXBeeDevice.sendDataAsync(remoteDevice, dataToSend);
+                myXBeeDevice.sendData(remoteDevice, dataToSend);
                 System.out.println("Succesvol geconverteerd!");
                 
               //  myXBeeDevice.close();
@@ -56,7 +56,7 @@ public class SendAsync {
 
            catch(XBeeException e)
             {
-               // e.printStackTrace();
+                e.printStackTrace();
             }           	
 
         }                       
