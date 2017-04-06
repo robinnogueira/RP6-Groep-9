@@ -20,7 +20,8 @@ public class handmatig extends javax.swing.JFrame {
     public int achteruit = 0;
     public int vooruit = 0;
     
-    public int v;
+    public int v = 0;
+    public int a = 0;
     public int stop;
     public int lr = 0;
     
@@ -503,6 +504,7 @@ public class handmatig extends javax.swing.JFrame {
                 System.out.println("STOP");
                 conv(manual_output);
                 v = 0;
+                a = 1;
             }
                 
         // pijltje naar rechts loslaten
@@ -519,6 +521,10 @@ public class handmatig extends javax.swing.JFrame {
                 manual_output = 1;
                 System.out.println("Weer naar voor .....");
                 conv(manual_output);
+            }else if(jRadioButton1.isSelected() && a==1){
+                a = 1;
+                manual_output = 2;
+                System.out.println("Weer naar voor .....");
             }
             conv(manual_output);
                      
@@ -536,6 +542,10 @@ public class handmatig extends javax.swing.JFrame {
                 manual_output = 1;
                 System.out.println("Weer naar voor .....");
                 conv(manual_output);
+            }else if(jRadioButton1.isSelected() && a==1){
+                a = 1;
+                manual_output = 2;
+                System.out.println("Weer naar voor .....");
             }
             conv(manual_output);
         
@@ -545,6 +555,7 @@ public class handmatig extends javax.swing.JFrame {
     //pijltje omhoog KNOP
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
         v = 1;
+        a = 0;
         if(stop==1){
             manual_output = 127;
             System.out.println("STOP");
@@ -578,6 +589,7 @@ public class handmatig extends javax.swing.JFrame {
     // pijltje omlaag KNOP
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         v = 0;
+        a = 1;
         if(stop==1){
             manual_output = 127;
             System.out.println("STOP");
@@ -606,7 +618,6 @@ public class handmatig extends javax.swing.JFrame {
 
     // pijltje naar rechts KNOP
     private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
-        
         if(v==1){
             manual_output = 9;
             System.out.println("Naar rechts + voor rijden .....");
