@@ -44,18 +44,17 @@ public class MyDataReceiveListener implements IDataReceiveListener {
         @Override
 	public void dataReceived(XBeeMessage xbeeMessage) {
             
-                // print 64 bit address van de verzender, vervolgens print hij de Hex waardes uit en daarna de waardes in 
+                // print 64 bit address van de verzender, vervolgens print hij de Hex waardes uit en als laasts worden de waardes als een String uit geprint
 		System.out.format("From %s >> %s | %s%n", xbeeMessage.getDevice().get64BitAddress(), 
 				HexUtils.prettyHexString(HexUtils.byteArrayToHexString(xbeeMessage.getData())), 
 				 data=new String(xbeeMessage.getData()));
-
-                                //loopt om de ontvangen data uit te lezen in de juiste volgorde
-                                            GUI.ultrasoon=data.charAt(0);
-                                            GUI.compas=data.charAt(1);
-                                            GUI.bumper=data.charAt(2);
-                                            GUI.afa=data.charAt(3);
-                                            GUI.afb=data.charAt(4);
-//                                    }
-//                                }                          
+                                 
+                                //leest waardes uit in chars en bepaalt welke char in welk variable moet komen
+                                GUI.ultrasoon=data.charAt(0);
+                                GUI.compas=data.charAt(1);
+                                GUI.bumper=data.charAt(2);
+                                GUI.afa=data.charAt(3);
+                                GUI.afb=data.charAt(4);
+                     
 	}
 }

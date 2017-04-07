@@ -5,6 +5,7 @@ import java.awt.event.KeyEvent;
 /**
  *
  * @author Jop Veth
+ * @author Chris Eijken
  */
 
 public class handmatig extends javax.swing.JFrame {
@@ -43,21 +44,20 @@ public class handmatig extends javax.swing.JFrame {
     public static int conv(int x){
         
         char add = (char ) x;
-        snd += add;//+(char)jSlider1.getValue();
-        
-        teller++; 
-        
-        if(teller >= 1){   
-            SendAsync.main(snd);
-            teller = 0;
-            snd = "";
-            System.out.println("Commando verstuurd!");
-        } 
-        
+        snd += add;
+        SendAsync.main(snd);
+        snd = "";
+        System.out.println("Commando verstuurd!");
+
         return 0;
     }
     
-    //auto generated code voor opbouw gui door NetBeans (java)
+    
+    
+    //--------- BEGIN  auto generated code voor opbouw gui door NetBeans (java) --------- >
+    
+    
+    
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -369,6 +369,13 @@ public class handmatig extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    
+    
+    
+    
+    //---------  EINDE  auto generated code voor opbouw gui door NetBeans (java) --------- >
+    
+    
     // in de funcite hieronder worden keypresses gesignaleerd en worden de buttons aangesproken die hiermee verbonden zijn in de GUI
     private void jTextField1KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField1KeyPressed
             
@@ -477,7 +484,7 @@ public class handmatig extends javax.swing.JFrame {
                 conv(manual_output);
             }else if(jRadioButton1.isSelected() && a==1){//als de rp6 al naar achter rijdt en dit pijltje wordt losgelaten moet hij weer achteruit gaan rijden.
                 a = 1;
-                manual_output = 1;
+                manual_output = 2;
                 System.out.println("Weer naar achter .....");
             }
             conv(manual_output);
@@ -498,7 +505,7 @@ public class handmatig extends javax.swing.JFrame {
                 conv(manual_output);
             }else if(jRadioButton1.isSelected() && a==1){//als de rp6 al naar achter rijdt en dit pijltje wordt losgelaten moet hij weer achteruit gaan rijden.
                 a = 1;
-                manual_output = 1;
+                manual_output = 2;
                 System.out.println("Weer naar achter .....");
             }
             conv(manual_output);

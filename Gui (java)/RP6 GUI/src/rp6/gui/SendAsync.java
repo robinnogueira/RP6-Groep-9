@@ -9,49 +9,46 @@ import com.digi.xbee.api.models.XBee64BitAddress;
 
 public class SendAsync {
         
-    
+        
         public static void main(String args){    
             
             //defineeer de xbee settings
             XBeeDevice myXBeeDevice = new XBeeDevice("COM6", 9600);
+            
             try
             {    
-                // opent xbee
+                // opent xbee met waardes die worden meegeven
                 myXBeeDevice.open();
                 
-                // start de listener 
+                // start de listener om data te ontvangne
                 myXBeeDevice.addDataListener(new MyDataReceiveListener());
                 
                 
                 System.out.println("Verbinden met XBee is succesvol tot stand gebracht!");
                     
-                // Instantiate an XBee device object.
-                // Get the XBee Network object from the XBee device.
+                //Maakt een instantie aan en haalt het netwerk gegevens op van de xbee
                 XBeeNetwork network = myXBeeDevice.getNetwork();
 
-                // Instantiate a remote XBee device.
-                XBee64BitAddress remoteAddress = new XBee64BitAddress("0013A2004146A180");
-                RemoteXBeeDevice remoteDevice = new RemoteXBeeDevice(myXBeeDevice, remoteAddress);
+                // Geeft het remoteAddress door waar de data heen moet worden verzonden
+                XBee64BitAddress remoteAddress = new XBee64BitAddress("0013A2004146A180"); // het MAC addres van de andere XBee
+                RemoteXBeeDevice remoteDevice = new RemoteXBeeDevice(myXBeeDevice, remoteAddress); // stopt deze in de instantie
 
-                // Add the remote XBee device to the network.
+                // Voegt hem toe aan het netwerk
                 network.addRemoteDevice(remoteDevice);
                 
                 // zet de waardes die zijn ontvangen in de parameter in een byte
                 byte[] dataToSend = args.getBytes();
-                
-                // code voor Async te verzenden
-                // myXBeeDevice.sendDataAsync(remoteDevice, dataToSend);
-                
+     
                 // verstuurd de data die is ontvangen
                 myXBeeDevice.sendData(remoteDevice, dataToSend);
                 
                 System.out.println("Succesvol geconverteerd!");
                   
            }
-
+            // wanneer er iets misgaat met de xbee
            catch(XBeeException e)
            {
-               // e.printStackTrace(); // debug
+               // e.printStackTrace(); // Debug only: om errors te worden omgevangen weer te geven 
                System.out.println("Niet verzonden");
            }           	
 
