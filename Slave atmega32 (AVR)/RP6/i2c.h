@@ -25,8 +25,3 @@ void init_i2c_slave(uint8_t ad);
 void init_i2c_ontvang( void (*ontvanger) (uint8_t [],uint8_t));
 void init_i2c_verzend( uint8_t (*verzender) ());
 void slaaftwi();
-
-void initUSART();
-void writeInteger(int16_t number, uint8_t base);
-void writeString(char *string);
-
