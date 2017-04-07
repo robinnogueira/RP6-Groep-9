@@ -48,26 +48,13 @@ public class MyDataReceiveListener implements IDataReceiveListener {
 		System.out.format("From %s >> %s | %s%n", xbeeMessage.getDevice().get64BitAddress(), 
 				HexUtils.prettyHexString(HexUtils.byteArrayToHexString(xbeeMessage.getData())), 
 				 data=new String(xbeeMessage.getData()));
-                                
-                              //  int dataint = Integer.parseInt(data);
-                                
-                               // System.out.println("ontvangen: %d", dataint);
-                               
+
                                 //loopt om de ontvangen data uit te lezen in de juiste volgorde
                                             GUI.ultrasoon=data.charAt(0);
                                             GUI.compas=data.charAt(1);
-                                            System.out.println("kompas");
                                             GUI.bumper=data.charAt(2);
-                                            System.out.println("Bumper");
                                             GUI.afa=data.charAt(3);
                                             GUI.afb=data.charAt(4);
-//                                            break; 
-//                                        case 5:
-//                                            GUI.battper_a=data.charAt(i);
-//                                            break; 
-//                                        case 6:
-//                                            GUI.battper_b=data.charAt(i);
-//                                            break;
 //                                    }
 //                                }                          
 	}

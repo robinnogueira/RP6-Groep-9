@@ -20,13 +20,13 @@ public class handmatig extends javax.swing.JFrame {
     public static String snd = "";      // send string voor convert naar char functie
     
     
-    public int bc = 0;
+    public int bc = 0;                  // button counter, zorgt ervoor dat bij het inhouden van een toets niet constant hetzelfde commando wordt verstuurd,.
     
     public handmatig() {
         initComponents();
     }
     
-   
+    //delay funcite om het voorkomen van het spammen van commands (van de toetsen) te voorkomen
     public void delay(){
         int countdown = 1;
         while (countdown < 10000){
@@ -39,6 +39,7 @@ public class handmatig extends javax.swing.JFrame {
         }
     }
     
+    //functie voor het converteren naar chars, zodat data kan worden verstuurd over de xbee
     public static int conv(int x){
         
         char add = (char ) x;
@@ -367,6 +368,7 @@ public class handmatig extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    // in de funcite hieronder worden keypresses gesignaleerd en worden de buttons aangesproken die hiermee verbonden zijn in de GUI
     private void jTextField1KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField1KeyPressed
             
         if(bc==0){
@@ -390,9 +392,9 @@ public class handmatig extends javax.swing.JFrame {
         /* Spatiebalk / NOODSTOP */
         }else if(evt.getKeyCode()==KeyEvent.VK_SPACE){
             System.out.println("STOP");
-            manual_output = 127;
-            conv(manual_output);
-            v = 0;
+            manual_output = 127; //127 stop code op de arduino
+            conv(manual_output); //conv functie converteerd data en verstuurd het door naar de xbee verzend functie
+            v = 0; 
   
          /* Enter / Wisselen tussen ingestelde afstand en de korte afstands modus */
         }else if(evt.getKeyCode()==KeyEvent.VK_ENTER){
@@ -400,10 +402,12 @@ public class handmatig extends javax.swing.JFrame {
                 jRadioButton2.setSelected(true);
                 jRadioButton1.setSelected(false);
                 System.out.println("Korte afstand modus");
+                //korte afstand modus geselecteerd en radiobuttn in gui selected
             }else if(jRadioButton2.isSelected()){
                 jRadioButton1.setSelected(true);
                 jRadioButton2.setSelected(false);
                 System.out.println("Lange afstand modus");
+                //lange afstand modus geselecteerd en radiobuttn in gui selected
             }
         }} 
     }//GEN-LAST:event_jTextField1KeyPressed
@@ -414,7 +418,7 @@ public class handmatig extends javax.swing.JFrame {
         if(jRadioButton2.isSelected()){
             jRadioButton1.setSelected(false);
         }
-        jTextField1.requestFocus(); 
+        jTextField1.requestFocus(); //er moet worden gefocusd op dit textfield omdat deze de keypresses registreerd
     }//GEN-LAST:event_jRadioButton2StateChanged
 
     private void jRadioButton1StateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_jRadioButton1StateChanged
@@ -434,6 +438,7 @@ public class handmatig extends javax.swing.JFrame {
         conv(manual_output);
     }//GEN-LAST:event_jButton1ActionPerformed
 
+    // de functie hieronder herkent de keyreleases van de pijltjes toetsen
     private void jTextField1KeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField1KeyReleased
 
         // pijltje omhoog loslatenn
@@ -458,18 +463,18 @@ public class handmatig extends javax.swing.JFrame {
         // pijltje naar rechts loslaten
         }else if(evt.getKeyCode()==KeyEvent.VK_RIGHT){
             if(jRadioButton2.isSelected() || jRadioButton1.isSelected()){
-                if(v==1){
+                if(v==1){ //als de rp6 al naar voren rijdt en dit pijltje wordt losgelaten moet hij weer rechtuit gaan rijden.
                     manual_output = 1;
                     System.out.println("Weer naar voor .....");
                 }else{
                     manual_output = 127;
-                    System.out.println("STOP");
+                    System.out.println("STOP");// als de robot niet naar voren rijdt stopt hij.
                 }
-            }else if(jRadioButton2.isSelected() && v==1){
+            }else if(jRadioButton2.isSelected() && v==1){//als de rp6 al naar voren rijdt en dit pijltje wordt losgelaten moet hij weer rechtuit gaan rijden.
                 manual_output = 1;
                 System.out.println("Weer naar voor .....");
                 conv(manual_output);
-            }else if(jRadioButton1.isSelected() && a==1){
+            }else if(jRadioButton1.isSelected() && a==1){//als de rp6 al naar achter rijdt en dit pijltje wordt losgelaten moet hij weer achteruit gaan rijden.
                 a = 1;
                 manual_output = 1;
                 System.out.println("Weer naar achter .....");
@@ -479,47 +484,47 @@ public class handmatig extends javax.swing.JFrame {
         //pijtlje naar links loslaten    
         }else if(evt.getKeyCode()==KeyEvent.VK_LEFT){
             if(jRadioButton2.isSelected() || jRadioButton1.isSelected()){
-                if(v==1){
+                if(v==1){ //als de rp6 al naar voren rijdt en dit pijltje wordt losgelaten moet hij weer rechtuit gaan rijden.
                     manual_output = 1;
                     System.out.println("Weer naar voor .....");
-                }else{
+                }else{ // als de robot niet naar voren rijdt stopt hij.
                     manual_output = 127;
                     System.out.println("STOP");
                 }
-            }else if(jRadioButton2.isSelected() && v==1){
+            }else if(jRadioButton2.isSelected() && v==1){//als de rp6 al naar voren rijdt en dit pijltje wordt losgelaten moet hij weer rechtuit gaan rijden.
                 manual_output = 1;
                 System.out.println("Weer naar voor .....");
                 conv(manual_output);
-            }else if(jRadioButton1.isSelected() && a==1){
+            }else if(jRadioButton1.isSelected() && a==1){//als de rp6 al naar achter rijdt en dit pijltje wordt losgelaten moet hij weer achteruit gaan rijden.
                 a = 1;
                 manual_output = 1;
                 System.out.println("Weer naar achter .....");
             }
             conv(manual_output);
         
-        }bc=0;  
+        }bc=0;  // herstel de buttoncounter
     }//GEN-LAST:event_jTextField1KeyReleased
 
     //pijltje omhoog KNOP
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-        v = 1;
-        a = 0;
-        if(stop==1){
+        v = 1; //rp6 moet vooruit, dus vooruit var moet op 1
+        a = 0;  // hij moet niet achteruit, dus var achteruit moet op 0
+        if(stop==1){// als de robot naar achtijr rijdt, en er wordt op het pijltje naar voor gedrukt, stopt de robot eerst, en bij een volgende push rijdt hij pas naar voor.
             manual_output = 127;
             System.out.println("STOP");
             stop = 0;
-        }else{
+        }else{// als de robot stilstaat begit hij met achteruit rijden
             manual_output = 1;
-            /* Bij ingestelde snelheid: */
+            // Bij lange afstand modus: DEZE MODUS WERKT NIET
             if(jRadioButton1.isSelected()){
                 stop = 1;
                 System.out.println("Vooruit rijden ..... ");
-                bc++;
+                bc++;// buttoncounter optellen , zodat commandos niet gespamt worden
             }
             /* Bij korte afstands modus: */
             else if(jRadioButton2.isSelected()){
                 System.out.println("Vooruit rijden .....");
-                bc++;
+                bc++;// buttoncounter optellen , zodat commandos niet gespamt worden
             }
         }
         conv(manual_output);
@@ -527,48 +532,48 @@ public class handmatig extends javax.swing.JFrame {
 
     // pijltje omlaag KNOP
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        v = 0;
-        a = 1;
-        if(stop==1){
+        v = 0; // hij moet niet vooruit, dus var vooruit moet op 0
+        a = 1; //rp6 moet achteruit, dus achteruit var moet op 1
+        if(stop==1){// als de robot naar voor rijdt, en er wordt op het pijltje naar achter gedrukt, stopt de robot eerst voor, en bij een volgende push wordt er pas naar achter gereden
             manual_output = 127;
             System.out.println("STOP");
             stop = 0;
-        }else{
+        }else{ //naar achter rijden
             manual_output = 2;
             System.out.println("Achteruit rijden .....");   
             stop = 1;
         }
-        bc++;
+        bc++;// buttoncounter optellen , zodat commandos niet gespamt worden
         conv(manual_output);
     }//GEN-LAST:event_jButton2ActionPerformed
 
     // pijltje naar links KNOP
     private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
-        if(v==1){
+        if(v==1){//naar voren en naar links rijden      
             manual_output = 5;
             System.out.println("Naar links + voor rijden .....");
-        }else{
+        }else{ //om as draaien naar links
             manual_output = 4;
             System.out.println("Naar links rijden .....");
         }
         conv(manual_output);
-        bc++;  
+        bc++;  // buttoncounter optellen , zodat commandos niet gespamt worden
     }//GEN-LAST:event_jButton5ActionPerformed
 
     // pijltje naar rechts KNOP
     private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
-        if(v==1){
+        if(v==1){//naar voor en rechts rijden als de robot al naar voren rijdt
             manual_output = 9;
             System.out.println("Naar rechts + voor rijden .....");
-        }else{
+        }else{ // naar voor rijden
             manual_output = 8;
             System.out.println("Naar rechts rijden .....");
         } 
         conv(manual_output);
-        bc++;
+        bc++;// buttoncounter optellen , zodat commandos niet gespamt worden
     }//GEN-LAST:event_jButton6ActionPerformed
 
-    
+    //main function
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">

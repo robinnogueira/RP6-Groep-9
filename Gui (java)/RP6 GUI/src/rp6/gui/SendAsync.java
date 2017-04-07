@@ -6,7 +6,6 @@ import com.digi.xbee.api.XBeeDevice;
 import com.digi.xbee.api.XBeeNetwork;
 import com.digi.xbee.api.exceptions.XBeeException;
 import com.digi.xbee.api.models.XBee64BitAddress;
-// import com.digi.xbee.api.utils.HexUtils;
 
 public class SendAsync {
         

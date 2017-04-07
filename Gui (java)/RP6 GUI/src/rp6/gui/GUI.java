@@ -545,27 +545,16 @@ public class GUI extends javax.swing.JFrame {
         /* open route programmeren */
         JFrame frame = new route(); 
         frame.setVisible(true); 
-        
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+       // knop om live update functie in te schakelen 
        call_update();
        jButton1.setEnabled(false);
-       //handmatig.conv(10);
-
     }//GEN-LAST:event_jButton1ActionPerformed
 
     public void updategui() {
-
-       //info uit array uitlezen
-       // ultrasoon = dataOntvangen[0];
-       // compas =  dataOntvangen[1];
-
-       // ultrasoon = 56;
-       // compas = 5;
-       
-       // dataOntvangen[0] = 10;
-       // dataOntvangen[1] = 3;
+        //funcite voor live updaten van de gui
         
         //live update ultrasoon afstand
         int live_ultrasoon = ultrasoon * 2;
@@ -623,6 +612,7 @@ public class GUI extends javax.swing.JFrame {
         System.out.println("GUI updated!");
     }
     
+    //functie die een nieuwe thread maakt voor het live updaten van de gui. zonder nieuwe thread is het niet mogelijk om live te updaten, de pijltjes toetsen werken niet meer bv. 
     public void call_update(){
         new Thread() {
             public void run() {
@@ -639,8 +629,7 @@ public class GUI extends javax.swing.JFrame {
     }
     
     public static void main(String args[]) {       
-        
-        
+        //main funcite laat gui zien.
         JFrame frame = new GUI(); 
         frame.setVisible(true);
     }
