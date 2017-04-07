@@ -575,7 +575,7 @@ public class GUI extends javax.swing.JFrame {
         
         //live update compass
         String compas_dir = null;
-        switch (compas) {
+        switch (compas) {       //de gui ontvangt 8 verschillende richtingen van de arduino, deze worden hieronder gekoppelt aan een richting in de gui.
             case 1: compas_dir = "N";
                     break;
             case 2: compas_dir = "NW";
@@ -596,19 +596,18 @@ public class GUI extends javax.swing.JFrame {
         jTextField6.setText(compas_dir);
   
         //live bumper rechts update
-        if(bumper == 0){
+        if(bumper == 0){        // bij het doorkrijgen van 0 zijn de bumpers niet ingedrukt
             jPanel4.setBackground(Color.GREEN);
             jPanel3.setBackground(Color.GREEN);
-        }else if(bumper== 1){
+        }else if(bumper== 1){   //bij het ontvangen van 1 is de linker bumper ingedrukt en wordt het vlak in de gui rood
             jPanel3.setBackground(Color.RED);
-        }else if(bumper== 2){
+        }else if(bumper== 2){   //bij het ontvangen van 2 is de rechter bumper ingedrukt en wordt het vlak in de gui rood
             jPanel4.setBackground(Color.RED);
-        }else if(bumper== 3){
+        }else if(bumper== 3){   //bij het ontvangen van 3 zijn beide bumpers ingedrukt en worden beide vlakken in de gui rood
             jPanel3.setBackground(Color.RED);
             jPanel4.setBackground(Color.RED);
         }
-        
-        
+
         System.out.println("GUI updated!");
     }
     
@@ -618,8 +617,8 @@ public class GUI extends javax.swing.JFrame {
             public void run() {
                 while(true){
                     try {
-                        Thread.sleep(1000);
-                        updategui();      
+                        Thread.sleep(1000);     //laat de gui elke 1 seconde herladen
+                        updategui();            //call update functie
                     } catch (InterruptedException ex) {
                         Logger.getLogger(GUI.class.getName()).log(Level.SEVERE, null, ex);
                     }      

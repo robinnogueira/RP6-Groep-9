@@ -57,6 +57,7 @@ public class handmatig extends javax.swing.JFrame {
         return 0;
     }
     
+    //auto generated code voor opbouw gui door NetBeans (java)
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {

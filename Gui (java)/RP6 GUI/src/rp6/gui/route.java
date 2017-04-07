@@ -437,17 +437,20 @@ public class route extends javax.swing.JFrame {
         //checkbox 1
         if(jCheckBox1.isSelected()){
             if(jComboBox1.getSelectedItem().toString().equals("Voor")){
-                cb = 0;
+                cb = 0;     //route richting is vooruit
             }else if(jComboBox1.getSelectedItem().toString().equals("Achter")){
-                cb = 2;
+                cb = 2;     //route richting is achtruit
             }else if(jComboBox1.getSelectedItem().toString().equals("Links")){
-                cb = 1;
+                cb = 1;     //route richting is links
             }else if(jComboBox1.getSelectedItem().toString().equals("Rechts")){
-                cb = 3;
+                cb = 3;     //route richting is rechts
             }
-            output+= jTextField1.getText()+cb;
-        }
+            output+= jTextField1.getText()+cb; // output is afstand in textbox + bit voor de richting 
+        }   
         
+            //COMMENTS VAN BOVENSTAANDE IF FUNCITE GELDEN VOOR DE 7 VOLGENDE HIERONDER.
+            //(bij onderstaande if funcites worden de outputs steeds toegevoegd aan bestaande output)
+            
         //checkbox 2
         if(jCheckBox8.isSelected()){
             if(jComboBox10.getSelectedItem().toString().equals("Voor")){
@@ -548,44 +551,33 @@ public class route extends javax.swing.JFrame {
         
         String txt = jTextField15.getText();
 
-        if(txt == null){
+        if(txt == null){//laatste caracters van de string zijn 000, zodat de arduino weet dat de fucntie is afgelopen
             stopAf = "000";
         }else{
             stopAf = txt;
         }
         
-        String start = "2";
+        String start = "2";//string wordt gestart met 2 zodat de arduino weet dat hij de geprogrammeerde route moet gaan rijden
         String end = "000";
         
-        output = start + output + end;
-        
+        output = start + output + end; //output = begin (2) + geprogrammeerde route + eind (000)
 
-        
         System.out.println(output);
         
-        int int_out = Integer.parseInt(output);
+        int int_out = Integer.parseInt(output); //output (string) wordt omgezet naar int
 
-        conv(127);   
+        conv(int_out);   //de hele geprogrammerde route code wordt verstuurd naar de arduino via de xbee
         
         
     }//GEN-LAST:event_jButton1ActionPerformed
 
-     public int conv(int x){
-        
-         System.out.println("x voor = " + x);
+    //functie voor het converteren van data en versturen naar de xbee
+     public int conv(int x){ 
         char add = (char) x;
         snd += add;
-        System.out.println("x na = " + x);
-        teller++; 
-        
-        if(teller >= 1){   
-            SendAsync.main(snd);
-            teller = 0;
-            System.out.println("Commando verstuurd! " + snd);
-            snd = "";
-            
-        }
-        
+        SendAsync.main(snd);
+        System.out.println("Commando verstuurd! " + snd);
+        snd = "";   
         return 0;
     }
     
