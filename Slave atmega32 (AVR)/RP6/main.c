@@ -1,11 +1,13 @@
 /*
- * i2cw.c
+ * RP6 code
  *
- * Created: 3/19/2016 2:14:44 PM
- * Author : john
+ * Created: 3/22/2017 2:14:44 PM
+ * Author : Groep 9
  */ 
 
-
+/*
+	Hier worden libaries en headers geinclude
+*/
 #include <avr/io.h>
 #include <util/twi.h>
 #include "i2c.h"
