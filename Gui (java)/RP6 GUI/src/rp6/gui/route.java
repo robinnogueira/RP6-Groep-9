@@ -114,6 +114,11 @@ public class route extends javax.swing.JFrame {
         );
 
         jTextField1.setFont(new java.awt.Font("Verdana", 0, 11)); // NOI18N
+        jTextField1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jTextField1ActionPerformed(evt);
+            }
+        });
 
         jLabel2.setFont(new java.awt.Font("Verdana", 0, 11)); // NOI18N
         jLabel2.setText("naar");
@@ -359,12 +364,13 @@ public class route extends javax.swing.JFrame {
                     .addComponent(jLabel2)
                     .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jCheckBox8)
-                    .addComponent(jTextField8, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel3)
-                    .addComponent(jLabel9)
-                    .addComponent(jComboBox10, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jCheckBox8)
+                        .addComponent(jLabel3)
+                        .addComponent(jLabel9)
+                        .addComponent(jComboBox10, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jTextField8, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jCheckBox9)
@@ -425,16 +431,9 @@ public class route extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private String stringtoint(int input){
-        String route="";
-        int x=input/128;
-        int y=input%128;
-        route+=x+y;
-        return route;
-    }
     
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        String route="";
+
         //checkbox 1
         if(jCheckBox1.isSelected()){
             if(jComboBox1.getSelectedItem().toString().equals("Voor")){
@@ -446,7 +445,7 @@ public class route extends javax.swing.JFrame {
             }else if(jComboBox1.getSelectedItem().toString().equals("Rechts")){
                 cb = 3;
             }
-            route+= stringtoint(Integer.parseInt(jTextField1.getText()))+cb;
+            output+= jTextField1.getText()+cb;
         }
         
         //checkbox 2
@@ -460,7 +459,7 @@ public class route extends javax.swing.JFrame {
             }else if(jComboBox10.getSelectedItem().toString().equals("Rechts")){
                 cb = 3;
             }
-            route+= stringtoint(Integer.parseInt(jTextField8.getText()))+cb;
+            output+= jTextField8.getText()+cb;
         }
         
         //checkbox 3
@@ -474,7 +473,7 @@ public class route extends javax.swing.JFrame {
             }else if(jComboBox12.getSelectedItem().toString().equals("Rechts")){
                 cb = 3;
             }
-             route+= stringtoint(Integer.parseInt(jTextField9.getText()))+cb;
+            output+= jTextField9.getText()+cb;
         }
         
         //checkbox 4
@@ -488,7 +487,7 @@ public class route extends javax.swing.JFrame {
             }else if(jComboBox14.getSelectedItem().toString().equals("Rechts")){
                 cb = 3;
             }
-             route+= stringtoint(Integer.parseInt(jTextField10.getText()))+cb;
+            output+= jTextField10.getText()+cb;
         }
         
         //checkbox 5
@@ -502,7 +501,7 @@ public class route extends javax.swing.JFrame {
             }else if(jComboBox16.getSelectedItem().toString().equals("Rechts")){
                 cb = 3;
             }
-             route+= stringtoint(Integer.parseInt(jTextField11.getText()))+cb;
+            output+= jTextField11.getText()+cb;
         }
                 
         //checkbox 6
@@ -516,7 +515,7 @@ public class route extends javax.swing.JFrame {
             }else if(jComboBox20.getSelectedItem().toString().equals("Rechts")){
                 cb = 3;
             }
-            output = output + jTextField12.getText() + cb;
+            output+= jTextField12.getText()+cb;
         }
         
         //checkbox 7
@@ -530,7 +529,7 @@ public class route extends javax.swing.JFrame {
             }else if(jComboBox22.getSelectedItem().toString().equals("Rechts")){
                 cb = 3;
             }
-             route+= stringtoint(Integer.parseInt(jTextField13.getText()))+cb;
+            output+= jTextField13.getText()+cb;
         }
         
         //checkbox 8
@@ -544,10 +543,8 @@ public class route extends javax.swing.JFrame {
             }else if(jComboBox18.getSelectedItem().toString().equals("Rechts")){
                 cb = 3;
             }
-             route+= stringtoint(Integer.parseInt(jTextField14.getText()))+cb;
+            output+= jTextField14.getText()+cb;
         }
-        
-        output = route;
         
         String txt = jTextField15.getText();
 
@@ -557,29 +554,36 @@ public class route extends javax.swing.JFrame {
             stopAf = txt;
         }
         
-        String end = "00";
+        String start = "2";
+        String end = "000";
         
-        output = output + end + stopAf;
+        output = start + output + end;
+        
+
         
         System.out.println(output);
         
         int int_out = Integer.parseInt(output);
 
-        conv(int_out);   
+        conv(127);   
+        
+        
     }//GEN-LAST:event_jButton1ActionPerformed
 
      public int conv(int x){
         
+         System.out.println("x voor = " + x);
         char add = (char) x;
         snd += add;
-        
+        System.out.println("x na = " + x);
         teller++; 
         
         if(teller >= 1){   
             SendAsync.main(snd);
             teller = 0;
+            System.out.println("Commando verstuurd! " + snd);
             snd = "";
-            System.out.println("Commando verstuurd!" + snd);
+            
         }
         
         return 0;
@@ -588,6 +592,10 @@ public class route extends javax.swing.JFrame {
     private void jCheckBox13ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCheckBox13ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jCheckBox13ActionPerformed
+
+    private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTextField1ActionPerformed
 
     public static void main(String args[]) {
 

@@ -54,20 +54,21 @@ public class MyDataReceiveListener implements IDataReceiveListener {
                                // System.out.println("ontvangen: %d", dataint);
                                
                                 //loopt om de ontvangen data uit te lezen in de juiste volgorde
-                                for(int i = 0;i < 2; i++)
-                                {
-                                    switch (i)
-                                    {
-                                        case 0:
-                                            GUI.ultrasoon=data.charAt(i);
-                                            break;
-                                        case 1:
-                                            GUI.compas=data.charAt(i);
-                                            break;
-                                        case 3:
-                                            GUI.bumper=data.charAt(i);
-                                            break;    
-                                    }
-                                }                          
+                                            GUI.ultrasoon=data.charAt(0);
+                                            GUI.compas=data.charAt(1);
+                                            System.out.println("kompas");
+                                            GUI.bumper=data.charAt(2);
+                                            System.out.println("Bumper");
+                                            GUI.afa=data.charAt(3);
+                                            GUI.afb=data.charAt(4);
+//                                            break; 
+//                                        case 5:
+//                                            GUI.battper_a=data.charAt(i);
+//                                            break; 
+//                                        case 6:
+//                                            GUI.battper_b=data.charAt(i);
+//                                            break;
+//                                    }
+//                                }                          
 	}
 }

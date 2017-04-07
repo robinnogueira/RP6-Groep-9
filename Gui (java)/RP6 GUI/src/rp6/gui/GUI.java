@@ -17,10 +17,15 @@ public class GUI extends javax.swing.JFrame {
     int huidige_snelheid;
     int afgelegde_afstand;
     
-    public static int bumper = 3; 
-    public static int compas = 3;
-    public static int ultrasoon = 10; 
+    public static int bumper; 
+    public static int compas;
+    public static int ultrasoon; 
     
+    public static int battper_a;
+    public static int battper_b;
+    
+    public static int afa;
+    public static int afb;
     
     
     public GUI() {
@@ -179,7 +184,7 @@ public class GUI extends javax.swing.JFrame {
         jTextField4.setToolTipText("");
 
         jLabel10.setFont(new java.awt.Font("Verdana", 0, 11)); // NOI18N
-        jLabel10.setText("m");
+        jLabel10.setText("cm");
 
         jLabel11.setFont(new java.awt.Font("Verdana", 0, 11)); // NOI18N
         jLabel11.setText("Compas richting:");
@@ -208,14 +213,14 @@ public class GUI extends javax.swing.JFrame {
                         .addComponent(jLabel3))
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addComponent(jLabel4)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jTextField1)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(jLabel5))
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addComponent(jLabel8)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jTextField4, javax.swing.GroupLayout.PREFERRED_SIZE, 59, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jTextField4)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(jLabel10))
                     .addComponent(jSeparator5, javax.swing.GroupLayout.Alignment.TRAILING)
@@ -546,6 +551,8 @@ public class GUI extends javax.swing.JFrame {
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
        call_update();
        jButton1.setEnabled(false);
+       //handmatig.conv(10);
+
     }//GEN-LAST:event_jButton1ActionPerformed
 
     public void updategui() {
@@ -561,8 +568,22 @@ public class GUI extends javax.swing.JFrame {
        // dataOntvangen[1] = 3;
         
         //live update ultrasoon afstand
-        jTextField1.setText(Integer.toString(ultrasoon));
-
+        int live_ultrasoon = ultrasoon * 2;
+        if(live_ultrasoon == 200){
+            jTextField1.setText("max. (200+)");
+        }else {
+          jTextField1.setText(Integer.toString(live_ultrasoon));  
+        }
+        
+        //live update afgelegde afstand
+        int af = (afa*128)+afb;
+        jTextField4.setText(Integer.toString(af));
+        
+        //live update batterij percentage
+        int batt = ((battper_a*128)+battper_b)/100;
+        jTextField3.setText(Integer.toString(batt));
+        jProgressBar2.setValue(batt);
+        
         //live update compass
         String compas_dir = null;
         switch (compas) {
@@ -588,6 +609,7 @@ public class GUI extends javax.swing.JFrame {
         //live bumper rechts update
         if(bumper == 0){
             jPanel4.setBackground(Color.GREEN);
+            jPanel3.setBackground(Color.GREEN);
         }else if(bumper== 1){
             jPanel3.setBackground(Color.RED);
         }else if(bumper== 2){
