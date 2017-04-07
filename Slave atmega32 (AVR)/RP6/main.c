@@ -16,17 +16,7 @@
 
 #define TRUE 0xFF;
 #define FALSE 0;
-
-/*de interrupt routine van de i2c
-de functie slaaftwi() staat in de library
-*/
-
-ISR(TWI_vect) {
-
-	slaaftwi();
-
-}
-
+#define aantalsensoren 5
 uint8_t data_ont[20]; //max 20
 volatile uint8_t data_flag = FALSE;
 volatile uint8_t databyte=0x33;
@@ -39,11 +29,63 @@ void (*ontfunc) (uint8_t[],uint8_t);
 uint8_t (*verfunc) ();
 void pwm_init();
 void motoren();
+void encoder_init();
+void readaccu();
+void bumpers();
+uint16_t readADC(uint8_t channel);
 
+int sensoren[aantalsensoren];
+int debounce1,debounce2,ontvangen=0;
+/*de interrupt routine van de i2c
+de functie slaaftwi() staat in de library
+*/
+
+ISR(TWI_vect) {
+
+	slaaftwi();
+
+}
+
+ISR(TIMER0_COMP_vect)
+{
+	static volatile int i=0;
+	i++;
+	if(i>20)
+	{
+		i=0;
+		if(debounce1<2)debounce1++;
+		if(debounce2<2)debounce2++;
+		ontvangen++;
+	}
+}
+
+ISR (INT0_vect)
+{
+	if (debounce1>1)
+	{
+		(motorbyte[0]==0||motorbyte[0]==4)?sensoren[1]++:sensoren[1]--;
+		debounce1=0;
+	}
+}
+
+/**
+ * External Interrupt 1 ISR
+ * (ENCR)
+ *
+ */
+ISR (INT1_vect)
+{
+	if (debounce2>1)
+	{
+		(motorbyte[0]==0||motorbyte[0]==8)?sensoren[2]++:sensoren[2]--;
+			debounce2=0;
+		}
+}
 
 int main(void)
 {
-	DDRC=0xFF;
+	DDRC=0xBF;
+	encoder_init();
 	initUSART();
 	init_i2c_slave(8);
 	pwm_init();
@@ -62,6 +104,11 @@ int main(void)
     /* Replace with your application code */
     while (1) 
     {    
+		readaccu();
+		bumpers();
+		if(sensoren[0]||ontvangen>2)
+			for(int i=0;i<3;i++)
+				motorbyte[i]=0;
 		motoren();
 		if(data_flag) {
 			for (int i =0;i<3;i++)
@@ -124,6 +171,8 @@ void slaaftwi() {
 		break;
 		case 0xB8:
 		TWDR=verfunc();
+		sensoren[1]=128;
+		sensoren[2]=128;
 		break;
 		case 0xC0:   //NACK
 		break;
@@ -155,6 +204,7 @@ void ontvangData(uint8_t data[],uint8_t tel){
 	data_ont[i]=data[i];
 	data_flag = TRUE;
 	writeString("o\n\r");
+	ontvangen=0;
 }
 
 /* het byte dat de slave verzend naar de master
@@ -162,7 +212,9 @@ in dit voorbeeld een eenvoudige teller
 */
 
 uint8_t verzendByte() {
-	return motorbyte[i];
+	if (i>=aantalsensoren)
+		i=0;
+	return sensoren[i++];
 }
 
 void motoren()
@@ -214,4 +266,50 @@ void writeInteger(int16_t number, uint8_t base)
 	char buffer[17];
 	itoa(number, &buffer[0], base);
 	writeString(&buffer[0]);
+}
+
+void encoder_init()
+{
+	DDRB |= (SL5 | PWRON);
+	DDRD &= ~(ENC_R | ENC_L);
+	PORTB |= PWRON;
+	PORTD |= (ENC_L | ENC_R);
+	sei();
+	MCUCR |= (1<<ISC00) | (1<<ISC10) | (0<<ISC11) | (0<<ISC01);
+	GICR |= (1<<INT0 | 1<<INT1);
+}
+
+void bumpers (){
+	sensoren[0] = 0;
+	if (PINB&SL6)
+	sensoren[0] += 1;
+	if (PINC&SL3)
+	sensoren[0] += 2;
+}
+
+void timer_init()
+{
+	TCCR0 = (1 << WGM12);				//timer op ctc stand zetten (reset on compare)
+	OCR0 = 156;						//aantal ticks voor er wat gebeurt op exact 400 seconden zetten
+	TIMSK = (1 << OCIE0);				//juiste register selecteren
+	sei();								//interupts definieren
+	TCCR0 |= (1 << CS12) | (1 << CS10);//prescale op 1024 zetten
+}
+
+void readaccu(){
+	uint16_t uitlees;
+	uitlees = readADC(ACS);
+	sensoren[3] = uitlees / 128;
+	sensoren[4] = uitlees % 128;
+	
+}
+
+uint16_t readADC(uint8_t channel)
+{
+	if((ADCSRA & (1<<ADSC))) return 0; // check if ADC is buisy...
+	ADMUX = (1<<REFS0) | (0<<REFS1) | (channel<<MUX0);
+	ADCSRA = (0<<ADIE) | (1<<ADSC) | (1<<ADEN) | (1<<ADPS2) | (1<<ADPS1) | (1<<ADIF);
+	while ((ADCSRA & (1<<ADSC)));
+	ADCSRA |= (1<<ADIF);
+	return ADC;
 }
